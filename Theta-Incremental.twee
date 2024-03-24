@@ -1,0 +1,868 @@
+:: StoryTitle
+Theta Incremental
+
+
+:: StoryData
+{
+  "ifid": "15F45C0F-FA0F-45F4-B9C2-479CEF9ADB7A",
+  "format": "SugarCube",
+  "format-version": "2.36.1",
+  "start": "Start",
+  "tag-colors": {
+    "bookmark": "blue",
+    "widget": "red",
+    "Unviewable": "blue",
+    "Options": "orange",
+    "Information": "green",
+    "Debug": "yellow",
+    "Gameplay": "green",
+    "Ranks": "green",
+    "Pinning": "green",
+    "Theta": "green",
+    "Savable": "red"
+  },
+  "zoom": 0.6
+}
+
+
+:: 0.x Changelog [Information] {"position":"700,1000","size":"100,100"}
+!CHANGELOG
+!!v0.0 - v0.?
+
+<<button [[Return|Changelog]]>><</button>>
+
+!!!v0.2.1
+!!!!
+
+This update took so long because I was rewriting most of the game behind the scenes
+Next update will probablt change the options tab
+
+Changed name to Theta Incremental
+Added slightly more ranks stuff
+Added Scientific Notation
+Added the Upgrades Tab
+Overhauled the Main Tab
+Added the Pins Tab
+Added several QoL features
+Fixed some bugs
+Updated the tab display to be more universal (not quite finished yet)
+Removed Auto-Autosave since it wasn't that good
+Made several behind-the-scenes changes to make development easier
+Changed the games banner thingy in galaxy
+Added tags in galaxy
+Added chatroom in galaxy
+
+!!v0.2
+!!!!10/03/2024
+Added Ranks
+Changed Value Recalculation to be Automatic
+Fixed issues with the help tab
+Fixed the Theta Button not working sometimes
+
+!!v0.1
+!!!!09/03/2024
+Actually added Autosave
+Added Auto-Autosave
+Added Theta Upgrades 3, 4 and 5
+Added Value Recalculation
+Added Automatic Value Fixing
+Added Import and Export
+Uploaded to galaxy
+
+!!!v0.0.2
+!!!!09/03/2024
+Overhauled Saving
+Added autosave
+Moved buttons around to improve consistency
+
+!!!v0.0.1
+!!!!08/03/2024
+Added Theta Θ
+Added Theta Upgrades 1 and 2
+Added Help
+Added Changelog
+Added Options
+Added Credits
+
+<<button [[Return|Changelog]]>><</button>>
+
+
+:: Changelog [Savable Information] {"position":"900,1000","size":"100,100"}
+!CHANGELOG
+<<button [[Return|Options]]>><</button>>
+
+Currently in v0.2.1
+
+<<button [[0.x|0.x Changelog]]>><</button>>
+
+
+:: Credits [Savable Information] {"position":"1000,800","size":"100,100"}
+!CREDITS
+<<button [[Return|Options]]>><</button>>
+
+Made using Twine (twinery.org)
+Uses the SugarCube story format for Twine
+
+Code:
+BanaCubed (me)
+
+Sprites:
+N/A
+
+Testing:
+N/A
+
+Inspiration:
+Incremental Mass Rewritten
+
+ifId:
+15F45C0F-FA0F-45F4-B9C2-479CEF9ADB7A
+I know this doesn't really count as interactive fiction but it still has an ifId because it uses Twine.
+
+<<button [[Return|Options]]>><</button>>
+
+
+:: Debug Center [Savable Debug] {"position":"2350,950","size":"200,200"}
+!DEBUG CENTER
+Welcome to the debug realm. Use Debug State to get permanent access here from the main tab.
+DON'T MESS AROUND HERE UNLESS YOU KNOW WHAT YOU'RE DOING
+
+!!DEBUG
+<<button [[Debug Center]]>><</button>> \
+<<button [[Debug State]]>><</button>> \
+<<button [[Debug Visuals]]>><</button>> \
+<<button [[Debug Number Limits]]>><</button>> 
+
+!!MAIN
+<<button [[Main]]>><</button>> 
+<<button [[Ranks]]>><</button>> 
+
+!!START
+<<button [[Start]]>><</button>>
+
+!!OPTIONS
+<<button [[Options]]>><</button>> \
+<<button [[Saving]]>><</button>>
+
+!!INFO
+<<button [[Help]]>><</button>> \
+<<button [[Changelog]]>><</button>> \
+<<button [[0.x Changelog]]>><</button>> \
+<<button [[Credits]]>><</button>>
+
+
+:: Debug Number Limits [Information Debug] {"position":"2600,800","size":"100,100"}
+!DEBUG NUMBER LIMITS
+<<button [[Return|Debug Center]]>><</button>>
+
+!!Normal limit
+2^1024 ~ 1.798e308
+
+I'll probably try to make a way around this at some point
+(not yet)
+
+<<button [[Return|Debug Center]]>><</button>>
+
+
+:: Debug State [Options Debug] {"position":"2200,800","size":"100,100"}
+!DEBUG STATE
+<<button [[Return|Debug Center]]>><</button>>
+
+DEBUG ACCESS (PREFFERABLE TO LEAVE ENABLED) <<checkbox "$DEBUG" false true autocheck>>
+DEBUG ACCESS (PREFFERABLE TO LEAVE ENABLED) <<checkbox "$rankEnergyUnlock" false true autocheck>>
+
+
+<<button [[Return|Debug Center]]>><</button>>
+
+
+:: Debug Visuals [Information Debug] {"position":"2400,700","size":"100,100"}
+!DEBUG VISUALS
+<<button [[Return|Debug Center]]>><</button>>
+
+!!Normal Text
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+1234567890
+-=+().
+
+<<set $numero to 0.213>>
+<<sciNotation $numero>>
+
+<<button [[Return|Debug Center]]>><</button>>
+
+
+:: DevStart [Debug Options Unviewable] {"position":"1800,1050","size":"100,100"}
+<<button "Rank Energy Stage">><<set $ranks to 6>><<goto [[Main]]>><</button>>
+
+
+:: Fix Values [widget Unviewable Debug Gameplay] {"position":"850,1350","size":"100,100"}
+<<widget "fix-values">>\
+<<if ($theta >= 0 or $theta <= 0) isnot true>><<set $theta to 0>><</if>>\
+<<if ($scientificNotationStart >= 0 or $theta <= 0) isnot true>><<set $scientificNotationStart to 1000000>><</if>>\
+<<if ($scientificNotationDecimal >= 0 or $theta <= 0) isnot true>><<set $scientificNotationDecimal to 4>><</if>>\
+<</widget>>
+
+
+:: Gameplay Help [Information] {"position":"1000,2000","size":"100,100"}
+!!!Why is idle production inconsistent?
+Idle production only happens in tabs where the resources are visible
+
+!!!Why no offline progress? :(
+I'll try to add some offline progress in the future.
+
+!!!How do I know when I have finished the game?
+The endgame is at the top of the page
+
+!!!Let me click!
+After Rank 1, clicking is removed. This is is mostly because the button wouldn't work consistently after automation is added.
+I will probably add minesweeper or something to keep you engaged.
+
+
+:: Help [Savable Information] {"position":"1150,2150","size":"200,200"}
+!HELP
+<<button [[Return|Options]]>><</button>>
+
+Press a button to show attached help messages
+No minimizing help windows yet (sorry)
+
+!!Current Endgame: Rank 5
+
+!!<<button "Known Issues">> \
+<<replace "#known-issues">><<include [[Known Issues]]>><</replace>><</button>>
+<span id="known-issues"></span>
+!!<<button "Saving">> \
+<<replace "#saving-help">><<include [[Saving Help]]>><</replace>><</button>>
+<span id="saving-help"></span>
+!!<<button "Gameplay Problems">> \
+<<replace "#gameplay-help">><<include [[Gameplay Help]]>><</replace>><</button>>
+<span id="gameplay-help"></span>
+<<button [[Return|Options]]>><</button>>
+
+
+:: Idle [widget Unviewable Gameplay] {"position":"2100,2200","size":"100,100"}
+\<<widget "idle-main">>\
+	\<<set $theta += $thetaSecond / 20>>\
+    \<<replace "#theta-display">><<sciNotation $theta>><</replace>>\
+    \<<set _maintime +=1>>\
+    \<<if _maintime >= 20>>\
+    	\<<set _maintime to 0>>\
+    	\<<replace "#idler">>\
+	    \<</replace>>\
+    \<</if>>\
+    \<<if $ranks >= 3>>\
+    	\<<thetaUPG1buy>><<thetaUPG2buy>><<thetaUPG3buy>>\
+        \<<if $ranks >= 4>>\
+        	\<<thetaUPG4buy>>\
+        \<</if>>\
+        \<<if $ranks >= 5>>\
+        	\<<thetaUPG5buy>>\
+        \<</if>>\
+    \<</if>>\
+    \<<recalculate-all>>\
+\<</widget>>\
+
+
+:: Known Issues [Information] {"position":"1200,1900","size":"100,100"}
+!!!Rank Requirement Display
+When reaching the final rank, the rank requirement does not correctly display "PLACEHOLDER".
+
+
+:: Main [Savable Gameplay Theta Ranks Information Pinning] {"position":"2350,2150","size":"200,200"}
+!MAIN<<set _maintime to 0>><<idlethingy>>
+<<render-global>>
+
+<<render-main>>
+
+
+:: Notations [widget Unviewable Information] {"position":"2100,1600","size":"100,100"}
+<<widget "sciNotation">>
+\<<script>>
+let number = State.getVar("_args[0]");
+let numberLength = State.getVar("$scientificNotationDecimal");
+let numberSci;
+
+if (number >= State.getVar("$scientificNotationStart")) {
+    numberSci = number.toExponential(numberLength);
+    numberSci = numberSci.replace(/\+/g, '');
+} else {
+    if (number < 1) {
+        numberSci = number.toFixed(4);
+    } else if (number < 10) {
+        numberSci = number.toFixed(2);
+    } else {
+        numberSci = Math.floor(number);
+    }
+}
+
+State.setVar("_numberSci", numberSci);
+<</script>>
+\_numberSci
+\<</widget>>
+
+
+:: Options [Savable Options] {"position":"1150,950","size":"200,200"}
+!OPTIONS<<set _maintime to 0>><<idlethingy>>
+<<render-global>>
+
+<<button [[Saving]]>><</button>> \
+
+<<button [[Help]]>><</button>> \
+<<button [[Changelog]]>><</button>> \
+<<button [[Credits]]>><</button>>\
+\
+
+
+:: PassageHeader [Unviewable Debug Gameplay] {"position":"2000,1400","size":"100,100"}
+<<fix-values>>\
+
+
+:: Pins [Options Gameplay Information Savable Pinning] {"position":"2700,2600","size":"100,100"}
+!PINS<<set _maintime to 0>><<idlethingy>>
+<<render-global>>
+
+<span id="pins"><<render-pins>></span>
+
+
+:: Pins Widget [widget Unviewable Options Information Pinning] {"position":"2900,2600","size":"100,100"}
+<<widget "pin-button">>\
+<<if _args[0] is true>>\
+<<button "Unpin">>\
+<<pinfalse _args[1]>>\
+<<replace "#pins">><<render-pins>><</replace>><</button>>\
+<</if>>\
+<<if _args[0] isnot true>>\
+<<button "Pin">>\
+<<pintrue _args[1]>>\
+<<replace "#pins">><<render-pins>><</replace>><</button>>\
+<</if>>\
+<</widget>>
+
+
+<<widget "pinfalse">>\
+<<if _args[0] is 0>><<set $thetaUPGpin to false>><</if>>\
+<<if _args[0] is 1>><<set $rankupPin to false>><</if>>\
+<<if _args[0] is 2>><<set $rankRewardsPin to false>><</if>>\
+<<if _args[0] is 3>><<set $rankEnergyPin to false>><</if>>\
+<</widget>>
+
+
+<<widget "pintrue">>\
+<<if _args[0] is 0>><<set $thetaUPGpin to true>><</if>>\
+<<if _args[0] is 1>><<set $rankupPin to true>><</if>>\
+<<if _args[0] is 2>><<set $rankRewardsPin to true>><</if>>\
+<<if _args[0] is 3>><<set $rankEnergyPin to true>><</if>>\
+<</widget>>
+
+
+:: Purchases [widget Unviewable Gameplay Theta] {"position":"2750,1850","size":"100,100"}
+<<widget "thetaUPG1buy">>\
+	<<if $theta >= Math.trunc($thetaUPG1c)>>\
+    	<<if $ranks < 2>>\
+    	<<set $theta -= Math.trunc($thetaUPG1c)>>\
+        <</if>>\
+        <<set $thetaUPG1 += 1>>\
+        <<set $thetaUPG1c *= 1.125>>\
+    <</if>>\
+    \
+<</widget>>\
+
+<<widget "thetaUPG2buy">>\
+	<<if $theta >= Math.trunc($thetaUPG2c)>>\
+    	<<if $ranks < 2>>\
+    	<<set $theta -= Math.trunc($thetaUPG2c)>>\
+        <</if>>\
+        <<set $thetaUPG2 += 1>>\
+        <<set $thetaUPG2c *= 1.25>>\
+    <</if>>\
+    \
+<</widget>>\
+
+<<widget "thetaUPG3buy">>\
+	<<if $theta >= Math.trunc($thetaUPG3c)>>\
+    	<<if $ranks < 2>>\
+    	<<set $theta -= Math.trunc($thetaUPG3c)>>\
+        <</if>>\
+        <<set $thetaUPG3 += 1>>\
+        <<set $thetaUPG3c *= 1.6>>\
+    <</if>>\
+    \
+<</widget>>\
+
+<<widget "thetaUPG4buy">>\
+	<<if $theta >= Math.trunc($thetaUPG4c)>>\
+    	<<if $ranks < 2>>\
+    	<<set $theta -= Math.trunc($thetaUPG4c)>>\
+        <</if>>\
+        <<set $thetaUPG4 += 1>>\
+        <<set $thetaUPG4c *= 2.5>>\
+    <</if>>\
+    \
+<</widget>>\
+
+<<widget "thetaUPG5buy">>\
+	<<if $theta >= Math.trunc($thetaUPG5c)>>\
+    	<<if $ranks < 2>>\
+    	<<set $theta -= Math.trunc($thetaUPG5c)>>\
+        <</if>>\
+        <<set $thetaUPG5 += 1>>\
+        <<set $thetaUPG5c *= 1.75>>\
+    <</if>>\
+    \
+<</widget>>\
+
+<<widget "thetaUPG6buy">>\
+	<<if $theta >= Math.trunc($thetaUPG6c)>>\
+    	<<set $theta -= Math.trunc($thetaUPG6c)>>\
+        <<set $thetaUPG6 += 1>>\
+        <<set $thetaUPG6c *= 1.8>>\
+    <</if>>\
+    \
+<</widget>>\
+
+<<widget "thetaUPG7buy">>\
+	<<if $theta >= Math.trunc($thetaUPG7c)>>\
+    	<<set $theta -= Math.trunc($thetaUPG7c)>>\
+        <<set $thetaUPG7 += 1>>\
+        <<set $thetaUPG7c *= 3>>\
+    <</if>>\
+    \
+<</widget>>\
+
+
+:: Rank Resets [widget Unviewable Ranks Gameplay Information] {"position":"2400,1700","size":"100,100"}
+<<widget "rankup">>
+	<<if $theta > $rankRequire>>
+    	<<set $ranks += 1>>
+        <<forceRank>>
+        <<replace "#RankReward">><<if $ranks >= 1>>
+Automatically click for Theta gain (5 x Ranks clicks per second)<</if>><<if $ranks >= 2>>
+Theta Upgrades 1-5 don't spend theta<</if>><<if $ranks >= 3>>
+Automate a Theta Upgrade for each rank<</if>><<if $ranks >= 4>>
+Unlock two more Theta Upgrades (hides Theta Upgrades 1, 2 and 4 for less clutter)<</if>><<if $ranks >= 5>>
+Square clicks per second<</if>><</replace>>
+    <<replace "#rankRequire">><<sciNotation $rankRequire>><</replace>>
+    <</if>>
+    <<if $rankEnergyUnlock isnot true>><<replace "#rankCore">><<render-ranks>><</replace>><</if>>
+<</widget>>
+
+
+<<widget "forceRank">>
+<<set $theta to 0>>
+<<set $thetaClick to 1>><<set $thetaSecond to 0>>
+<<set $thetaUPG1 to 0>><<set $thetaUPG1c to 25>><<set $thetaUPG1p to 1>>
+<<set $thetaUPG2 to 0>><<set $thetaUPG2c to 25>><<set $thetaUPG2p to 3>>
+<<set $thetaUPG3 to 0>><<set $thetaUPG3c to 300>><<set $thetaUPG3p to 1>>
+<<set $thetaUPG4 to 0>><<set $thetaUPG4c to 4000>><<set $thetaUPG4p to 1.5>>
+<<set $thetaUPG5 to 0>><<set $thetaUPG5c to 10000>><<set $thetaUPG5p to 2>>
+<<set $thetaUPG6 to 0>><<set $thetaUPG6c to 1000000>><<set $thetaUPG6p to 0.5>>
+<<set $thetaUPG7 to 0>><<set $thetaUPG7c to 15000000>><<set $thetaUP7p to 1.3>>
+<<recalculate-all>>
+<</widget>>
+
+
+<<widget "rankRespec">>
+<<forceRank>>
+<<set $rankEnergyUPG1 to false>>
+<<set $rankEnergyUPG2 to false>>
+<<set $rankEnergyUPG3 to false>>
+<<set $rankEnergyUPG4 to false>>
+<<set $rankEnergyUPG5 to false>>
+<<set $rankEnergy to $rankEnergyAll>>
+<</widget>>
+
+
+:: Ranks [Savable Gameplay Information Ranks] {"position":"2400,1900","size":"100,100"}
+!RANKS<<set _maintime to 0>><<idlethingy>>
+<<render-global>>
+
+<span id="rankCore"><<render-ranks>></span>
+
+
+:: Recalculate [widget Unviewable Gameplay] {"position":"1000,1200","size":"100,100"}
+\<<widget "recalculate-all">>\
+\	<<fix-values>>\
+\	<<recalculate-theta>>\
+\   <<recalculate-ranks>>\
+\	<<if $ranks >= 6>><<set $rankEnergyUnlock to true>><</if>>\
+\<</widget>>\
+
+<<widget "recalculate-theta">>\
+	\<<set $thetaUPG6p to 0.5>>\
+    \<<set $thetaUPG7p to 1.3>>\
+    \<<set $thetaUPG4p to 1.5>>\
+	\<<set $thetaClickOld to $thetaClick>><<set $thetaSecondOld to $thetaSecond>>\
+    \<<set $thetaUPG3p to 1 + $thetaUPG6 * $thetaUPG6p>>\
+    \<<set $thetaUPG5p to 2 + $thetaUPG6 * $thetaUPG6p>>\
+	\<<set $thetaUPG2p to ((3 + ($thetaUPG3 + $thetaUPG5 * $thetaUPG5p) * $thetaUPG3p) * $thetaUPG4p ** $thetaUPG4) * $thetaUPG7p ** $thetaUPG7>>\
+	\<<set $thetaUPG1p to (1 + ($thetaUPG3 + $thetaUPG5 * $thetaUPG5p) * $thetaUPG3p) * $thetaUPG7p ** $thetaUPG7>>\
+	\<<set $thetaClick to 1 + $thetaUPG1 * $thetaUPG1p>>\
+    \<<set $thetaSecond to 0 + $thetaUPG2 * $thetaUPG2p>>\
+    \<<set $cps to $ranks * 5>>
+    \<<if $ranks >= 5>><<set $cps to $cps ** 2>><</if>>
+    \<<if $ranks >= 1>><<set $thetaSecond to $thetaSecond + $thetaClick * $cps>><</if>>\
+    \
+    \<<if $thetaClickOld isnot $thetaClick or $thetaSecondOld isnot $thetaSecond>>\
+    	\<<replace "#theta-gain">><<if $ranks is 0>><<button "+<<sciNotation $thetaClick>>">> \
+\<<set $theta += $thetaClick>> \
+\<</button>><</if>> (+ <<sciNotation $thetaSecond>>/s)\
+    	\<</replace>>\
+\    \<</if>>\
+\    \
+\<</widget>>
+\
+\<<widget "recalculate-ranks">>
+\	<<if $ranks is 0>>
+\    	<<set $rankRequire to 150000>>
+\    <</if>>
+\    <<if $ranks is 1>>
+\    	<<set $rankRequire to 250000>>
+\    <</if>>
+\    <<if $ranks is 2>>
+\    	<<set $rankRequire to 1000000>>
+\    <</if>>
+\    <<if $ranks is 3>>
+\    	<<set $rankRequire to 2000000>>
+\    <</if>>
+\    <<if $ranks is 4>>
+\    	<<set $rankRequire to 75000000>>
+\    <</if>>
+\    <<if $ranks is 5>>
+\    	<<set $rankRequire to 1000000000000>>
+\    <</if>>
+\    <<if $ranks >= 6>>
+\    	<<set $rankRequire to 102400 * ((5 * ($ranks - 5) ** 2 + 25) ** $ranks)>>
+\    <<set $rankEnergyAll to $ranks - 5>>
+\    <</if>>
+\<</widget>>
+
+
+:: Render Subwidgets [widget Gameplay Unviewable Debug Information Options Pinning Ranks Theta] {"position":"1950,2550","size":"200,200"}
+<<widget "render-resources">>\
+!!RESOURCES
+Θ <span id="theta-display"><<sciNotation $theta>></span> \
+<span id="theta-gain"><<if $ranks is 0>><<button "+<<sciNotation $thetaClick>>">> \
+<<set $theta += $thetaClick>> \
+<</button>><</if>> (+ <<sciNotation $thetaSecond>>/s)</span>
+<</widget>>
+
+
+<<widget "render-buttons">>\
+<<button [[Options]]>><</button>> \
+<<button [[Pins]]>><</button>> \
+<<button [[Main]]>><</button>> \
+<<button [[Ranks]]>><</button>> \
+<<button [[Upgrades]]>><</button>> \
+<<if $DEBUG is true>> \
+<<button [[Debug Center]]>><</button>>
+<</if>>\
+<</widget>>
+
+
+<<widget "thetaUPGarea">>\
+!!THETA UPGRADES
+!!!!Θ1: Increases Θ per click
+<span id="theta-upg-one">Power +<<sciNotation $thetaUPG1p>>; Count $thetaUPG1; Cost <<sciNotation $thetaUPG1c>></span> \
+<<button "Buy One">><<thetaUPG1buy>><</button>>
+
+!!!!Θ2: Increases Θ per second
+<span id="theta-upg-two">Power +<<sciNotation $thetaUPG2p>>; Count $thetaUPG2; Cost <<sciNotation $thetaUPG2c>></span> \
+<<button "Buy One">><<thetaUPG2buy>><</button>>
+
+!!!!Θ3: Increases power of Θ1 and Θ2
+<span id="theta-upg-three">Power +<<sciNotation $thetaUPG3p>>; Count $thetaUPG3; Cost <<sciNotation $thetaUPG3c>></span> \
+<<button "Buy One">><<thetaUPG3buy>><</button>>
+
+!!!!Θ4: Multiplies the power of Θ2
+<span id="theta-upg-four">Power x$thetaUPG4p; Count <<sciNotation $thetaUPG4p>>; Cost <<sciNotation $thetaUPG4c>></span> \
+<<button "Buy One">><<thetaUPG4buy>><</button>>
+
+!!!!Θ5: Adds to functional Θ3
+<span id="theta-upg-five">Power +$thetaUPG5p; Count <<sciNotation $thetaUPG5p>>; Cost <<sciNotation $thetaUPG5c>></span> \
+<<button "Buy One">><<thetaUPG5buy>><</button>>
+
+<<if $ranks >= 4>>!!!!Θ6: Adds to the power of Θ3 and Θ5
+<span id="theta-upg-six">Power +$thetaUPG6p; Count <<sciNotation $thetaUPG6p>>; Cost <<sciNotation $thetaUPG6c>></span> \
+<<button "Buy One">><<thetaUPG6buy>><</button>>
+
+!!!!Θ7: Multiplies the power of Θ1 and Θ2
+<span id="theta-upg-seven">Power x$thetaUPG7p; Count <<sciNotation $thetaUPG7p>>; Cost <<sciNotation $thetaUPG7c>></span> \
+<<button "Buy One">><<thetaUPG7buy>><</button>><</if>>\
+<</widget>>
+
+
+<<widget "rankupArea">>\
+!!You are at rank $ranks
+!!!To rank up, you need <span id="rankRequire"><<sciNotation $rankRequire>></span> Θ
+Ranks reset previous progress
+<<button "Rank up">><<rankup>><</button>>\
+<</widget>>
+
+
+<<widget "rankRewardsArea">>\
+!!RANK REWARDS
+<span id="RankReward"><<if $ranks >= 1>>
+Automatically click for Theta gain (5 x Ranks cps)<</if>><<if $ranks >= 2>>
+Theta Upgrades 1-5 don't spend theta<</if>><<if $ranks >= 3>>
+Automate a Theta Upgrade for each rank<</if>><<if $ranks >= 4>>
+Unlock two more Theta Upgrades<</if>><<if $ranks >= 5>>
+Square clicks per second<</if>><<if $ranks >= 6>>
+Unlock Rank Energy<</if>></span>\
+<</widget>>
+
+
+<<widget "rankEnergyArea">>\
+!!RANK ENERGY
+Every Rank after 5 gives one Rank Energy
+Spend them wisely
+
+<span id="REdisplay">You have $rankEnergy Rank Energy
+You have $rankEnergyAll total Rank Energy</span>
+
+<<button "RESPEC">><<rankRespec>><</button>>
+
+YOU HAVE REACHED THE ENDGAME
+RANK ENERGY IS UNDER CONSTRUCTION
+<</widget>>
+
+
+:: Render Widgets [widget Unviewable Gameplay Information Options Debug Ranks Theta Pinning] {"position":"2350,2550","size":"200,200"}
+<<widget "render-global">>\
+<<render-resources>>
+<<render-buttons>>\
+<</widget>>
+
+
+<<widget "idlethingy">>\
+<span id="idler"><<repeat 50ms>><<idle-main>><</repeat>></span>\
+<</widget>>
+
+
+<<widget "render-main">>\
+<<if $thetaUPGpin is true>><<thetaUPGarea>>
+
+<</if>>\
+\
+<<if $rankEnergyPin is true>><<rankRewardsArea>>
+
+<</if>>\
+\
+<<if $rankupPin is true>><<rankupArea>>
+
+<</if>>\
+\
+<<if $rankRewardsPin is true>><<rankRewardsArea>>
+
+<</if>>\
+\
+!!!!You can pin a subtab to make it appear here
+<</widget>>
+
+
+<<widget "render-ranks">>\
+<<if $rankEnergyUnlock is true>>\
+<<rankEnergyArea>>
+
+<</if>>\
+<<rankupArea>>
+
+<<rankRewardsArea>>
+<</widget>>
+
+
+<<widget "render-upgrades">>\
+<<thetaUPGarea>>\
+<</widget>>
+
+
+<<widget "render-pins">>\
+!!!UPGRADES
+Theta Upgrades <<pin-button $thetaUPGpin 0>>
+
+!!!RANKS
+<<if $rankEnergyUnlock is true>> Rank Energy <<pin-button $rankupPin 3>>
+<</if>>Rankup Area <<pin-button $rankupPin 1>>
+Rank Rewards <<pin-button $rankRewardsPin 2>>
+<</widget>>
+
+
+:: Saving [Savable Options] {"position":"1200,700","size":"100,100"}
+!SAVING
+<<button [[Return|Options]]>><</button>>
+
+!!Import and Export
+<<button "Import">><<script>>
+	jQuery(document.createElement('input'))
+		.prop('type', 'file')
+		.on('change', Save.import)
+		.trigger('click');
+<</script>><</button>> \
+\
+<<button "Export">><<script>>Save.export("ThetaCore v0 1")<</script>><</button>>
+
+!!Load from slot
+Slot 1 <<radiobutton "$saveSlotLoad" 0 autocheck>>
+Slot 2 <<radiobutton "$saveSlotLoad" 1 autocheck>>
+Slot 3 <<radiobutton "$saveSlotLoad" 2 autocheck>>
+<<button "Load">><<load>><</button>>
+
+!!Save to slot
+Slot 1 <<radiobutton "$saveSlotSave" 0 autocheck>> 
+Slot 2 <<radiobutton "$saveSlotSave" 1 autocheck>> 
+Slot 3 <<radiobutton "$saveSlotSave" 2 autocheck>> 
+<<button "Save">><<save>><</button>>
+
+!!Autosave
+!!!<<button "Load Autosave">><<script>>Save.autosave.load()<</script>><</button>>
+The autosave is automatically loaded when the page is opened.
+
+
+:: Saving Help [Information] {"position":"900,2200","size":"100,100"}
+!!!Will saves last between updates?
+Yes.
+
+!!!Why does some of my progress not get saved?
+Saving is only capable of saving the data from the last tab change. I can't change this
+
+!!!Why is saving so complicated?
+Good question, I don't know to be honest. Ideally the saving system won't be needed, since the autosaving should work fine, but the loading and saving should be pretty self-explanatory. Same goes for import and export, but they export/import all saves, and there is no clipboard option.
+
+!!!Does exporting export one or all saves?
+All saves
+
+!!!How to edit saves?
+If you don't like part of the game, that's fine, feel free to cheat (just don't complain about the games balancing if you do), just let me know what base64 system the game uses so I can use it for debugging. (and also put it here)
+
+!!!Is there a save bank?
+Not yet :(
+
+
+
+:: Saving Widgets [widget Unviewable] {"position":"1200,500","size":"100,100"}
+<<widget "load">>
+	<<if $saveSlotLoad is 0>>
+    	<<script>> Save.slots.load(0) <</script>>
+    <</if>>
+    <<if $saveSlotLoad is 1>>
+    	<<script>> Save.slots.load(1) <</script>>
+    <</if>>
+    <<if $saveSlotLoad is 2>>
+    	<<script>> Save.slots.load(2) <</script>>
+    <</if>>
+    <<if $saveSlotLoad is 3>>
+    	<<script>> Save.slots.load(3) <</script>>
+    <</if>>
+    <<if $saveSlotLoad is 4>>
+    	<<script>> Save.slots.load(4) <</script>>
+    <</if>>
+    <<if $saveSlotLoad is 5>>
+    	<<script>> Save.slots.load(5) <</script>>
+    <</if>>
+    <<if $saveSlotLoad is 6>>
+    	<<script>> Save.slots.load(6) <</script>>
+    <</if>>
+    <<if $saveSlotLoad is 7>>
+    	<<script>> Save.slots.load(7) <</script>>
+    <</if>>
+<</widget>>
+
+<<widget "save">>
+	<<if $saveSlotSave is 0>>
+    	<<script>> Save.slots.save(0, "ThetaCore Save 1") <</script>>
+    <</if>>
+    <<if $saveSlotSave is 1>>
+    	<<script>> Save.slots.save(1, "ThetaCore Save 2") <</script>>
+    <</if>>
+    <<if $saveSlotSave is 2>>
+    	<<script>> Save.slots.save(2, "ThetaCore Save 3") <</script>>
+    <</if>>
+    <<if $saveSlotSave is 3>>
+    	<<script>> Save.slots.save(3, "ThetaCore Save 4") <</script>>
+    <</if>>
+    <<if $saveSlotSave is 4>>
+    	<<script>> Save.slots.save(4, "ThetaCore Save 5") <</script>>
+    <</if>>
+    <<if $saveSlotSave is 5>>
+    	<<script>> Save.slots.save(5, "ThetaCore Save 6") <</script>>
+    <</if>>
+    <<if $saveSlotSave is 6>>
+    	<<script>> Save.slots.save(6, "ThetaCore Save 7") <</script>>
+    <</if>>
+    <<if $saveSlotSave is 7>>
+    	<<script>> Save.slots.save(7, "ThetaCore Save 8") <</script>>
+    <</if>>
+<</widget>>
+
+
+:: Start [Information] {"position":"1750,1550","size":"200,200"}
+Welcome to Theta Incremental, I guess you can make some Theta's to do some stuff here.
+If you are confused about something, go to the help tab (under options).
+The current endgame is visible in the help tab and galaxy's changelog.
+
+<<button [[Start|Upgrades]]>><</button>>
+
+
+:: StoryDisplayTitle [Unviewable Information Debug] {"position":"1600,1400","size":"100,100"}
+ThetaCore Incremental
+
+
+:: StoryInit [Unviewable Debug Gameplay] {"position":"1800,1300","size":"100,100"}
+<<set $version to 3>>
+<<set $theta to 0>>
+<<set $thetaClick to 1>><<set $thetaSecond to 0>>
+<<set $thetaUPG1 to 0>><<set $thetaUPG1c to 25>><<set $thetaUPG1p to 1>>
+<<set $thetaUPG2 to 0>><<set $thetaUPG2c to 25>><<set $thetaUPG2p to 3>>
+<<set $thetaUPG3 to 0>><<set $thetaUPG3c to 300>><<set $thetaUPG3p to 1>>
+<<set $thetaUPG4 to 0>><<set $thetaUPG4c to 4000>><<set $thetaUPG4p to 1.5>>
+<<set $thetaUPG5 to 0>><<set $thetaUPG5c to 10000>><<set $thetaUPG5p to 2>>
+<<set $thetaUPG6 to 0>><<set $thetaUPG6c to 1000000>><<set $thetaUPG6p to 0.5>>
+<<set $thetaUPG7 to 0>><<set $thetaUPG7c to 15000000>><<set $thetaUPG7p to 1.3>>
+
+<<set $ranks to 0>><<set $rankRequire to 150000>>
+<<set $rankEnergyUPG1 to false>>
+<<set $rankEnergyUPG2 to false>>
+<<set $rankEnergyUPG3 to false>>
+<<set $rankEnergyUPG4 to false>>
+<<set $rankEnergyUPG5 to false>>
+<<set $rankEnergy to 0>>
+<<set $rankEnergyAll to 0>>
+
+<<set $saveSlotLoad to 0>><<set $saveSlotSave to 0>>
+<<set $scientificNotationStart to 1000000>><<set $scientificNotationDecimal to 4>>
+<<script>>
+UIBar.destroy();
+Config.saves.autoload = "prompt";
+Config.saves.autosave = true;
+<</script>>
+
+
+:: TODO [Unviewable Debug Information] {"position":"1750,700","size":"200,200"}
+BUGFIXES
+
+GAMEPLAY
+Implement Rank Energy
+Do the rest of Ranks
+
+GENERAL
+Do the decimal thingy
+
+
+:: The Shadow Realm [Unviewable Debug Information] {"position":"2700,1000","size":"100,100"}
+Why does this exist
+
+<<set $shadowiness to 5>>
+<<if ($shadowiness >= 0 or $shadowiness <= 0) isnot true>>Yay<</if>>
+<<set $shadowiness *= $shadow>>
+<<if ($shadowiness >= 0 or $shadowiness <= 0) isnot true>>Yay<</if>>
+
+
+:: Upgrades [Theta Savable Gameplay Information] {"position":"2600,2000","size":"100,100"}
+!UPGRADES<<set _maintime to 0>><<idlethingy>>
+<<render-global>>
+
+<<render-upgrades>>
+
+
+:: StoryStylesheet [stylesheet]
+.passage {
+  font-family: "Lucida Console", monospace;
+}
