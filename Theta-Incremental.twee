@@ -31,26 +31,27 @@ Theta Incremental
 
 <<button [[Return|Changelog]]>><</button>>
 
-!!!v0.2.1
-!!!!
+!!!v0.2.2
+!!!!25/03/2024
 
-This update took so long because I was rewriting most of the game behind the scenes
-Next update will probablt change the options tab
+Fixed the Upgrades tab not visually changing.
+
+!!!v0.2.1
+!!!!24/03/2024
+
+Next update will probably change the options tab
 
 Changed name to Theta Incremental
+
 Added slightly more ranks stuff
-Added Scientific Notation
-Added the Upgrades Tab
+
 Overhauled the Main Tab
 Added the Pins Tab
+Added the Upgrades Tab
+
 Added several QoL features
-Fixed some bugs
-Updated the tab display to be more universal (not quite finished yet)
-Removed Auto-Autosave since it wasn't that good
-Made several behind-the-scenes changes to make development easier
-Changed the games banner thingy in galaxy
-Added tags in galaxy
-Added chatroom in galaxy
+Added Scientific Notation
+Fixed some bugs (yes this is a QoL feature)
 
 !!v0.2
 !!!!10/03/2024
@@ -192,7 +193,7 @@ abcdefghijklmnopqrstuvwxyz
 
 
 :: DevStart [Debug Options Unviewable] {"position":"1800,1050","size":"100,100"}
-<<button "Rank Energy Stage">><<set $ranks to 6>><<goto [[Main]]>><</button>>
+<<button "Rank Energy">><<set $ranks to 6>><<goto [[Main]]>><</button>>
 
 
 :: Fix Values [widget Unviewable Debug Gameplay] {"position":"850,1350","size":"100,100"}
@@ -200,6 +201,24 @@ abcdefghijklmnopqrstuvwxyz
 <<if ($theta >= 0 or $theta <= 0) isnot true>><<set $theta to 0>><</if>>\
 <<if ($scientificNotationStart >= 0 or $theta <= 0) isnot true>><<set $scientificNotationStart to 1000000>><</if>>\
 <<if ($scientificNotationDecimal >= 0 or $theta <= 0) isnot true>><<set $scientificNotationDecimal to 4>><</if>>\
+<</widget>>
+
+
+<<widget "upgrades-rerender">>\
+    \<<if _maintime >= 20>>\
+    	\<<set _maintime to 0>>\
+    	\<<replace "#idler-upgrades">>\
+	    \<</replace>>\
+    \<</if>>\
+<<replace "#theta-upg-one">>Power +<<sciNotation $thetaUPG1p>>; Count $thetaUPG1; Cost <<sciNotation $thetaUPG1c>><</replace>>\
+<<replace "#theta-upg-two">>Power +<<sciNotation $thetaUPG2p>>; Count $thetaUPG2; Cost <<sciNotation $thetaUPG2c>><</replace>>\
+<<replace "#theta-upg-three">>Power +<<sciNotation $thetaUPG3p>>; Count $thetaUPG3; Cost <<sciNotation $thetaUPG3c>><</replace>>\
+<<replace "#theta-upg-four">>Power x<<sciNotation $thetaUPG4p>>; Count $thetaUPG4; Cost <<sciNotation $thetaUPG4c>><</replace>>\
+<<replace "#theta-upg-five">>Power +<<sciNotation $thetaUPG5p>>; Count $thetaUPG5; Cost <<sciNotation $thetaUPG5c>><</replace>>\
+<<if $ranks >= 5>>\
+<<replace "#theta-upg-six">>Power +<<sciNotation $thetaUPG6p>>; Count $thetaUPG6; Cost <<sciNotation $thetaUPG6c>><</replace>>\
+<<replace "#theta-upg-seven">>Power x<<sciNotation $thetaUPG7p>>; Count $thetaUPG7; Cost <<sciNotation $thetaUPG7c>><</replace>>\
+<</if>>\
 <</widget>>
 
 
@@ -227,9 +246,6 @@ No minimizing help windows yet (sorry)
 
 !!Current Endgame: Rank 5
 
-!!<<button "Known Issues">> \
-<<replace "#known-issues">><<include [[Known Issues]]>><</replace>><</button>>
-<span id="known-issues"></span>
 !!<<button "Saving">> \
 <<replace "#saving-help">><<include [[Saving Help]]>><</replace>><</button>>
 <span id="saving-help"></span>
@@ -260,11 +276,6 @@ No minimizing help windows yet (sorry)
     \<</if>>\
     \<<recalculate-all>>\
 \<</widget>>\
-
-
-:: Known Issues [Information] {"position":"1200,1900","size":"100,100"}
-!!!Rank Requirement Display
-When reaching the final rank, the rank requirement does not correctly display "PLACEHOLDER".
 
 
 :: Main [Savable Gameplay Theta Ranks Information Pinning] {"position":"2350,2150","size":"200,200"}
@@ -563,7 +574,7 @@ Square clicks per second<</if>><</replace>>
 !!!!Θ1: Increases Θ per click
 <span id="theta-upg-one">Power +<<sciNotation $thetaUPG1p>>; Count $thetaUPG1; Cost <<sciNotation $thetaUPG1c>></span> \
 <<button "Buy One">><<thetaUPG1buy>><</button>>
-
+<span id="idler-upgrades"><<repeat 50ms>><<upgrades-rerender>><</repeat>></span>
 !!!!Θ2: Increases Θ per second
 <span id="theta-upg-two">Power +<<sciNotation $thetaUPG2p>>; Count $thetaUPG2; Cost <<sciNotation $thetaUPG2c>></span> \
 <<button "Buy One">><<thetaUPG2buy>><</button>>
@@ -603,7 +614,7 @@ Ranks reset previous progress
 <span id="RankReward"><<if $ranks >= 1>>
 Automatically click for Theta gain (5 x Ranks cps)<</if>><<if $ranks >= 2>>
 Theta Upgrades 1-5 don't spend theta<</if>><<if $ranks >= 3>>
-Automate a Theta Upgrade for each rank<</if>><<if $ranks >= 4>>
+Automate a Theta Upgrade (1-5) for each rank<</if>><<if $ranks >= 4>>
 Unlock two more Theta Upgrades<</if>><<if $ranks >= 5>>
 Square clicks per second<</if>><<if $ranks >= 6>>
 Unlock Rank Energy<</if>></span>\
@@ -653,7 +664,7 @@ RANK ENERGY IS UNDER CONSTRUCTION
 <<if $rankRewardsPin is true>><<rankRewardsArea>>
 
 <</if>>\
-\
+
 !!!!You can pin a subtab to make it appear here
 <</widget>>
 
@@ -734,7 +745,6 @@ If you don't like part of the game, that's fine, feel free to cheat (just don't 
 
 !!!Is there a save bank?
 Not yet :(
-
 
 
 :: Saving Widgets [widget Unviewable] {"position":"1200,500","size":"100,100"}
@@ -837,13 +847,14 @@ Config.saves.autosave = true;
 
 :: TODO [Unviewable Debug Information] {"position":"1750,700","size":"200,200"}
 BUGFIXES
+Fix that annoying bug with the upgrades not refreshing visually
 
 GAMEPLAY
 Implement Rank Energy
 Do the rest of Ranks
 
 GENERAL
-Do the decimal thingy
+
 
 
 :: The Shadow Realm [Unviewable Debug Information] {"position":"2700,1000","size":"100,100"}
