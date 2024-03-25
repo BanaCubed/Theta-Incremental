@@ -584,19 +584,19 @@ Square clicks per second<</if>><</replace>>
 <<button "Buy One">><<thetaUPG3buy>><</button>>
 
 !!!!Θ4: Multiplies the power of Θ2
-<span id="theta-upg-four">Power x$thetaUPG4p; Count <<sciNotation $thetaUPG4p>>; Cost <<sciNotation $thetaUPG4c>></span> \
+<span id="theta-upg-four">Power x$thetaUPG4p; Count <<sciNotation $thetaUPG4>>; Cost <<sciNotation $thetaUPG4c>></span> \
 <<button "Buy One">><<thetaUPG4buy>><</button>>
 
 !!!!Θ5: Adds to functional Θ3
-<span id="theta-upg-five">Power +$thetaUPG5p; Count <<sciNotation $thetaUPG5p>>; Cost <<sciNotation $thetaUPG5c>></span> \
+<span id="theta-upg-five">Power +$thetaUPG5p; Count <<sciNotation $thetaUPG5>>; Cost <<sciNotation $thetaUPG5c>></span> \
 <<button "Buy One">><<thetaUPG5buy>><</button>>
 
 <<if $ranks >= 4>>!!!!Θ6: Adds to the power of Θ3 and Θ5
-<span id="theta-upg-six">Power +$thetaUPG6p; Count <<sciNotation $thetaUPG6p>>; Cost <<sciNotation $thetaUPG6c>></span> \
+<span id="theta-upg-six">Power +$thetaUPG6p; Count <<sciNotation $thetaUPG6>>; Cost <<sciNotation $thetaUPG6c>></span> \
 <<button "Buy One">><<thetaUPG6buy>><</button>>
 
 !!!!Θ7: Multiplies the power of Θ1 and Θ2
-<span id="theta-upg-seven">Power x$thetaUPG7p; Count <<sciNotation $thetaUPG7p>>; Cost <<sciNotation $thetaUPG7c>></span> \
+<span id="theta-upg-seven">Power x$thetaUPG7p; Count <<sciNotation $thetaUPG7>>; Cost <<sciNotation $thetaUPG7c>></span> \
 <<button "Buy One">><<thetaUPG7buy>><</button>><</if>>\
 <</widget>>
 
@@ -708,7 +708,7 @@ Rank Rewards <<pin-button $rankRewardsPin 2>>
 		.trigger('click');
 <</script>><</button>> \
 \
-<<button "Export">><<script>>Save.export("ThetaCore v0 1")<</script>><</button>>
+<<button "Export">><<script>>Save.export("Theta Incremental")<</script>><</button>>
 
 !!Load from slot
 Slot 1 <<radiobutton "$saveSlotLoad" 0 autocheck>>
@@ -854,7 +854,6 @@ Implement Rank Energy
 Do the rest of Ranks
 
 GENERAL
-
 
 
 :: The Shadow Realm [Unviewable Debug Information] {"position":"2700,1000","size":"100,100"}
