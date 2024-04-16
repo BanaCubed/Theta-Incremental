@@ -1,0 +1,26 @@
+* {
+    font-size: 100%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, monospace;
+    
+    background: rgb(0,0,0);
+    background: -moz-linear-gradient(18deg, rgba(0,0,0,1) 0%, rgba(43,0,69,1) 100%);
+    background: -webkit-linear-gradient(18deg, rgba(0,0,0,1) 0%, rgba(43,0,69,1) 100%);
+    background: linear-gradient(18deg, rgba(0,0,0,1) 0%, rgba(43,0,69,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#2b0045",GradientType=1);
+
+    color: antiquewhite;
+}
+
+.button {
+    background-color: rgb(45, 62, 131);
+    border: 2px solid rgb(255, 232, 211);
+    color: antiquewhite;
+    padding: 4px 11px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 6px;
+  }
