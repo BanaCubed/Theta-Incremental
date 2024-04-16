@@ -1,6 +1,6 @@
 let clicks = new Decimal(0)
 
-function onClick() {
+function thetaButtonPress() {
     clicks = clicks.add(1)
-    document.getElementById("clicks").textContent = "Clicks " + 3
+    document.getElementById("clicks").textContent = "Θ: " + formatWhole(clicks)
 }
