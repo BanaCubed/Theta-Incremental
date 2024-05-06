@@ -1,28 +1,69 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Theta Incremental</title>
-
-</head>
-
+    
 
     <link rel="stylesheet" href="css/styles.css">
 
     <script src="js/dependencies/break_eternity.js"></script>
 
-    <script src="js/functions/formats.js"></script>
+    <script src="js/utils/formats.js"></script>
+    <script src="js/utils/tabs.js"></script>
 
     <script src="js/main.js"></script>
+    <script src="js/core.js"></script>
+
+
+</head>
 
 
 <body>
 
+    <div id="resourcesDisplay">
+        <div class="resourceDisplay" id="thetaResource">
+            <div id="thetaText" class="thetaDisplay resourceText">θ: <span id="thetaCountDisplay">?</span></div>
+            <button onclick="thetaButtonPress()" class="button thetaDisplay resourceButton" id="thetaButton">+ <span id="thetaPerClickDisplay">?</span></button>
+        </div>
+    </div>
 
-    <span id="thetaDisplay">θ: 0</span>
-    <button onclick="thetaButtonPress()" class="button">+ 1</button>
+    <div id="tabs">
 
+        <div id="tabsView">
+            <div id="thetaTab" class="tabs" onclick="switchTabs(-2)">Options</div>
+            <div id="thetaTab" class="tabs" onclick="switchTabs(-1)">Stats</div>
+            <div id="thetaTab" class="tabs" onclick="switchTabs(0)">Theta</div>
+            <div id="thetaTab" class="tabs" onclick="switchTabs(1)">Ranks</div>
+        </div>
+        
+
+        <div id="tabData">
+
+            <div id="thetaTab" class="tabData">
+                <div class="upgradesListA">
+                    <div class="upgrade" id="thetaUPG1">
+                        θB1: Increase Theta/click<br>
+                        Power: 1<br>
+                        Count: 0<br>
+                        Cost: 25<br>
+                    </div>
+                </div>
+                <div class="upgradesListB">
+                    <div class="upgrade" id="thetaUPG2">
+                        θB2: Increase Theta/sec<br>
+                        Power: 3<br>
+                        Count: 0<br>
+                        Cost: 25<br>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 
 </body>
 </html>
