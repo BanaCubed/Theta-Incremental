@@ -40,3 +40,13 @@ function load(initial = false) {
 }
 
 setInterval(save, 1000);
+
+function saveExport() {
+	navigator.clipboard.writeText('TiS' + btoa(unescape(encodeURIComponent(JSON.stringify(player)))))
+}
+
+function saveImport() {
+	save = prompt('Paste or type in save here')
+	save = save.substring(3)
+	player = Object.assign(player, JSON.parse(decodeURIComponent(escape(atob(save)))))
+}

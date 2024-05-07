@@ -101,7 +101,6 @@ button:hover {
 .tabData {
     width: 100%;
     height: fit-content;
-    min-height: calc(100% - 140px);
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -156,4 +155,10 @@ span {
 
 .upgradeButtons {
     width: 120px;
+}
+
+.optionsButton {
+    height: 100px;
+    width: 100px;
+    margin: 10px;
 }

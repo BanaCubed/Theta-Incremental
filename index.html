@@ -17,6 +17,7 @@
     <script src="js/main.js"></script>
     <script src="js/core.js"></script>
     <script src="js/game.js"></script>
+    <script src="js/options.js"></script>
     
     <link rel="stylesheet" href="css/styles.css">
 
@@ -130,7 +131,10 @@
             </div>
 
             <div id="optionsTab" class="tabData">
-
+                <div style="height: fit-content; display: flex; justify-content: center; width: 100%;">
+                    <button class="optionsButton" onclick="saveExport()">Export Save to Clipboard</button>
+                    <button class="optionsButton" onclick="saveImport()">Import Save</button>
+                </div>
             </div>
 
         </div>
