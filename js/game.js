@@ -79,5 +79,59 @@ const game = {
         effect() {
             return Decimal.times(player.thetaUpgrades[4], 2)
         }
-    }]
+    }],
+    ranks: {
+        nextat(x = player.ranks.ranks) {
+            x = new Decimal(x)
+            if(x.lt(6)) {
+                if(x.lt(1)) return new Decimal(1500000)
+                if(x.lt(2)) return new Decimal(2500000)
+                if(x.lt(3)) return new Decimal(5000000)
+                if(x.lt(4)) return new Decimal(10000000)
+                if(x.lt(5)) return new Decimal(100000000)
+                return new Decimal('1e12')
+            } else {
+                return Decimal.sub(player.ranks, 5).times(5).pow(2).add(25).pow(10).times(102400)
+            }
+        }
+    },
+    stats: {
+        theta: {
+            type(x = player.theta) {
+                x = new Decimal(x)
+                if(x.add(1).log(10).lt(360)) return 0
+                else if(x.add(1).log(10).add(1).log(10).lt(360)) return 1
+                else if(x.add(1).log(10).add(1).log(10).add(1).log(10).lt(360)) return 2
+                else if(x.add(1).slog(10).lt(5)) return 3
+                else return 4
+            },
+            amount(x = player.theta) {
+                x = new Decimal(x)
+                if(this.type(x) === 0) {
+                    return x
+                }
+                if(this.type(x) === 1) {
+                    return x.add(1).log(10)
+                }
+                if(this.type(x) === 2) {
+                    return x.add(1).log(10).add(1).log(10)
+                }
+                if(this.type(x) === 3) {
+                    return x.add(1).log(10).add(1).log(10).add(1).log(10)
+                }
+                if(this.type(x) === 4) {
+                    return x.add(1).slog(10)
+                }
+            },
+            degrees(x = this.amount()) {
+                if(this.amount(x).lt(1.296e18)) return Decimal.div(360, x)
+                else return Decimal.div(1, 3.6e15)
+            },
+            rotations(x = this.amount()) {
+                x = new Decimal(x)
+                if(x.lt(1.296e18)) return 1
+                else return x.div(1.296e18)
+            }
+        }
+    }
 }

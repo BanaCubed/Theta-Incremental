@@ -3,6 +3,7 @@ const tabs = ['theta', 'ranks', 'stats', 'options']
 const basePlayer = {
     theta: new Decimal(0),
     time: Date.now(),
+	playtime: 0,
     thetaUpgrades: [new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0)],
 	tab: 'theta',
 	options: {
@@ -15,6 +16,11 @@ const basePlayer = {
 		automation: {
 			theta: 0,
 		},
+		tabs: 0
+	},
+	ranks: {
+		ranks: new Decimal(0),
+		rankUpgrades: [false, false, false, false, false],
 	},
 }
 

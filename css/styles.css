@@ -2,10 +2,12 @@
     font-size: 15px;
     font-family: 'Courier New', monospace;
 
-    background: rgb(6, 0, 24);
-
     color: white;
     user-select: none;
+}
+
+body {
+    background: rgb(24, 0, 48);
 }
 
 
@@ -83,6 +85,7 @@ button {
     border-width: 3px;
     border-color: rgba(255, 255, 255, 0.05);
     border-style: solid;
+    margin: 10px;
 }
 
 button:hover {
@@ -104,6 +107,8 @@ button:hover {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
 }
 
 .upgradesList {
@@ -132,6 +137,10 @@ button:hover {
 }
 
 span {
+    background-color: transparent;
+}
+
+div{
     background-color: transparent;
 }
 
