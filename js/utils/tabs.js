@@ -1,7 +1,16 @@
 function switchTabs(tab) {
-    // 0 = Theta
-    // 1 = Ranks
-    // -1 = Stats
-    // -2 = Options
-    // -3 = Debug
+    player.tab = tabs[tab]
+    updateTab()
+}
+
+function updateTab() {
+    for (let index = 0; index < tabs.length; index++) {
+        let tabID = tabs[index];
+        let display = 'none'
+        if(player.tab == tabID)  display = 'flex'
+
+        tabID = tabID + 'Tab'
+
+        document.getElementById(tabID).style.display = display
+    }
 }

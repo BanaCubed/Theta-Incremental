@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -8,17 +9,16 @@
     
 
     <script src="js/dependencies/break_eternity.js"></script>
+    <script src="js/utils/tabs.js"></script>
     <script src="js/save.js"></script>
 
-    <link rel="stylesheet" href="css/styles.css">
-
-
     <script src="js/utils/formats.js"></script>
-    <script src="js/utils/tabs.js"></script>
 
     <script src="js/main.js"></script>
     <script src="js/core.js"></script>
-    <script src="js/utils/temp.js"></script>
+    <script src="js/game.js"></script>
+    
+    <link rel="stylesheet" href="css/styles.css">
 
 
 </head>
@@ -30,21 +30,18 @@
         <div class="resourceDisplay" id="thetaResource">
             <div id="thetaText" class="thetaDisplay resourceText">θ: <span id="thetaCountDisplay">?</span></div>
             <div class="passiveProductionDisplay">+ <span id="thetaPassiveDisplay">?</span>/s</div>
+            <button onclick="thetaButtonPress()" class="button thetaDisplay resourceButton" id="thetaButton">+ <span id="thetaPerClickDisplay">?</span></button>
         </div>
-    </div>
-
-    <div id="resourceButtons">
-        <button onclick="thetaButtonPress()" class="button thetaDisplay resourceButton" id="thetaButton">+ <span id="thetaPerClickDisplay">?</span></button>
     </div>
 
 
     <div id="tabs">
 
         <div id="tabsView">
-            <button id="thetaTab" class="tabs" onclick="switchTabs(-2)">Options</button>
-            <button id="thetaTab" class="tabs" onclick="switchTabs(-1)">Stats</button>
-            <button id="thetaTab" class="tabs" onclick="switchTabs(0)">Theta</button>
-            <button id="thetaTab" class="tabs" onclick="switchTabs(1)">Ranks</button>
+            <button class="tabs" onclick="switchTabs(3)">Options</button>
+            <button class="tabs" onclick="switchTabs(2)">Stats</button>
+            <button class="tabs" onclick="switchTabs(0)">Theta</button>
+            <button class="tabs" onclick="switchTabs(1)">Ranks</button>
         </div>
         
 
@@ -53,21 +50,31 @@
             <div id="thetaTab" class="tabData">
 
                     <div style="height: fit-content; width: 280px; margin: 10px;">
-                        θB1: Increase Theta/click<br>
+                        θB1: Increase Theta/click<br><br>
                         <div class="upgrade" id="thetaUPG1"><div class="upgradeInfo">Power: +<span id="thetaUPG1power">?</span><br>
                         Count: <span id="thetaUPG1count">?</span><br>
                         Cost: <span id="thetaUPG1cost">?</span><br>
                         Effect: +<span id="thetaUPG1effect">?</span><br></div>
-                        <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1)">Buy One</button></div>
+                        <div class="upgradeButtons">
+                            <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1)">Buy One</button>
+                            <button id="thetaUPG1max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1, true)">Buy Max</button>
+                            <!-- <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1)">Auto: Off</button> -->
+                        </div>
+                        </div>
                     </div>
 
                     <div style="height: fit-content; width: 280px; margin: 10px;">
-                        θB2: Increase Theta/sec<br>
+                        θB2: Increase Theta/sec<br><br>
                         <div class="upgrade" id="thetaUPG2"><div class="upgradeInfo">Power: +<span id="thetaUPG2power">?</span><br>
                         Count: <span id="thetaUPG2count">?</span><br>
                         Cost: <span id="thetaUPG2cost">?</span><br>
                         Effect: +<span id="thetaUPG2effect">?</span><br></div>
-                        <button id="thetaUPG2buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(2)">Buy One</button></div>
+                        <div class="upgradeButtons">
+                            <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(2)">Buy One</button>
+                            <button id="thetaUPG1max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(2, true)">Buy Max</button>
+                            <!-- <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1)">Auto: Off</button> -->
+                        </div>
+                        </div>
                     </div>
 
                     <div style="height: fit-content; width: 280px; margin: 10px;">
@@ -76,17 +83,53 @@
                         Count: <span id="thetaUPG3count">?</span><br>
                         Cost: <span id="thetaUPG3cost">?</span><br>
                         Effect: +<span id="thetaUPG3effect">?</span><br></div>
-                        <button id="thetaUPG3buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(3)">Buy One</button></div>
+                        <div class="upgradeButtons">
+                            <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(3)">Buy One</button>
+                            <button id="thetaUPG1max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(3, true)">Buy Max</button>
+                            <!-- <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1)">Auto: Off</button> -->
+                        </div>
+                        </div>
                     </div>
 
                     <div style="height: fit-content; width: 280px; margin: 10px;">
-                        θB4: Multiply Theta/sec<br>
+                        θB4: Multiply Theta/sec<br><br>
                         <div class="upgrade" id="thetaUPG4"><div class="upgradeInfo">Power: x1.5<br>
                         Count: <span id="thetaUPG4count">?</span><br>
                         Cost: <span id="thetaUPG4cost">?</span><br>
                         Effect: x<span id="thetaUPG4effect">?</span><br></div>
-                        <button id="thetaUPG4buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(4)">Buy One</button></div>
+                        <div class="upgradeButtons">
+                            <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(4)">Buy One</button>
+                            <button id="thetaUPG1max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(4, true)">Buy Max</button>
+                            <!-- <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1)">Auto: Off</button> -->
+                        </div>
+                        </div>
                     </div>
+
+                    <div style="height: fit-content; width: 280px; margin: 10px;">
+                        θB5: Adds to functional θB3<br><br>
+                        <div class="upgrade" id="thetaUPG5"><div class="upgradeInfo">Power: +2<br>
+                        Count: <span id="thetaUPG5count">?</span><br>
+                        Cost: <span id="thetaUPG5cost">?</span><br>
+                        Effect: +<span id="thetaUPG5effect">?</span><br></div>
+                        <div class="upgradeButtons">
+                            <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(5)">Buy One</button>
+                            <button id="thetaUPG1max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(5, true)">Buy Max</button>
+                            <!-- <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1)">Auto: Off</button> -->
+                        </div>
+                        </div>
+                    </div>
+
+            </div>
+
+            <div id="ranksTab" class="tabData">
+
+            </div>
+
+            <div id="statsTab" class="tabData">
+
+            </div>
+
+            <div id="optionsTab" class="tabData">
 
             </div>
 
@@ -95,4 +138,9 @@
     </div>
 
 </body>
+
+<script>
+    updateTab()
+</script>
+
 </html>

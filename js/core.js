@@ -1,45 +1,4 @@
-const game = {
-    thetaUpgrades: [{
-        cost() {
-            return Decimal.pow(1.125, player.thetaUpgrades[0]).times(25).floor()
-        },
-        effect() {
-            return Decimal.times(player.thetaUpgrades[0], this.power())
-        },
-        power() {
-            return Decimal.add(player.thetaUpgrades[2], 1)
-        }
-    }, {
-        cost() {
-            return Decimal.pow(1.25, player.thetaUpgrades[1]).times(25).floor()
-        },
-        effect() {
-            return Decimal.times(player.thetaUpgrades[1], 3)
-        },
-        effect() {
-            return Decimal.times(player.thetaUpgrades[1], this.power())
-        },
-        power() {
-            return Decimal.add(player.thetaUpgrades[2], 3)
-        }
-    }, {
-        cost() {
-            return Decimal.pow(1.6, player.thetaUpgrades[2]).times(300).floor()
-        },
-        effect() {
-            return player.thetaUpgrades[2]
-        }
-    }, {
-        cost() {
-            return Decimal.pow(2.5, player.thetaUpgrades[3]).times(4000).floor()
-        },
-        effect() {
-            return Decimal.pow(1.5, player.thetaUpgrades[3])
-        }
-    }]
-}
-
-let tabHeight = 23
+let themeColor = '#060018'
 
 setInterval(mainLoop, 25)
 
@@ -66,7 +25,9 @@ function mainLoop() {
     document.getElementById('thetaUPG2effect').textContent = formatWhole(game.thetaUpgrades[1].effect())
     document.getElementById('thetaUPG2power').textContent = formatWhole(game.thetaUpgrades[1].power())
 
-    document.getElementById('thetaUPG3count').textContent = formatWhole(player.thetaUpgrades[2])
+    let thetaUPG3text = formatWhole(player.thetaUpgrades[2])
+    if(!new Decimal(game.thetaUpgrades[2].bonus()).eq(0)) thetaUPG3text = thetaUPG3text + " + " + formatWhole(game.thetaUpgrades[2].bonus())
+    document.getElementById('thetaUPG3count').textContent = thetaUPG3text
     document.getElementById('thetaUPG3cost').textContent = formatWhole(game.thetaUpgrades[2].cost())
     document.getElementById('thetaUPG3effect').textContent = formatWhole(game.thetaUpgrades[2].effect())
 
@@ -74,7 +35,11 @@ function mainLoop() {
     document.getElementById('thetaUPG4cost').textContent = formatWhole(game.thetaUpgrades[3].cost())
     document.getElementById('thetaUPG4effect').textContent = format(game.thetaUpgrades[3].effect())
 
-    // CSS variables
+    document.getElementById('thetaUPG5count').textContent = formatWhole(player.thetaUpgrades[4])
+    document.getElementById('thetaUPG5cost').textContent = formatWhole(game.thetaUpgrades[4].cost())
+    document.getElementById('thetaUPG5effect').textContent = formatWhole(game.thetaUpgrades[4].effect())
+
+    // CSS variables and Modification
     // tabHeight = document.getElementById('tabView').getBoundingClientRect().height
 
     // Update Temp

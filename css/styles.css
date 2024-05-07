@@ -1,6 +1,6 @@
 * {
     font-size: 15px;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Courier New', monospace;
 
     background: rgb(6, 0, 24);
 
@@ -22,7 +22,7 @@
     right: 2.5%;
     display: flex;
     justify-content: center;
-    height: 37px;
+    height: 70px;
 }
 
 .passiveProductionDisplay {
@@ -52,13 +52,14 @@
     position: absolute;
     font-size: 25px;
     top: 100px;
-    width: 95%;
-    right: 2.5%;
+    width: calc(100% - 20px);
+    right: 10px;
     height: fit-content;
     max-height: calc(100% - 100px);
     display: flex;
     flex-direction: column;
     justify-content: start;
+    overflow: auto;
 }
 
 #tabsView {
@@ -93,7 +94,6 @@ button:hover {
 #tabData {
     width: 100%;
     height: fit-content;
-    min-height: calc(100% - 140px);
     display: flex;
     overflow: auto;
 }
@@ -144,7 +144,7 @@ span {
 }
 
 .upgradeBuy {
-    height: 23px;
+    height: 22px;
     width: 120px;
     margin: 0;
 }
@@ -152,4 +152,8 @@ span {
 .upgradeInfo {
     width: 160px;
     margin: 0;
+}
+
+.upgradeButtons {
+    width: 120px;
 }
