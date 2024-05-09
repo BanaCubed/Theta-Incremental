@@ -54,6 +54,8 @@ function load(data) {
 
 	if(data !== null && data !== undefined) {
 		player = Object.assign(player, JSON.parse(decodeURIComponent(escape(atob(data)))));
+	} else {
+		player = basePlayer
 	}
 
 	player = remakeValues(player, basePlayer)
