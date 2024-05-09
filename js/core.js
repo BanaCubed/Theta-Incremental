@@ -151,6 +151,9 @@ function mainLoop() {
         if(game.stats.theta.rotations().gt(1)) document.getElementById('thetaDistance').style.display = 'unset'
         else document.getElementById('thetaDistance').style.display = 'none'
         
+        if(Decimal.gte(player.theta, 1)) document.getElementById('thetaRotation').style.display = 'unset'
+        else document.getElementById('thetaRotation').style.display = 'none'
+        
         document.getElementById('statsRadius').textContent = formatDistance(game.stats.theta.radius())
         document.getElementById('statsDistance').textContent = formatDistance(game.stats.theta.distance())
     }

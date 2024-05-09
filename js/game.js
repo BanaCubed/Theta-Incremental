@@ -213,7 +213,7 @@ const game = {
     },
     stats: {
         theta: {
-            degrees(x = player.theta) {
+            degrees(x = new Decimal(player.theta)) {
                 if(x.lt(1.296e21)) return Decimal.div(360, x)
                 else return Decimal.div(1, 3.6e18)
             },
