@@ -7,17 +7,6 @@
 
     <title>Theta Incremental</title>
     
-
-    <script src="js/dependencies/break_eternity.js"></script>
-    <script src="js/utils/tabs.js"></script>
-    <script src="js/save.js"></script>
-
-    <script src="js/utils/formats.js"></script>
-
-    <script src="js/main.js"></script>
-    <script src="js/core.js"></script>
-    <script src="js/game.js"></script>
-    <script src="js/options.js"></script>
     
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/theta.css">
@@ -35,12 +24,17 @@
             <div class="passiveProductionDisplay">+ <span id="thetaPassiveDisplay">?</span>/s</div>
             <button onclick="thetaButtonPress()" class="button thetaDisplay resourceButton" id="thetaButton">+ <span id="thetaPerClickDisplay">?</span></button>
         </div>
+        <div class="resourceDisplay" id="rankResource" style="display: none;">
+            <div id="ranksResourceDisplayText" class="rankDisplay resourceText">Rank <span id="ranksCountDisplay">?</span></div>
+            <div class="passiveProductionDisplay">Need <span id="rankRequirementDisplay">?</span> θ</div>
+            <button onclick="rankUp()" class="button rankDisplay resourceButton" id="rankupQuickButton">Rank Up</button>
+        </div>
     </div>
 
 
     <div id="tabs">
 
-        <div id="tabsView">
+        <div id="tabsView" class="tabsList">
             <button class="tabs" onclick="switchTabs(3)">Options</button>
             <button class="tabs" onclick="switchTabs(2)">Stats</button>
             <button class="tabs" onclick="switchTabs(0)">Theta</button>
@@ -50,97 +44,197 @@
 
         <div id="tabData">
 
-            <div id="thetaTab" class="tabData" style="flex-direction: row;">
+            <div id="thetaTab" class="tabData" style="flex-direction: row; flex-wrap: wrap;">
 
-                    <div style="height: fit-content; width: 280px; margin: 2px;
-                        border-color: rgba(0, 0, 0, 0.5); border-radius: 5px; border-width: 3px; border-style: solid;
-                        padding: 5px; background-color: rgba(0, 0, 0, 0.5);">
-                            θB1: Increase Theta/click<br><br>
-                            <div class="upgrade" id="thetaUPG1"><div class="upgradeInfo">Power: +<span id="thetaUPG1power">?</span><br>
-                            Count: <span id="thetaUPG1count">?</span><br>
-                            Cost: <span id="thetaUPG1cost">?</span><br>
-                            Effect: +<span id="thetaUPG1effect">?</span><br></div>
-                            <div class="upgradeButtons">
-                                <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1)">Buy One</button>
-                                <button id="thetaUPG1max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1, true)">Buy Max</button>
-                                <!-- <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1)">Auto: Off</button> -->
+                    <div class="box">
+                        θB1: Increase theta/click<br><br>
+                        <div class="upgrade" id="thetaUPG1">
+                            <div class="upgradeInfo">Power: +<br>
+                            Count:  <br>
+                                Cost:  <br>
+                                Effect: +<br>
                             </div>
+                            <div class="upgradeInfo2">
+                                <span id="thetaUPG1power">?</span><br>
+                                <span id="thetaUPG1count">?</span><br>
+                                <span id="thetaUPG1cost">?</span><br>
+                                <span id="thetaUPG1effect">?</span><br>
                             </div>
+                        </div>
+                        <div class="upgradeButtons" style="display: flex; flex-direction: row;">
+                            <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1)">Buy One</button>
+                            <button id="thetaUPG1max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1, true)">Buy Max</button>
+                            <button id="thetaUPG1auto" class="thetaUPGbuy upgradeBuy" onclick="toggleAuto(1, 0)" style="display: none;">Auto: Off</button>
+                        </div>
                     </div>
 
-                    <div style="height: fit-content; width: 280px; margin: 2px;
-                        border-color: rgba(0, 0, 0, 0.5); border-radius: 5px; border-width: 3px; border-style: solid;
-                        padding: 5px; background-color: rgba(0, 0, 0, 0.5);">
-                            θB2: Increase Theta/sec<br><br>
-                            <div class="upgrade" id="thetaUPG2"><div class="upgradeInfo">Power: +<span id="thetaUPG2power">?</span><br>
-                            Count: <span id="thetaUPG2count">?</span><br>
-                            Cost: <span id="thetaUPG2cost">?</span><br>
-                            Effect: +<span id="thetaUPG2effect">?</span><br></div>
-                            <div class="upgradeButtons">
-                                <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(2)">Buy One</button>
-                                <button id="thetaUPG1max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(2, true)">Buy Max</button>
-                                <!-- <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1)">Auto: Off</button> -->
+                    <div class="box">
+                        θB2: Increase theta/sec<br><br>
+                        <div class="upgrade" id="thetaUPG2">
+                            <div class="upgradeInfo">Power: +<br>
+                                Count:  <br>
+                                Cost:  <br>
+                                Effect: +<br>
                             </div>
+                            <div class="upgradeInfo2">
+                                <span id="thetaUPG2power">?</span><br>
+                                <span id="thetaUPG2count">?</span><br>
+                                <span id="thetaUPG2cost">?</span><br>
+                                <span id="thetaUPG2effect">?</span><br>
                             </div>
+                        </div>
+                        <div class="upgradeButtons" style="display: flex; flex-direction: row;">
+                            <button id="thetaUPG2buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(2)">Buy One</button>
+                            <button id="thetaUPG2max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(2, true)">Buy Max</button>
+                            <button id="thetaUPG2auto" class="thetaUPGbuy upgradeBuy" onclick="toggleAuto(2, 0)" style="display: none;">Auto: Off</button>
+                        </div>
                     </div>
 
-                    <div style="height: fit-content; width: 280px; margin: 2px;
-                        border-color: rgba(0, 0, 0, 0.5); border-radius: 5px; border-width: 3px; border-style: solid;
-                        padding: 5px; background-color: rgba(0, 0, 0, 0.5);">
-                            θB3: Increase power of the previous upgrades<br>
-                            <div class="upgrade" id="thetaUPG3"><div class="upgradeInfo">Power: +1<br>
-                            Count: <span id="thetaUPG3count">?</span><br>
-                            Cost: <span id="thetaUPG3cost">?</span><br>
-                            Effect: +<span id="thetaUPG3effect">?</span><br></div>
-                            <div class="upgradeButtons">
-                                <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(3)">Buy One</button>
-                                <button id="thetaUPG1max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(3, true)">Buy Max</button>
-                                <!-- <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1)">Auto: Off</button> -->
+                    <div class="box">
+                        θB3: Increase the power of the previous upgrades<br>
+                        <div class="upgrade" id="thetaUPG3">
+                            <div class="upgradeInfo">Power: +<br>
+                                Count:  <br>
+                                Cost:  <br>
+                                Effect: +<br>
                             </div>
+                            <div class="upgradeInfo2">
+                                <span id="thetaUPG3power">?</span><br>
+                                <span id="thetaUPG3count">?</span><br>
+                                <span id="thetaUPG3cost">?</span><br>
+                                <span id="thetaUPG3effect">?</span><br>
                             </div>
+                        </div>
+                        <div class="upgradeButtons" style="display: flex; flex-direction: row;">
+                            <button id="thetaUPG3buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(3)">Buy One</button>
+                            <button id="thetaUPG3max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(3, true)">Buy Max</button>
+                            <button id="thetaUPG3auto" class="thetaUPGbuy upgradeBuy" onclick="toggleAuto(3, 0)" style="display: none;">Auto: Off</button>
+                        </div>
                     </div>
 
-                    <div style="height: fit-content; width: 280px; margin: 2px;
-                        border-color: rgba(0, 0, 0, 0.5); border-radius: 5px; border-width: 3px; border-style: solid;
-                        padding: 5px; background-color: rgba(0, 0, 0, 0.5);">
-                            θB4: Multiply Theta/sec<br><br>
-                            <div class="upgrade" id="thetaUPG4"><div class="upgradeInfo">Power: x1.5<br>
-                            Count: <span id="thetaUPG4count">?</span><br>
-                            Cost: <span id="thetaUPG4cost">?</span><br>
-                            Effect: x<span id="thetaUPG4effect">?</span><br></div>
-                            <div class="upgradeButtons">
-                                <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(4)">Buy One</button>
-                                <button id="thetaUPG1max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(4, true)">Buy Max</button>
-                                <!-- <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1)">Auto: Off</button> -->
+                    <div class="box">
+                        θB4: Multipliy theta/sec<br><br>
+                        <div class="upgrade" id="thetaUPG4">
+                            <div class="upgradeInfo">Power: x<br>
+                                Count:  <br>
+                                Cost:  <br>
+                                Effect: x<br>
                             </div>
+                            <div class="upgradeInfo2">
+                                <span id="thetaUPG4power">?</span><br>
+                                <span id="thetaUPG4count">?</span><br>
+                                <span id="thetaUPG4cost">?</span><br>
+                                <span id="thetaUPG4effect">?</span><br>
                             </div>
+                        </div>
+                        <div class="upgradeButtons" style="display: flex; flex-direction: row;">
+                            <button id="thetaUPG4buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(4)">Buy One</button>
+                            <button id="thetaUPG4max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(4, true)">Buy Max</button>
+                            <button id="thetaUPG4auto" class="thetaUPGbuy upgradeBuy" onclick="toggleAuto(4, 0)" style="display: none;">Auto: Off</button>
+                        </div>
                     </div>
 
-                    <div style="height: fit-content; width: 280px; margin: 2px;
-                        border-color: rgba(0, 0, 0, 0.5); border-radius: 5px; border-width: 3px; border-style: solid;
-                        padding: 5px; background-color: rgba(0, 0, 0, 0.5);">
-                            θB5: Adds to functional θB3<br><br>
-                            <div class="upgrade" id="thetaUPG5"><div class="upgradeInfo">Power: +2<br>
-                            Count: <span id="thetaUPG5count">?</span><br>
-                            Cost: <span id="thetaUPG5cost">?</span><br>
-                            Effect: +<span id="thetaUPG5effect">?</span><br></div>
-                            <div class="upgradeButtons">
-                                <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(5)">Buy One</button>
-                                <button id="thetaUPG1max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(5, true)">Buy Max</button>
-                                <!-- <button id="thetaUPG1buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(1)">Auto: Off</button> -->
+                    <div class="box">
+                        θB5: Add bonus functional θB3<br><br>
+                        <div class="upgrade" id="thetaUPG5">
+                            <div class="upgradeInfo">Power: +<br>
+                                Count:  <br>
+                                Cost:  <br>
+                                Effect: +<br>
                             </div>
+                            <div class="upgradeInfo2">
+                                <span id="thetaUPG5power">?</span><br>
+                                <span id="thetaUPG5count">?</span><br>
+                                <span id="thetaUPG5cost">?</span><br>
+                                <span id="thetaUPG5effect">?</span><br>
+                            </div>
+                        </div>
+                        <div class="upgradeButtons" style="display: flex; flex-direction: row;">
+                            <button id="thetaUPG5buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(5)">Buy One</button>
+                            <button id="thetaUPG5max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(5, true)">Buy Max</button>
+                            <button id="thetaUPG5auto" class="thetaUPGbuy upgradeBuy" onclick="toggleAuto(5, 0)" style="display: none;">Auto: Off</button>
+                        </div>
+                    </div>
+
+                    <div class="box" style="display: none;" id="thetaUPG6box">
+                        θB6: Increase the power of θB3 and θB5<br>
+                        <div class="upgrade" id="thetaUPG6">
+                            <div class="upgradeInfo">Power: +<br>
+                                Count:  <br>
+                                Cost:  <br>
+                                Effect: +<br>
+                            </div>
+                            <div class="upgradeInfo2">
+                                <span id="thetaUPG6power">?</span><br>
+                                <span id="thetaUPG6count">?</span><br>
+                                <span id="thetaUPG6cost">?</span><br>
+                                <span id="thetaUPG6effect">?</span><br>
+                            </div>
+                        </div>
+                        <div class="upgradeButtons" style="display: flex; flex-direction: row;">
+                            <button id="thetaUPG6buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(6)">Buy One</button>
+                            <button id="thetaUPG6max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(6, true)">Buy Max</button>
+                            <button id="thetaUPG6auto" class="thetaUPGbuy upgradeBuy" onclick="toggleAuto(6, 0)" style="display: none;">Auto: Off</button>
+                        </div>
+                    </div>
+
+                    <div class="box" style="display: none;" id="thetaUPG7box">
+                        θB6: Multiply all theta gain<br><br>
+                        <div class="upgrade" id="thetaUPG7">
+                            <div class="upgradeInfo">Power: x<br>
+                                Count:  <br>
+                                Cost:  <br>
+                                Effect: x<br>
+                            </div>
+                            <div class="upgradeInfo2">
+                                <span id="thetaUPG7power">?</span><br>
+                                <span id="thetaUPG7count">?</span><br>
+                                <span id="thetaUPG7cost">?</span><br>
+                                <span id="thetaUPG7effect">?</span><br>
+                            </div>
+                        </div>
+                        <div class="upgradeButtons" style="display: flex; flex-direction: row;">
+                            <button id="thetaUPG7buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(7)">Buy One</button>
+                            <button id="thetaUPG7max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(7, true)">Buy Max</button>
+                        <button id="thetaUPG7auto" class="thetaUPGbuy upgradeBuy" onclick="toggleAuto(7, 0)" style="display: none;">Auto: Off</button>
                             </div>
                     </div>
 
             </div>
 
             <div id="ranksTab" class="tabData">
-                <button id="rankup">Rank Up<br>Ranks reset all theta related features<br>You can rank up at <span>?</span> theta<br><span>At ? Ranks, ???</span></button>
+
+                <div id="ranksSubtabs" class="tabsList">
+                    <button class="tabs" onclick="switchTabs(1, true, 0)">Rankup</button>
+                    <button class="tabs" onclick="switchTabs(1, true, 1)" style="display: none;" id="rankEnergySubtabButton">Energy</button>
+                </div>
+
+                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;" id="rankupSubtab">
+                    <div class="box" style="padding: 10px; align-self: center; max-width: 95%; width: 450px">
+                        <button id="rankup" onclick="rankUp()">Rank Up<br>You are at Rank <span id="ranksCount">?</span></button><br><span style="margin-bottom: 10px;">Ranks reset all theta related features.<br>You can rank up at <span id="rankRequirement">?</span> theta.<br><span id="ranksNextMilestone">At ? Ranks, ???</span></span>
+                    </div><br>
+                    <div class="box" style="padding: 10px; width: fit-content; max-width: calc(100% - 20px);">
+                        <h2>Rank Rewards</h2><br><span id="rankMilestones">???</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; display: none;" id="energySubtab">
+                    <div class="box" style="padding: 10px; align-self: center; width: 95%; min-height: 300px;">
+                        <h1>You have <span id="currentRankEnergy">?</span> Rank Energy<br><span id="totalRankEnergy">?</span> total<br>Next at <span id="nextRankEnergy">?</span> theta</h1><br>
+
+                    </div>
+                </div>
+
             </div>
 
             <div id="statsTab" class="tabData">
-                <div id="thetaFacts" style="margin: 10px;">
-                    If each <span id="thetaAmountTypeStats"></span>of your theta were <span id="statsDegrees">? ???</span>, they would make <span id="statsRotations">?</span> full rotation
+                <div style="display: flex; flex-direction: row;">
+                    <div class="thetaFacts box" style="margin: 10px;">
+                        If each of your theta (θ) was <span id="statsDegrees">? ???</span>, they would make <span id="statsRotations">?</span> full rotation<span id="rotationS"></span>
+                    </div>
+                    <div class="thetaFacts box" id="thetaDistance" style="margin: 10px; display: none;">
+                        If your theta's angle was the amount that a wheel with a radius of <span id="statsRadius">? ???</span> spun, it would move <span id="statsDistance">? ???</span>
+                    </div>
                 </div>
             </div>
 
@@ -156,6 +250,17 @@
     </div>
 
 </body>
+
+<script src="js/dependencies/break_eternity.js"></script>
+<script src="js/utils/formats.js"></script>
+<script src="js/game.js"></script>
+
+<script src="js/utils/tabs.js"></script>
+<script src="js/save.js"></script>
+
+<script src="js/main.js"></script>
+<script src="js/core.js"></script>
+<script src="js/options.js"></script>
 
 <script>
     updateTab()

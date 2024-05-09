@@ -4,7 +4,7 @@ function exponentialFormat(num, precision, mantissa = true) {
     let e = num.log10().floor()
     let m = num.div(Decimal.pow(10, e))
     if (m.toStringWithDecimalPlaces(precision) == 10) {
-        m = Decimal(1)
+        m = new Decimal(1)
         e = e.add(1)
     }
     e = (e.gte(1e9) ? format(e, 3) : (e.gte(10000) ? commaFormat(e, 0) : e.toStringWithDecimalPlaces(0)))
@@ -41,7 +41,7 @@ function sumValues(x) {
     return x.reduce((a, b) => Decimal.add(a, b))
 }
 
-function format(decimal, precision = 2, small) {
+function format(decimal, precision = 2, small = false) {
     small = small
     decimal = new Decimal(decimal)
     if (isNaN(decimal.sign) || isNaN(decimal.layer) || isNaN(decimal.mag)) {
@@ -57,7 +57,7 @@ function format(decimal, precision = 2, small) {
     }
     else if (decimal.gte("1e1000000")) return exponentialFormat(decimal, 0, false)
     else if (decimal.gte("1e10000")) return exponentialFormat(decimal, 0)
-    else if (decimal.gte(1e9)) return exponentialFormat(decimal, precision)
+    else if (decimal.gte(1e9)) return exponentialFormat(decimal, precision === 0 ? 2 : precision)
     else if (decimal.gte(1e3)) return commaFormat(decimal, 0)
     else if (decimal.gte(0.0001) || !small) return regularFormat(decimal, precision)
     else if (decimal.eq(0)) return (0).toFixed(precision)
@@ -109,4 +109,116 @@ function invertOOM(x){
     x = new Decimal(10).pow(e).times(m)
 
     return x
+}
+
+function formatDistance(x) {
+    x = new Decimal(x)
+    let unitMod = 14
+    if(x.lt("1e-3")) {
+        x = x.times(1000)
+        unitMod++
+        if(x.lt("1e-3")) {
+            x = x.times(1000)
+            unitMod++
+            if(x.lt("1e-3")) {
+                x = x.times(1000)
+                unitMod++
+                if(x.lt("1e-3")) {
+                    x = x.times(1000)
+                    unitMod++
+                    if(x.lt("1e-3")) {
+                        x = x.times(1000)
+                        unitMod++
+                        if(x.lt("1e-3")) {
+                            x = x.times(1000)
+                            unitMod++
+                            if(x.lt("1e-3")) {
+                                x = x.times(1000)
+                                unitMod++
+                                if(x.lt("1e-3")) {
+                                    x = x.times(1000)
+                                    unitMod++
+                                    if(x.lt("1e-3")) {
+                                        x = x.times(1000)
+                                        unitMod++
+                                        if(x.lt("1e-3")) {
+                                            x = x.times(1000)
+                                            unitMod++
+                                            if(x.lt("1.6e-3")) {
+                                                x = x.times(1600)
+                                                unitMod++
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if(x.gte("1e3"))  {
+        x = x.div(1000)
+        unitMod--
+        if(x.gte("1e3"))  {
+            x = x.div(1000)
+            unitMod--
+            if(x.gte("1e3"))  {
+                x = x.div(1000)
+                unitMod--
+                if(x.gte("1e3"))  {
+                    x = x.div(1000)
+                    unitMod--
+                    if(x.gte("1e3"))  {
+                        x = x.div(1000)
+                        unitMod--
+                        if(x.gte("1e3"))  {
+                            x = x.div(1000)
+                            unitMod--
+                            if(x.gte("1e3"))  {
+                                x = x.div(1000)
+                                unitMod--
+                                if(x.gte("1e3"))  {
+                                    x = x.div(1000)
+                                    unitMod--
+                                    if(x.gte("1e3"))  {
+                                        x = x.div(1000)
+                                        unitMod--
+                                        if(x.gte("1e3"))  {
+                                            x = x.div(1000)
+                                            unitMod--
+                                            if(x.gte("1e3"))  {
+                                                x = x.div(1000)
+                                                unitMod--
+                                                if(x.gte("1e67"))  {
+                                                    x = x.div("1e67")
+                                                    unitMod--
+                                                    if(x.gte("1.3e208"))  {
+                                                        x = x.div("1.3e208")
+                                                        unitMod--
+                                                        if(x.gte(Decimal.pow(2, 1024).pow(Decimal.pow(2, 1024).log(10).sub(1)).times(1e100)))  {
+                                                            x = x.div(Decimal.pow(2, 1024).pow(Decimal.pow(2, 1024).log(10).sub(1)).times(1e100)).log(10).add(1)
+                                                            unitMod--
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    const distances = ['really big universe', 'big universe', 'universe', 'quettameter', 'ronnameter', 'yottameter', 'zettameter', 'exameter', 'petameter', 'terameter', 'gigameter', 'megameter', 'kilometer', 'meter', 'millimeter', 'micrometer', 'nanometer', 'picometer', 'femtometer', 'attometer', 'zeptometer', 'yoctometer', 'rontometer', 'quectometer', 'plank length']
+
+    let toUse = distances[unitMod]
+
+    return format(x) + " " + toUse + "s"
 }

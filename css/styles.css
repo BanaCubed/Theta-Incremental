@@ -4,10 +4,35 @@
 
     color: white;
     user-select: none;
+    transition: cubic-bezier(0, 0, 0.2, 1) 0.3s;
+
+    --backgroundcolor: hsl(var(--themecolor), 100%, 10%);
+    --buttonbackgroundcolor: hsl(var(--themecolor), 100%, 20%);
+    --buttonbackgroundcolorhover: hsl(var(--themecolor), 70%, 50%)
+}
+
+:root {
+    --themecolor: 270;
 }
 
 body {
-    background: rgb(24, 0, 48);
+    background: var(--backgroundcolor);
+}
+
+button {
+    text-align: center;
+    background-color: var(--buttonbackgroundcolor);
+    border-radius: 10px;
+    border-width: 3px;
+    border-color: rgba(255, 255, 255, 0.05);
+    border-style: solid;
+    margin: 10px;
+}
+
+button:hover {
+    background-color: var(--buttonbackgroundcolorhover);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05, 1.05);
 }
 
 
@@ -18,12 +43,13 @@ body {
     width: 150px;
     margin: 0 15px;
 }
+
 #resourcesDisplay {
     width: 95%;
     position: absolute;
     right: 2.5%;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     height: 70px;
 }
 
@@ -64,34 +90,23 @@ body {
     overflow: auto;
 }
 
-#tabsView {
-    justify-content: center;
-    flex-wrap: wrap;
-    flex-direction: row;
+.tabsList {
+    margin: 0 0 5px 0;
+    overflow-y: auto;
+    overflow-x: auto;
+    min-height: 42px;
+    max-height: 42px;
+    width: 100%;
     display: flex;
-    margin: 0 0 10px 0;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .tabs {
     width: 144px;
-    margin: 0 3px;
-}
-
-button {
-    text-align: center;
-    background-color: #2d0c52;
-    border-radius: 10px;
-    transition: ease-in-out 0.3s;
-    border-width: 3px;
-    border-color: rgba(255, 255, 255, 0.05);
-    border-style: solid;
-    margin: 10px;
-}
-
-button:hover {
-    background-color: #4d237c;
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05, 1.05);
+    margin: 3px 3px;
+    height: 30px;
 }
 
 #tabData {
@@ -109,6 +124,7 @@ button:hover {
     flex-wrap: wrap;
     flex-direction: column;
     align-content: center;
+    text-align: center;
 }
 
 .upgradesList {
@@ -121,20 +137,29 @@ button:hover {
 
 
 ::-webkit-scrollbar {
-    background: #120036;
     border-radius: 10px;
     width: 10px;
+    height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #120036;
+    background: hsl(var(--themecolor), 100%, 25%);
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #350460;
+    background: hsl(var(--themecolor), 100%, 40%);
     border-radius: 10px;
 }
+
+::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--themecolor), 80%, 60%);
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
 
 span {
     background-color: transparent;
@@ -152,22 +177,42 @@ div{
 }
 
 .upgradeBuy {
-    height: 22px;
-    width: 120px;
-    margin: 0;
+    height: 44px;
+    width: 140px;
+    margin: 0px;
 }
 
 .upgradeInfo {
-    width: 160px;
+    width: 30%;
+    margin: 0;
+    text-align: right;
+}
+
+.upgradeInfo2 {
+    width: 70%;
+    text-align: left;
     margin: 0;
 }
 
 .upgradeButtons {
-    width: 120px;
+    width: fit-content;
+    max-width: 100%;
 }
 
 .optionsButton {
     height: 100px;
     width: 100px;
     margin: 10px;
+}
+
+.box {
+    height: fit-content;
+    width: 280px;
+    margin: 2px;
+    border-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    border-width: 3px;
+    border-style: solid;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
 }
