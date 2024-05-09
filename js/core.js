@@ -11,6 +11,10 @@ function mainLoop() {
     // Calculations
     player.theta = Decimal.add(player.theta, getThetaGain('passive').times(diff))
     if(Decimal.gte(player.theta, player.ranks.bestTheta)) player.ranks.bestTheta = player.theta
+    if(Decimal.gte(player.theta, player.ranks.bestTheta)) {
+        player.ranks.bestTheta = player.theta
+        player.ranks.rankEnergy = game.ranks.calculateTotalEnergy()
+    }
 
     // Automation
     if(player.unlocks.automation.theta >= 1) {
@@ -19,6 +23,8 @@ function mainLoop() {
         if(player.automation.thetaUpgrades[2]) thetaUPGbuy(3, true)
         if(player.automation.thetaUpgrades[3]) thetaUPGbuy(4, true)
         if(player.automation.thetaUpgrades[4]) thetaUPGbuy(5, true)
+        if(player.automation.thetaUpgrades[5]) thetaUPGbuy(6, true)
+        if(player.automation.thetaUpgrades[6]) thetaUPGbuy(7, true)
     }
 
     // Rerendering
@@ -90,6 +96,14 @@ function mainLoop() {
 
         if(player.unlocks.automation.theta >= 3) {
             document.getElementById('thetaUPG5auto').style.display = 'unset'
+        }
+
+        if(player.unlocks.automation.theta >= 4) {
+            document.getElementById('thetaUPG6auto').style.display = 'unset'
+        }
+
+        if(player.unlocks.automation.theta >= 5) {
+            document.getElementById('thetaUPG7auto').style.display = 'unset'
         }
 
         if(player.ranks.milestones >= 4) {

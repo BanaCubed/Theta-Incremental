@@ -157,12 +157,18 @@ const game = {
             if(Decimal.gte(player.ranks.ranks, 4)) milestones++
             if(Decimal.gte(player.ranks.ranks, 5)) milestones++
             if(Decimal.gte(player.ranks.ranks, 6)) milestones++
+            if(Decimal.gte(player.ranks.ranks, 8)) milestones++
+            if(Decimal.gte(player.ranks.ranks, 10)) milestones++
+            if(Decimal.gte(player.ranks.ranks, 15)) milestones++
+            if(Decimal.gte(player.ranks.ranks, 25)) milestones++
             player.ranks.milestones = milestones
 
             if(milestones >= 3 && player.unlocks.automation.theta < 1) player.unlocks.automation.theta = 1
             if(milestones >= 4 && player.unlocks.automation.theta < 2) player.unlocks.automation.theta = 2
             if(milestones >= 5 && player.unlocks.automation.theta < 3) player.unlocks.automation.theta = 3
             if(milestones >= 6 && player.unlocks.tabs < 1) player.unlocks.tabs = 1
+            if(milestones >= 7 && player.unlocks.automation.theta < 4) player.unlocks.automation.theta = 4
+            if(milestones >= 8 && player.unlocks.automation.theta < 5) player.unlocks.automation.theta = 5
         },
         milestonesText: [
             'automatically click the theta gain button based on ranks, unaffeted by upgrade 4.',
@@ -173,11 +179,12 @@ const game = {
             "unlock rank energy and theta upgrades 6-7 don't spend theta.",
             'automate theta upgrade 6',
             'automate theta upgrade 7',
-            'unlock three more theta upgrades',
-            "automate theta upgrade 9, and increase theta upgrade 10's limit",
+            'unlock three more theta upgrades UNIMPLEMENTED',
+            "automate theta upgrade 9, and increase theta upgrade 10's limit UNIMPLEMENTED",
+            "placeholder",
         ],
         milestonesRequirements: [
-            new Decimal(1), new Decimal(2), new Decimal(3), new Decimal(4), new Decimal(5), new Decimal(6), new Decimal(8), new Decimal(10), new Decimal(15), new Decimal(25)
+            new Decimal(1), new Decimal(2), new Decimal(3), new Decimal(4), new Decimal(5), new Decimal(6), new Decimal(8), new Decimal(10), new Decimal(15), new Decimal(25), new Decimal(1e100)
         ],
         rerenderMilestones(x = player.ranks.milestones) {
             if(x === 0) return
@@ -205,7 +212,7 @@ const game = {
             return x
         },
         calculateTotalEnergy() {
-            return Decimal.div(Decimal.add(player.ranks.bestTheta, 1), '1e14').log('1e6').add(1).pow(5/3)
+            return Decimal.div(Decimal.add(player.ranks.bestTheta, 1), '1e14').log('1e6').add(1).pow(5/3).floor()
         },
         nextEnergyAt() {
             return Decimal.pow(Decimal.add(player.ranks.rankEnergy, 1), 3/5).sub(1).pow_base('1e6').times('1e14').sub(1)
