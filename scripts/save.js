@@ -30,10 +30,12 @@ const basePlayer = {
 	},
 	ranks: {
 		ranks: new Decimal(0),
-		rankUpgrades: [false, false, false, false, false],
+		rankUpgrades1: [false, false, false, false, false],
+		rankRowsData: [0],
 		milestones: 0,
 		rankEnergy: new Decimal(0),
 		bestTheta: new Decimal(0),
+		lastRankup: Date.now()
 	},
 }
 
@@ -59,14 +61,13 @@ function load(data) {
 	}
 
 	player = remakeValues(player, basePlayer)
-
-	updateTab()
 }
 
-setInterval(save, 1000);
+setInterval(save, 8000);
 
 function saveExport() {
-	navigator.clipboard.writeText('TiS' + btoa(unescape(encodeURIComponent(JSON.stringify(player)))))
+	navigator.clipboard.writeText('5j3' + btoa(unescape(encodeURIComponent(JSON.stringify(player)))))
+	alert('Save copied to clipboard, if it hasn' + "'" + 't been copied, here is the save text: ' + '5j3' + btoa(unescape(encodeURIComponent(JSON.stringify(player)))))
 }
 
 function saveImport() {

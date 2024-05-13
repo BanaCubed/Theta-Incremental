@@ -13,8 +13,8 @@ function mainLoop() {
     if(Decimal.gte(player.theta, player.ranks.bestTheta)) player.ranks.bestTheta = player.theta
     if(Decimal.gte(player.theta, player.ranks.bestTheta)) {
         player.ranks.bestTheta = player.theta
-        player.ranks.rankEnergy = game.ranks.calculateTotalEnergy()
     }
+    player.ranks.rankEnergy = game.ranks.calculateTotalEnergy()
 
     // Automation
     if(player.unlocks.automation.theta >= 1) {
@@ -120,12 +120,77 @@ function mainLoop() {
         let rankMilestoneText = "At Rank " + formatWhole(game.ranks.milestonesRequirements[player.ranks.milestones]) + ", " + game.ranks.milestonesText[player.ranks.milestones]
         document.getElementById('ranksNextMilestone').textContent = rankMilestoneText
         document.getElementById('ranksCount').textContent = formatWhole(player.ranks.ranks)
+        game.ranks.rerenderMilestones()
 
         document.getElementById('currentRankEnergy').textContent = formatWhole(game.ranks.unspentEnergy())
         document.getElementById('totalRankEnergy').textContent = formatWhole(player.ranks.rankEnergy)
         document.getElementById('nextRankEnergy').textContent = formatWhole(game.ranks.nextEnergyAt())
+        document.getElementById('rankEnergyCost').textContent = formatWhole(game.ranks.upgrades[1].cost())
 
         if(player.unlocks.tabs >= 1) document.getElementById('rankEnergySubtabButton').style.display = 'unset'
+
+        document.getElementById('rankUPG1a1').textContent = formatWhole(game.ranks.upgrades[1].effects.a1().times(100))
+        document.getElementById('rankUPG1a2').textContent = formatWhole(game.ranks.upgrades[1].effects.a2().times(100))
+        document.getElementById('rankUPG1b1').textContent = formatWhole(game.ranks.upgrades[1].effects.b1().times(100))
+        document.getElementById('rankUPG1c1').textContent = format(game.ranks.upgrades[1].effects.c1().times(100))
+        document.getElementById('rankUPG1d1').textContent = format(game.ranks.upgrades[1].effects.d1().times(100))
+        document.getElementById('rankUPG1e1').textContent = formatWhole(game.ranks.upgrades[1].effects.e1())
+
+        if(player.ranks.rankUpgrades1[0]) {
+            document.getElementById('rankUPG1').style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
+            document.getElementById('rankUPG1buyButton').style.backgroundColor = 'hsl(120, 100%, 20%)'
+            document.getElementById('rankUPG1buyButton').style.pointerEvents = 'none'
+            document.getElementById('rankUPG1buyButton').textContent = 'Already Purchased'
+        } else {
+            document.getElementById('rankUPG1').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
+            document.getElementById('rankUPG1buyButton').style.backgroundColor = 'var(--buttonbackgroundcolor)'
+            document.getElementById('rankUPG1buyButton').style.pointerEvents = 'unset'
+            document.getElementById('rankUPG1buyButton').textContent = 'Buy'
+        }
+        if(player.ranks.rankUpgrades1[1]) {
+            document.getElementById('rankUPG2').style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
+            document.getElementById('rankUPG2buyButton').style.backgroundColor = 'hsl(120, 100%, 20%)'
+            document.getElementById('rankUPG2buyButton').style.pointerEvents = 'none'
+            document.getElementById('rankUPG2buyButton').textContent = 'Already Purchased'
+        } else {
+            document.getElementById('rankUPG2').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
+            document.getElementById('rankUPG2buyButton').style.backgroundColor = 'var(--buttonbackgroundcolor)'
+            document.getElementById('rankUPG2buyButton').style.pointerEvents = 'unset'
+            document.getElementById('rankUPG2buyButton').textContent = 'Buy'
+        }
+        if(player.ranks.rankUpgrades1[2]) {
+            document.getElementById('rankUPG3').style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
+            document.getElementById('rankUPG3buyButton').style.backgroundColor = 'hsl(120, 100%, 20%)'
+            document.getElementById('rankUPG3buyButton').style.pointerEvents = 'none'
+            document.getElementById('rankUPG3buyButton').textContent = 'Already Purchased'
+        } else {
+            document.getElementById('rankUPG3').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
+            document.getElementById('rankUPG3buyButton').style.backgroundColor = 'var(--buttonbackgroundcolor)'
+            document.getElementById('rankUPG3buyButton').style.pointerEvents = 'unset'
+            document.getElementById('rankUPG3buyButton').textContent = 'Buy'
+        }
+        if(player.ranks.rankUpgrades1[3]) {
+            document.getElementById('rankUPG4').style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
+            document.getElementById('rankUPG4buyButton').style.backgroundColor = 'hsl(120, 100%, 20%)'
+            document.getElementById('rankUPG4buyButton').style.pointerEvents = 'none'
+            document.getElementById('rankUPG4buyButton').textContent = 'Already Purchased'
+        } else {
+            document.getElementById('rankUPG4').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
+            document.getElementById('rankUPG4buyButton').style.backgroundColor = 'var(--buttonbackgroundcolor)'
+            document.getElementById('rankUPG4buyButton').style.pointerEvents = 'unset'
+            document.getElementById('rankUPG4buyButton').textContent = 'Buy'
+        }
+        if(player.ranks.rankUpgrades1[4]) {
+            document.getElementById('rankUPG5').style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
+            document.getElementById('rankUPG5buyButton').style.backgroundColor = 'hsl(120, 100%, 20%)'
+            document.getElementById('rankUPG5buyButton').style.pointerEvents = 'none'
+            document.getElementById('rankUPG5buyButton').textContent = 'Already Purchased'
+        } else {
+            document.getElementById('rankUPG5').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
+            document.getElementById('rankUPG5buyButton').style.backgroundColor = 'var(--buttonbackgroundcolor)'
+            document.getElementById('rankUPG5buyButton').style.pointerEvents = 'unset'
+            document.getElementById('rankUPG5buyButton').textContent = 'Buy'
+        }
     }
 
     if(player.tab === 'stats') {
@@ -174,26 +239,4 @@ function mainLoop() {
 
     // CSS variables and Modification
     document.documentElement.style.setProperty('--themecolor', color)
-}
-
-function getThetaGain(event) {
-    let gain
-
-    if (event === 'passive') {
-        gain = new Decimal(0)
-        gain = gain.add(game.thetaUpgrades[1].effect())
-        gain = gain.times(game.thetaUpgrades[3].effect())
-        gain = gain.times(game.thetaUpgrades[6].effect())
-
-        if(player.ranks.milestones >= 1) gain = gain.add(getThetaGain('click')).times(player.ranks.ranks).times(5)
-        if(player.ranks.milestones >= 5) gain = gain.add(getThetaGain('click')).times(player.ranks.ranks).times(5)
-    }
-
-    if (event === 'click') {
-        gain = new Decimal(1)
-        gain = gain.add(game.thetaUpgrades[0].effect())
-        gain = gain.times(game.thetaUpgrades[6].effect())
-    }
-
-    return gain
 }

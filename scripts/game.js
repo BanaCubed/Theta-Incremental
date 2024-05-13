@@ -2,10 +2,14 @@ const game = {
     thetaUpgrades: [
        { // UPG1
         cost(x = player.thetaUpgrades[0]) {
-            return Decimal.pow(1.125, x).times(25).floor()
+            let base = new Decimal(1.125)
+            if(player.ranks.rankUpgrades1[3]) base = base.pow(Decimal.pow(0.94, player.ranks.rankEnergy))
+            return Decimal.pow(base, x).times(25).floor()
         },
         buyMax() {
-            let toBuy = Decimal.div(player.theta, 25).log(1.125).floor().add(1)
+            let base = new Decimal(1.125)
+            if(player.ranks.rankUpgrades1[3]) base = base.pow(Decimal.pow(0.94, player.ranks.rankEnergy))
+            let toBuy = Decimal.div(player.theta, 25).log(base).floor().add(1)
             let cost = this.cost(toBuy.sub(1))
             toBuy = toBuy.sub(player.thetaUpgrades[0])
             return [cost, toBuy]
@@ -14,15 +18,21 @@ const game = {
             return Decimal.times(player.thetaUpgrades[0], this.power())
         },
         power() {
-            return Decimal.add(game.thetaUpgrades[2].effect(), 1)
+            let base = Decimal.add(game.thetaUpgrades[2].effect(), 1)
+            if(player.ranks.rankUpgrades1[0]) base = base.times(Decimal.add(1, Decimal.div(player.thetaUpgrades[0], 4)))
+            return base
         },
         spends() { return player.ranks.milestones < 2 }
     }, { // UPG2
         cost(x = player.thetaUpgrades[1]) {
-            return Decimal.pow(1.25, x).times(25).floor()
+            let base = new Decimal(1.25)
+            if(player.ranks.rankUpgrades1[3]) base = base.pow(Decimal.pow(0.94, player.ranks.rankEnergy))
+            return Decimal.pow(base, x).times(25).floor()
         },
         buyMax() {
-            let toBuy = Decimal.div(player.theta, 25).log(1.25).floor().add(1)
+            let base = new Decimal(1.25)
+            if(player.ranks.rankUpgrades1[3]) base = base.pow(Decimal.pow(0.94, player.ranks.rankEnergy))
+            let toBuy = Decimal.div(player.theta, 25).log(base).floor().add(1)
             let cost = this.cost(toBuy.sub(1))
             toBuy = toBuy.sub(player.thetaUpgrades[1])
             return [cost, toBuy]
@@ -31,38 +41,51 @@ const game = {
             return Decimal.times(player.thetaUpgrades[1], this.power())
         },
         power() {
-            return Decimal.add(game.thetaUpgrades[2].effect(), 3)
+            let base = Decimal.add(game.thetaUpgrades[2].effect(), 3)
+            if(player.ranks.rankUpgrades1[0]) base = base.times(Decimal.add(1, Decimal.div(player.thetaUpgrades[1], 4)))
+            return base
         },
         spends() { return player.ranks.milestones < 2 }
     }, { // UPG3
         cost(x = player.thetaUpgrades[2]) {
-            return Decimal.pow(1.6, x).times(300).floor()
+            let base = new Decimal(1.6)
+            if(player.ranks.rankUpgrades1[3]) base = base.pow(Decimal.pow(0.94, player.ranks.rankEnergy))
+            return Decimal.pow(base, x).times(300).floor()
         },
         buyMax() {
-            let toBuy = Decimal.div(player.theta, 300).log(1.6).floor().add(1)
+            let base = new Decimal(1.6)
+            if(player.ranks.rankUpgrades1[3]) base = base.pow(Decimal.pow(0.94, player.ranks.rankEnergy))
+            let toBuy = Decimal.div(player.theta, 300).log(base).floor().add(1)
             let cost = this.cost(toBuy.sub(1))
             toBuy = toBuy.sub(player.thetaUpgrades[2])
             return [cost, toBuy]
         },
         effect() {
-            return Decimal.add(player.thetaUpgrades[2], this.bonus()).times(this.power())
+            let base = new Decimal(player.thetaUpgrades[2])
+            return Decimal.add(base, this.bonus()).times(this.power())
         },
         bonus() {
             return game.thetaUpgrades[4].effect()
         },
         spends() { return player.ranks.milestones < 2 },
         power() {
-            return Decimal.add(game.thetaUpgrades[5].effect()).add(1)
+            let base = Decimal.add(game.thetaUpgrades[5].effect()).add(1)
+            if(player.ranks.rankUpgrades1[1]) base = base.times(Decimal.times(player.thetaUpgrades[2], 0.4).add(1))
+            return base
         }
     }, { // UPG4
         cost(x = player.thetaUpgrades[3]) {
             let amount = new Decimal(x)
             if(amount.gte(10)) amount = amount.div(10).pow(2).times(10)
-            let base = Decimal.pow(2.5, amount).times(4000).floor()
-            return base
+            let base = new Decimal(2.5)
+            if(player.ranks.rankUpgrades1[3]) base = base.pow(Decimal.pow(0.94, player.ranks.rankEnergy))
+            let baseCost = Decimal.pow(base, amount).times(4000).floor()
+            return baseCost
         },
         buyMax() {
-            let toBuy = Decimal.div(player.theta, 4000).log(2.5)
+            let base = new Decimal(2.5)
+            if(player.ranks.rankUpgrades1[3]) base = base.pow(Decimal.pow(0.94, player.ranks.rankEnergy))
+            let toBuy = Decimal.div(player.theta, 4000).log(base)
             if(toBuy.gte(10)) {
                 toBuy = toBuy.div(10).pow(0.5).times(10).floor()
             }
@@ -118,11 +141,11 @@ const game = {
         cost(x = player.thetaUpgrades[6]) {
             let amount = new Decimal(x)
             if(amount.gte(10)) amount = amount.div(10).pow(2).times(10)
-            let base = Decimal.pow(3, amount).times(5e7).floor()
+            let base = Decimal.pow(2, amount).times(5e7).floor()
             return base
         },
         buyMax() {
-            let toBuy = Decimal.div(player.theta, 5e7).log(3)
+            let toBuy = Decimal.div(player.theta, 5e7).log(2)
             if(toBuy.gte(10)) {
                 toBuy = toBuy.div(10).pow(0.5).times(10).floor()
             }
@@ -137,16 +160,43 @@ const game = {
         power() {
             return new Decimal(1.3)
         }
+    }, { // UPG8
+        cost(x = player.thetaUpgrades[7]) {
+            let amount = new Decimal(x)
+            if(amount.gte(10)) amount = amount.div(10).pow(2).times(10)
+            let base = Decimal.pow(1e4, amount).times(1e26).floor()
+            return base
+        },
+        buyMax() {
+            let toBuy = Decimal.div(player.theta, 1e26).log(1e4)
+            if(toBuy.gte(10)) {
+                toBuy = toBuy.div(10).pow(0.5).times(10).floor()
+            }
+            let cost = this.cost(toBuy)
+            toBuy = toBuy.sub(player.thetaUpgrades[7]).add(1)
+            return [cost, toBuy]
+        },
+        effect() {
+            return Decimal.pow(this.power(), player.thetaUpgrades[7])
+        },
+        spends() { return true },
+        power() {
+            return new Decimal(0.05)
+        }
     }],
     ranks: {
         nextat(x = player.ranks.ranks) {
             x = new Decimal(x)
             if(x.lt(3)) {
-                if(x.lt(1)) return new Decimal(1000000)
-                if(x.lt(2)) return new Decimal(5000000)
-                if(x.lt(3)) return new Decimal(50000000)
+                if(x.lt(1)) return new Decimal(250000)
+                if(x.lt(2)) return new Decimal(1000000)
+                if(x.lt(3)) return new Decimal(1500000)
             } else {
-                return Decimal.pow(1337, player.ranks.ranks)
+                let base = new Decimal(x)
+                let baseEnergy = new Decimal(player.ranks.rankEnergy)
+                if(player.ranks.rankUpgrades1[2]) base = base.times(Decimal.pow(0.96, baseEnergy))
+                if(base.gte(15)) base = base.div(15).pow(2).times(15)
+                return Decimal.pow(144, base)
             }
         },
         milestoneCheck() {
@@ -157,10 +207,10 @@ const game = {
             if(Decimal.gte(player.ranks.ranks, 4)) milestones++
             if(Decimal.gte(player.ranks.ranks, 5)) milestones++
             if(Decimal.gte(player.ranks.ranks, 6)) milestones++
+            if(Decimal.gte(player.ranks.ranks, 7)) milestones++
             if(Decimal.gte(player.ranks.ranks, 8)) milestones++
             if(Decimal.gte(player.ranks.ranks, 10)) milestones++
-            if(Decimal.gte(player.ranks.ranks, 15)) milestones++
-            if(Decimal.gte(player.ranks.ranks, 25)) milestones++
+            if(Decimal.gte(player.ranks.ranks, 13)) milestones++
             player.ranks.milestones = milestones
 
             if(milestones >= 3 && player.unlocks.automation.theta < 1) player.unlocks.automation.theta = 1
@@ -179,12 +229,12 @@ const game = {
             "unlock rank energy and theta upgrades 6-7 don't spend theta.",
             'automate theta upgrade 6',
             'automate theta upgrade 7',
-            'unlock three more theta upgrades UNIMPLEMENTED',
-            "automate theta upgrade 9, and increase theta upgrade 10's limit UNIMPLEMENTED",
+            'increase theta gain based on time since last rankup',
+            'unlock the placeholder unlock',
             "placeholder",
         ],
         milestonesRequirements: [
-            new Decimal(1), new Decimal(2), new Decimal(3), new Decimal(4), new Decimal(5), new Decimal(6), new Decimal(8), new Decimal(10), new Decimal(15), new Decimal(25), new Decimal(1e100)
+            new Decimal(1), new Decimal(2), new Decimal(3), new Decimal(4), new Decimal(5), new Decimal(6), new Decimal(7), new Decimal(8), new Decimal(10), new Decimal(13), new Decimal(1e100)
         ],
         rerenderMilestones(x = player.ranks.milestones) {
             if(x === 0) return
@@ -206,28 +256,71 @@ const game = {
             if(x === 0) return formatWhole(player.ranks.milestones < 5 ? Decimal.times(player.ranks.ranks, 5) : Decimal.times(player.ranks.ranks, 5).pow(2)) + ' cps'
             if(x === 1) return false
             if(x === 2) return !Decimal.gte(player.ranks.ranks, 5) ? formatWhole(player.ranks.ranks) : '5'
-            if(x >= 3) return false
+            if(x >= 3 && x < 8) return false
+            if(x === 8) return 'x' + format(Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
+            if(x >= 9) return false
         },
         unspentEnergy(x = player.ranks.rankEnergy) {
+            x = new Decimal(x)
+            if(player.ranks.rankRowsData[0] >= 1) x = x.sub(1)
+            if(player.ranks.rankRowsData[0] >= 2) x = x.sub(1)
+            if(player.ranks.rankRowsData[0] >= 3) x = x.sub(2)
+            if(player.ranks.rankRowsData[0] >= 4) x = x.sub(3)
+            if(player.ranks.rankRowsData[0] >= 5) x = x.sub(4)
             return x
         },
         calculateTotalEnergy() {
-            return Decimal.div(Decimal.add(player.ranks.bestTheta, 1), '1e14').log('1e6').add(1).pow(5/3).floor()
+            let base = Decimal.div(Decimal.add(player.ranks.bestTheta, 1), '1e10').log('1e2').add(1).pow(Decimal.sub(1, Decimal.pow(player.ranks.ranks, -0.8))).floor()
+            if(base.gte(26)) base = base.sub(25).pow(0.2).add(25)
+            return base
         },
         nextEnergyAt() {
-            return Decimal.pow(Decimal.add(player.ranks.rankEnergy, 1), 3/5).sub(1).pow_base('1e6').times('1e14').sub(1)
+            let energy = new Decimal(player.ranks.rankEnergy)
+            if(energy.gte(26)) energy = energy.sub(25).pow(5).add(25)
+            return Decimal.pow(Decimal.add(energy, 1), Decimal.sub(1, Decimal.pow(player.ranks.ranks, -0.8)).pow(-1)).sub(1).pow_base('1e2').times('1e10').sub(1)
+        },
+        upgrades: {
+            1: {
+                cost() {
+                    if(player.ranks.rankRowsData[0] == 0) return new Decimal(1)
+                    if(player.ranks.rankRowsData[0] == 1) return new Decimal(1)
+                    if(player.ranks.rankRowsData[0] == 2) return new Decimal(2)
+                    if(player.ranks.rankRowsData[0] == 3) return new Decimal(3)
+                    if(player.ranks.rankRowsData[0] == 4) return new Decimal(4)
+                },
+                effects: {
+                    a1() {
+                        return Decimal.div(player.thetaUpgrades[0], 4)
+                    },
+                    a2() {
+                        return Decimal.div(player.thetaUpgrades[1], 4)
+                    },
+                    b1() {
+                        return Decimal.times(player.thetaUpgrades[2], 0.35)
+                    },
+                    c1() {
+                        return Decimal.sub(1, Decimal.pow(0.96, player.ranks.rankEnergy))
+                    },
+                    d1() {
+                        return Decimal.sub(1, Decimal.pow(0.94, player.ranks.rankEnergy))
+                    },
+                    e1() {
+                        return Decimal.pow(40, game.ranks.unspentEnergy())
+                    },
+                }
+            },
         }
     },
     stats: {
         theta: {
             degrees(x = new Decimal(player.theta)) {
-                if(x.lt(1.296e21)) return Decimal.div(360, x)
-                else return Decimal.div(1, 3.6e18)
+                if(x.lt(1.296e22)) return Decimal.div(360, x)
+                else return Decimal.div(1, 3.6e19)
             },
             rotations(x = player.theta) {
                 x = new Decimal(x)
-                if(x.lt(1.296e21)) return new Decimal(1)
-                else return x.div(1.296e21)
+                if(x.lt(1.296e22)) return new Decimal(1)
+                else return x.div(1.296e22)
             },
             radius(x = this.rotations()) {
                 if(x.lt(6.25e40)) return Decimal.div(1000, x).div(6.28318530718)
@@ -243,7 +336,7 @@ const game = {
         rankup() {
             player.theta = new Decimal(0)
             player.thetaUpgrades = [new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0)]
-            if(player.tab === 'ranks') game.ranks.rerenderMilestones()
+            player.ranks.lastRankup = player.time
         },
     }
 }

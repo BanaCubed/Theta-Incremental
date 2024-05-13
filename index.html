@@ -12,11 +12,21 @@
     <link rel="stylesheet" href="css/theta.css">
     <link rel="stylesheet" href="css/ranks.css">
 
+    <script src="scripts/dependencies/break_eternity.js"></script>
+    <script src="scripts/utils/formats.js"></script>
+    <script src="scripts/game.js"></script>
+
+    <script src="scripts/options.js"></script>
+    <script src="scripts/main.js"></script>
+    
+    <script src="scripts/save.js"></script>
+    
+    <script src="scripts/core.js"></script>
 
 </head>
 
 
-<body>
+<body id="body">
 
     <div id="resourcesDisplay">
         <div class="resourceDisplay" id="thetaResource">
@@ -179,7 +189,7 @@
                     </div>
 
                     <div class="box" style="display: none;" id="thetaUPG7box">
-                        θB6: Multiply all theta gain<br><br>
+                        θB7: Multiply all theta gain<br><br>
                         <div class="upgrade" id="thetaUPG7">
                             <div class="upgradeInfo">Power: x<br>
                                 Count:  <br>
@@ -213,28 +223,83 @@
                     <div class="box" style="padding: 10px; align-self: center; max-width: 95%; width: 450px">
                         <button id="rankup" onclick="rankUp()">Rank Up<br>You are at Rank <span id="ranksCount">?</span></button><br><span style="margin-bottom: 10px;">Ranks reset all theta related features.<br>You can rank up at <span id="rankRequirement">?</span> theta.<br><span id="ranksNextMilestone">At ? Ranks, ???</span></span>
                     </div><br>
-                    <div class="box" style="padding: 10px; width: fit-content; max-width: calc(100% - 20px);">
+                    <div class="box" style="padding: 10px; width: 100%; max-width: calc(100% - 50px); text-align: left;">
                         <h2>Rank Rewards</h2><br><span id="rankMilestones">???</span>
                     </div>
                 </div>
 
                 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; display: none;" id="energySubtab">
-                    <div class="box" style="padding: 10px; align-self: center; width: 95%; min-height: 300px;">
-                        <h1>You have <span id="currentRankEnergy">?</span> Rank Energy<br><span id="totalRankEnergy">?</span> total<br>Next at <span id="nextRankEnergy">?</span> theta</h1><br>
+                    <div class="box" style="padding: 10px; align-self: center; width: 300px; min-height: 100px;">
+
+                        <h1>You have <span id="currentRankEnergy">?</span> Rank Energy (Rε)<br><span id="totalRankEnergy">?</span> total (Rτ)<br>Next at <span id="nextRankEnergy">?</span> theta<br>Buying an upgrade increases the cost of all others<br><br>Next upgrade will cost you <span id="rankEnergyCost">infinity</span> Rε</h1><br>
+                        <button class="upgradeBuy" onclick="respecRanks()">Respec</button>
 
                     </div>
+
+                    <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;">
+
+                        <div class="box" style="max-width: 100%;" id="rankUPG1">
+                            RεU1a: Increase θB1 and θB2 power based on their amount<br><br>
+                            <div class="upgrade" style="text-align: center; justify-content: center;">
+                                <div class="upgradeInfo" style="width: 95%; text-align: left;">Effect: +25% each<br>Currently: +<span id="rankUPG1a1">?</span>%, +<span id="rankUPG1a2">?</span>%</div>
+                            </div>
+                            <div class="upgradeButtons" style="display: flex; flex-direction: row;">
+                                <button id="rankUPG1buyButton" class="rankUPGbuy upgradeBuy" onclick="rankUPGbuy(1, 1)" style="width: 300px;"><span id="rankUPG1buy">Buy</span></button>
+                            </div>
+                        </div>
+
+                        <div class="box" style="max-width: 100%;" id="rankUPG2">
+                            RεU1b: Increase power of θB3 based on it's non-bonus amount<br><br>
+                            <div class="upgrade" style="text-align: center; justify-content: center;">
+                                <div class="upgradeInfo" style="width: 95%; text-align: left;">Effect: +35% per non-bonus θB3<br>Currently: +<span id="rankUPG1b1">?</span>%</div>
+                            </div>
+                            <div class="upgradeButtons" style="display: flex; flex-direction: row;">
+                                <button id="rankUPG2buyButton" class="rankUPGbuy upgradeBuy" onclick="rankUPGbuy(1, 2)" style="width: 300px;"><span id="rankUPG2buy">Buy</span></button>
+                            </div>
+                        </div>
+
+                        <div class="box" style="max-width: 100%;" id="rankUPG3">
+                            RεU1c: Decrease rank cost scaling based on Rτ<br><br>
+                            <div class="upgrade" style="text-align: center; justify-content: center;">
+                                <div class="upgradeInfo" style="width: 95%; text-align: left;">Effect: -4% per Rτ<br>Currently: -<span id="rankUPG1c1">?</span>%</div>
+                            </div>
+                            <div class="upgradeButtons" style="display: flex; flex-direction: row;">
+                                <button id="rankUPG3buyButton" class="rankUPGbuy upgradeBuy" onclick="rankUPGbuy(1, 3)" style="width: 300px;"><span id="rankUPG3buy">Buy</span></button>
+                            </div>
+                        </div>
+
+                        <div class="box" style="max-width: 100%;" id="rankUPG4">
+                            RεU1d: Reduce theta upgrade 1-4 scaling based on Rτ<br><br>
+                            <div class="upgrade" style="text-align: center; justify-content: center;">
+                                <div class="upgradeInfo" style="width: 95%; text-align: left;">Effect: -6% per Rτ<br>Currently: -<span id="rankUPG1d1">?</span>%</div>
+                            </div>
+                            <div class="upgradeButtons" style="display: flex; flex-direction: row;">
+                                <button id="rankUPG4buyButton" class="rankUPGbuy upgradeBuy" onclick="rankUPGbuy(1, 4)" style="width: 300px;"><span id="rankUPG4buy">Buy</span></button>
+                            </div>
+                        </div>
+
+                        <div class="box" style="max-width: 100%;" id="rankUPG5">
+                            RεU1e: Drastically increase theta gain based on Rε<br><br>
+                            <div class="upgrade" style="text-align: center; justify-content: center;">
+                                <div class="upgradeInfo" style="width: 95%; text-align: left;">Effect: x40 per Rε<br>Currently: x<span id="rankUPG1e1">?</span></div>
+                            </div>
+                            <div class="upgradeButtons" style="display: flex; flex-direction: row;">
+                                <button id="rankUPG5buyButton" class="rankUPGbuy upgradeBuy" onclick="rankUPGbuy(1, 5)" style="width: 300px;"><span id="rankUPG5buy">Buy</span></button>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
 
             </div>
 
             <div id="statsTab" class="tabData">
-                <div style="display: flex; flex-direction: row;">
-                    <div class="thetaFacts box" style="margin: 10px; display: none;" id="thetaRotation">
-                        If each of your theta (θ) was <span id="statsDegrees">? ???</span>, they would make <span id="statsRotations">?</span> full rotation<span id="rotationS"></span>
-                    </div>
-                    <div class="thetaFacts box" id="thetaDistance" style="margin: 10px; display: none;">
-                        If your theta's angle was the amount that a wheel with a radius of <span id="statsRadius">? ???</span> spun, it would move <span id="statsDistance">? ???</span>
-                    </div>
+                <div class="thetaFacts box" style="margin: 10px; display: none;" id="thetaRotation">
+                    If each of your theta (θ) was <span id="statsDegrees">? ???</span>, they would make <span id="statsRotations">?</span> full rotation<span id="rotationS"></span>
+                </div>
+                <div class="thetaFacts box" id="thetaDistance" style="margin: 10px; display: none;">
+                    If your theta's angle was the amount that a wheel with a radius of <span id="statsRadius">? ???</span> spun, it would move <span id="statsDistance">? ???</span>
                 </div>
             </div>
 
@@ -250,17 +315,6 @@
     </div>
 
 </body>
-
-<script src="js/dependencies/break_eternity.js"></script>
-<script src="js/utils/formats.js"></script>
-<script src="js/game.js"></script>
-
-<script src="js/utils/tabs.js"></script>
-<script src="js/save.js"></script>
-
-<script src="js/main.js"></script>
-<script src="js/core.js"></script>
-<script src="js/options.js"></script>
 
 <script>
     updateTab()

@@ -114,37 +114,37 @@ function invertOOM(x){
 function formatDistance(x) {
     x = new Decimal(x)
     let unitMod = 14
-    if(x.lt("1e-3")) {
+    if(x.lt("1")) {
         x = x.times(1000)
         unitMod++
-        if(x.lt("1e-3")) {
+        if(x.lt("1")) {
             x = x.times(1000)
             unitMod++
-            if(x.lt("1e-3")) {
+            if(x.lt("1")) {
                 x = x.times(1000)
                 unitMod++
-                if(x.lt("1e-3")) {
+                if(x.lt("1")) {
                     x = x.times(1000)
                     unitMod++
-                    if(x.lt("1e-3")) {
+                    if(x.lt("1")) {
                         x = x.times(1000)
                         unitMod++
-                        if(x.lt("1e-3")) {
+                        if(x.lt("1")) {
                             x = x.times(1000)
                             unitMod++
-                            if(x.lt("1e-3")) {
+                            if(x.lt("1")) {
                                 x = x.times(1000)
                                 unitMod++
-                                if(x.lt("1e-3")) {
+                                if(x.lt("1")) {
                                     x = x.times(1000)
                                     unitMod++
-                                    if(x.lt("1e-3")) {
+                                    if(x.lt("1")) {
                                         x = x.times(1000)
                                         unitMod++
-                                        if(x.lt("1e-3")) {
+                                        if(x.lt("1")) {
                                             x = x.times(1000)
                                             unitMod++
-                                            if(x.lt("1.6e-3")) {
+                                            if(x.lt("1")) {
                                                 x = x.times(1600)
                                                 unitMod++
                                             }
