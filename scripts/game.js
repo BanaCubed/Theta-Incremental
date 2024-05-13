@@ -231,10 +231,10 @@ const game = {
             'automate theta upgrade 7',
             'increase theta gain based on time since last rankup',
             'unlock the placeholder unlock',
-            "placeholder",
+            "good luck getting this one",
         ],
         milestonesRequirements: [
-            new Decimal(1), new Decimal(2), new Decimal(3), new Decimal(4), new Decimal(5), new Decimal(6), new Decimal(7), new Decimal(8), new Decimal(10), new Decimal(13), new Decimal(1e100)
+            new Decimal(1), new Decimal(2), new Decimal(3), new Decimal(4), new Decimal(5), new Decimal(6), new Decimal(7), new Decimal(8), new Decimal(10), new Decimal(13), Decimal.pow(2, 1024)
         ],
         rerenderMilestones(x = player.ranks.milestones) {
             if(x === 0) return
