@@ -227,11 +227,11 @@ const game = {
             'unlock two more theta upgrades.',
             'square the automatic clicks per second.',
             "unlock rank energy and theta upgrades 6-7 don't spend theta.",
-            'automate theta upgrade 6',
-            'automate theta upgrade 7',
-            'increase theta gain based on time since last rankup',
-            'unlock the placeholder unlock',
-            "good luck getting this one",
+            'automate theta upgrade 6.',
+            'automate theta upgrade 7.',
+            'increase theta gain based on time since last rankup.',
+            'unlock a super cool placeholder that does nothing right now.',
+            "good luck getting this one.",
         ],
         milestonesRequirements: [
             new Decimal(1), new Decimal(2), new Decimal(3), new Decimal(4), new Decimal(5), new Decimal(6), new Decimal(7), new Decimal(8), new Decimal(10), new Decimal(13), Decimal.pow(2, 1024)
@@ -271,12 +271,12 @@ const game = {
         },
         calculateTotalEnergy() {
             let base = Decimal.div(Decimal.add(player.ranks.bestTheta, 1), '1e10').log('1e2').add(1).pow(Decimal.sub(1, Decimal.pow(player.ranks.ranks, -0.8))).floor()
-            if(base.gte(26)) base = base.sub(25).pow(0.2).add(25)
+            if(base.gte(10)) base = base.sub(9).pow(0.2).add(9)
             return base
         },
         nextEnergyAt() {
             let energy = new Decimal(player.ranks.rankEnergy)
-            if(energy.gte(26)) energy = energy.sub(25).pow(5).add(25)
+            if(energy.gte(10)) energy = energy.sub(9).pow(5).add(9)
             return Decimal.pow(Decimal.add(energy, 1), Decimal.sub(1, Decimal.pow(player.ranks.ranks, -0.8)).pow(-1)).sub(1).pow_base('1e2').times('1e10').sub(1)
         },
         upgrades: {

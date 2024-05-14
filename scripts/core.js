@@ -28,7 +28,12 @@ function mainLoop() {
     }
 
     // Rerendering
-    // Theta Display
+    if(document.documentElement.scrollTop <= 15) {
+        document.getElementById('resourcesDisplay').style.boxShadow = 'unset'
+    } else {
+        document.getElementById('resourcesDisplay').style.boxShadow = '0 0 10px #000'
+    }
+
     document.getElementById('thetaCountDisplay').textContent = formatWhole(player.theta)
     document.getElementById('thetaPerClickDisplay').textContent = formatWhole(getThetaGain('click'))
     document.getElementById('thetaPassiveDisplay').textContent = formatWhole(getThetaGain('passive'))
@@ -138,58 +143,48 @@ function mainLoop() {
 
         if(player.ranks.rankUpgrades1[0]) {
             document.getElementById('rankUPG1').style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
-            document.getElementById('rankUPG1buyButton').style.backgroundColor = 'hsl(120, 100%, 20%)'
-            document.getElementById('rankUPG1buyButton').style.pointerEvents = 'none'
             document.getElementById('rankUPG1buyButton').textContent = 'Already Purchased'
+            document.getElementById('rankUPG1buyButton').classList.add('bought')
         } else {
             document.getElementById('rankUPG1').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
-            document.getElementById('rankUPG1buyButton').style.backgroundColor = 'var(--buttonbackgroundcolor)'
-            document.getElementById('rankUPG1buyButton').style.pointerEvents = 'unset'
             document.getElementById('rankUPG1buyButton').textContent = 'Buy'
+            document.getElementById('rankUPG1buyButton').classList.remove('bought')
         }
         if(player.ranks.rankUpgrades1[1]) {
             document.getElementById('rankUPG2').style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
-            document.getElementById('rankUPG2buyButton').style.backgroundColor = 'hsl(120, 100%, 20%)'
-            document.getElementById('rankUPG2buyButton').style.pointerEvents = 'none'
             document.getElementById('rankUPG2buyButton').textContent = 'Already Purchased'
+            document.getElementById('rankUPG2buyButton').classList.add('bought')
         } else {
             document.getElementById('rankUPG2').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
-            document.getElementById('rankUPG2buyButton').style.backgroundColor = 'var(--buttonbackgroundcolor)'
-            document.getElementById('rankUPG2buyButton').style.pointerEvents = 'unset'
             document.getElementById('rankUPG2buyButton').textContent = 'Buy'
+            document.getElementById('rankUPG2buyButton').classList.remove('bought')
         }
         if(player.ranks.rankUpgrades1[2]) {
             document.getElementById('rankUPG3').style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
-            document.getElementById('rankUPG3buyButton').style.backgroundColor = 'hsl(120, 100%, 20%)'
-            document.getElementById('rankUPG3buyButton').style.pointerEvents = 'none'
             document.getElementById('rankUPG3buyButton').textContent = 'Already Purchased'
+            document.getElementById('rankUPG3buyButton').classList.add('bought')
         } else {
             document.getElementById('rankUPG3').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
-            document.getElementById('rankUPG3buyButton').style.backgroundColor = 'var(--buttonbackgroundcolor)'
-            document.getElementById('rankUPG3buyButton').style.pointerEvents = 'unset'
             document.getElementById('rankUPG3buyButton').textContent = 'Buy'
+            document.getElementById('rankUPG3buyButton').classList.remove('bought')
         }
         if(player.ranks.rankUpgrades1[3]) {
             document.getElementById('rankUPG4').style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
-            document.getElementById('rankUPG4buyButton').style.backgroundColor = 'hsl(120, 100%, 20%)'
-            document.getElementById('rankUPG4buyButton').style.pointerEvents = 'none'
             document.getElementById('rankUPG4buyButton').textContent = 'Already Purchased'
+            document.getElementById('rankUPG4buyButton').classList.add('bought')
         } else {
             document.getElementById('rankUPG4').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
-            document.getElementById('rankUPG4buyButton').style.backgroundColor = 'var(--buttonbackgroundcolor)'
-            document.getElementById('rankUPG4buyButton').style.pointerEvents = 'unset'
             document.getElementById('rankUPG4buyButton').textContent = 'Buy'
+            document.getElementById('rankUPG4buyButton').classList.remove('bought')
         }
         if(player.ranks.rankUpgrades1[4]) {
             document.getElementById('rankUPG5').style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
-            document.getElementById('rankUPG5buyButton').style.backgroundColor = 'hsl(120, 100%, 20%)'
-            document.getElementById('rankUPG5buyButton').style.pointerEvents = 'none'
             document.getElementById('rankUPG5buyButton').textContent = 'Already Purchased'
+            document.getElementById('rankUPG5buyButton').classList.add('bought')
         } else {
             document.getElementById('rankUPG5').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
-            document.getElementById('rankUPG5buyButton').style.backgroundColor = 'var(--buttonbackgroundcolor)'
-            document.getElementById('rankUPG5buyButton').style.pointerEvents = 'unset'
             document.getElementById('rankUPG5buyButton').textContent = 'Buy'
+            document.getElementById('rankUPG5buyButton').classList.remove('bought')
         }
     }
 
