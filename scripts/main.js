@@ -27,13 +27,10 @@ function getThetaGain(event) {
         gain = gain.add(game.thetaUpgrades[1].effect())
         gain = gain.times(game.thetaUpgrades[3].effect())
         gain = gain.times(game.thetaUpgrades[6].effect())
-        if(player.ranks.rankUpgrades1[4]) gain = gain.times(Decimal.pow(40, game.ranks.unspentEnergy()))
+        if(player.ranks.rankUpgrades1[4]) gain = gain.times(Decimal.pow(55, game.ranks.unspentEnergy()))
         if(player.ranks.milestones >= 9) gain = gain.times(Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
 
-        let cps = new Decimal(0)
-        if(player.ranks.milestones >= 1) cps = cps.add(Decimal.times(player.ranks.ranks, 5))
-        if(player.ranks.milestones >= 5) cps = cps.pow(2)
-        gain = gain.add(Decimal.times(getThetaGain('click'), cps))
+        gain = gain.add(Decimal.times(getThetaGain('click'), getCPS()))
     }
 
     if (event === 'click') {
@@ -73,8 +70,8 @@ function rankUPGbuy(row, id) {
 function respecRanks() {
     if(confirm('Are you sure you want to Respec you Rank Energy upgrades? This will force a Rank reset, without any gain!')) {
         game.reset.rankup()
-        player.ranks.rankRowsData = basePlayer.ranks.rankRowsData
-        player.ranks.rankUpgrades1 = basePlayer.ranks.rankUpgrades1
+        player.ranks.rankRowsData = [0]
+        player.ranks.rankUpgrades1 = [false, false, false, false, false]
     } else {
         return
     }
@@ -127,4 +124,12 @@ function updateSubtab() {
             }
         }
     }
+}
+
+function getCPS() {
+    let cps = new Decimal(5)
+    cps = cps.add(game.thetaUpgrades[8].effect())
+    if(player.ranks.milestones >= 1) cps = cps.times(player.ranks.ranks)
+    if(player.ranks.milestones >= 5) cps = cps.pow(2)
+    return cps
 }

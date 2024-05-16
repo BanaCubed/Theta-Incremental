@@ -1,5 +1,5 @@
 * {
-    font-size: 15px;
+    font-size: 12px;
     font-family: 'Courier New', monospace;
 
     color: white;
@@ -65,7 +65,7 @@ button.bought {
     padding-bottom: 4px;
     display: flex;
     justify-content: space-around;
-    height: 80px;
+    height: 70px;
     overflow-y: hidden;
     z-index: 999;
     box-shadow: 0 0 10px #000;
@@ -112,8 +112,8 @@ button.bought {
     margin: 0 0 5px 0;
     overflow-y: auto;
     overflow-x: auto;
-    min-height: 48px;
-    max-height: 48px;
+    min-height: 35px;
+    max-height: 35px;
     max-width: 100%;
     min-width: calc(100%);
     width: fit-content;
@@ -127,9 +127,10 @@ button.bought {
 }
 
 .tabs:not(.bought) {
-    width: 144px;
+    width: 118px;
     margin: 3px 3px;
-    height: 30px;
+    height: 24px;
+    font-weight: bold;
 }
 
 #tabData {
@@ -200,13 +201,13 @@ div{
 }
 
 button.upgradeBuy:not(.bought) {
-    height: 44px;
+    height: 35px;
     width: 300px;
     margin: 0px;
 }
 
 button.upgradeBuy.bought {
-    height: 44px;
+    height: 35px;
     width: 300px;
     margin: 0px;
 }
@@ -228,10 +229,10 @@ button.upgradeBuy.bought {
     max-width: 100%;
 }
 
-.optionsButton {
-    height: 100px;
-    width: 100px;
-    margin: 10px;
+button.optionsButton {
+    height: 80px;
+    width: 80px;
+    margin: 3px;
 }
 
 .box {
@@ -262,4 +263,8 @@ button.upgradeBuy.bought {
     background-color: rgba(0, 0, 0, 0.2);
     transform: scale(1.1, 1.1);
     border-color: var(--buttonbackgroundcolorhover);
+}
+
+button.DangerousButton:hover {
+    background-color: hsl(0, 100%, 50%);
 }

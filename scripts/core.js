@@ -28,10 +28,10 @@ function mainLoop() {
     }
 
     // Rerendering
-    if(document.documentElement.scrollTop <= 15) {
+    if(document.documentElement.scrollTop <= 8) {
         document.getElementById('resourcesDisplay').style.boxShadow = 'unset'
     } else {
-        document.getElementById('resourcesDisplay').style.boxShadow = '0 0 10px #000'
+        document.getElementById('resourcesDisplay').style.boxShadow = '0 0 10px #000, 0 0 20px #000, 0 0 15px #000, 0 0 5px #000'
     }
 
     document.getElementById('thetaCountDisplay').textContent = formatWhole(player.theta)
@@ -45,49 +45,21 @@ function mainLoop() {
 
 
     if(player.tab === 'theta') {
-        document.getElementById('thetaUPG1count').textContent = formatWhole(player.thetaUpgrades[0])
-        document.getElementById('thetaUPG1cost').textContent = formatWhole(game.thetaUpgrades[0].cost())
-        document.getElementById('thetaUPG1effect').textContent = formatWhole(game.thetaUpgrades[0].effect())
-        document.getElementById('thetaUPG1power').textContent = formatWhole(game.thetaUpgrades[0].power())
-        document.getElementById('thetaUPG1auto').textContent = 'Auto: ' + (player.automation.thetaUpgrades[0] ? 'On' : 'Off')
+        for (let index = 0; index <= 9; index++) {
+            const IDname = 'thetaUPG' + (index + 1)
+            
+            document.getElementById(IDname + 'count').textContent = game.thetaUpgrades[index].bonus().lt(1) ? formatWhole(player.thetaUpgrades[index]) : formatWhole(player.thetaUpgrades[index]) + ' + ' + formatWhole(game.thetaUpgrades[index].bonus())
+            document.getElementById(IDname + 'cost').textContent = formatWhole(game.thetaUpgrades[index].cost())
+            document.getElementById(IDname + 'effect').textContent = format(game.thetaUpgrades[index].effect())
+            document.getElementById(IDname + 'power').textContent = format(game.thetaUpgrades[index].power())
+            document.getElementById(IDname + 'auto').textContent = 'Auto: ' + (player.automation.thetaUpgrades[index] ? 'On' : 'Off')
 
-        document.getElementById('thetaUPG2count').textContent = formatWhole(player.thetaUpgrades[1])
-        document.getElementById('thetaUPG2cost').textContent = formatWhole(game.thetaUpgrades[1].cost())
-        document.getElementById('thetaUPG2effect').textContent = formatWhole(game.thetaUpgrades[1].effect())
-        document.getElementById('thetaUPG2power').textContent = formatWhole(game.thetaUpgrades[1].power())
-        document.getElementById('thetaUPG2auto').textContent = 'Auto: ' + (player.automation.thetaUpgrades[1] ? 'On' : 'Off')
-
-        let thetaUPG3text = formatWhole(player.thetaUpgrades[2])
-        if(!Decimal.eq(game.thetaUpgrades[2].bonus(), 0)) thetaUPG3text = thetaUPG3text + " + " + formatWhole(game.thetaUpgrades[2].bonus())
-        document.getElementById('thetaUPG3count').textContent = thetaUPG3text
-        document.getElementById('thetaUPG3cost').textContent = formatWhole(game.thetaUpgrades[2].cost())
-        document.getElementById('thetaUPG3effect').textContent = format(game.thetaUpgrades[2].effect(), 1)
-        document.getElementById('thetaUPG3power').textContent = format(game.thetaUpgrades[2].power(), 1)
-        document.getElementById('thetaUPG3auto').textContent = 'Auto: ' + (player.automation.thetaUpgrades[2] ? 'On' : 'Off')
-
-        document.getElementById('thetaUPG4count').textContent = formatWhole(player.thetaUpgrades[3])
-        document.getElementById('thetaUPG4cost').textContent = formatWhole(game.thetaUpgrades[3].cost())
-        document.getElementById('thetaUPG4effect').textContent = format(game.thetaUpgrades[3].effect())
-        document.getElementById('thetaUPG4power').textContent = format(game.thetaUpgrades[3].power())
-        document.getElementById('thetaUPG4auto').textContent = 'Auto: ' + (player.automation.thetaUpgrades[3] ? 'On' : 'Off')
-
-        document.getElementById('thetaUPG5count').textContent = formatWhole(player.thetaUpgrades[4])
-        document.getElementById('thetaUPG5cost').textContent = formatWhole(game.thetaUpgrades[4].cost())
-        document.getElementById('thetaUPG5effect').textContent = format(game.thetaUpgrades[4].effect(), 1)
-        document.getElementById('thetaUPG5power').textContent = format(game.thetaUpgrades[4].power(), 1)
-        document.getElementById('thetaUPG5auto').textContent = 'Auto: ' + (player.automation.thetaUpgrades[4] ? 'On' : 'Off')
-
-        document.getElementById('thetaUPG6count').textContent = formatWhole(player.thetaUpgrades[5])
-        document.getElementById('thetaUPG6cost').textContent = formatWhole(game.thetaUpgrades[5].cost())
-        document.getElementById('thetaUPG6effect').textContent = format(game.thetaUpgrades[5].effect(), 1)
-        document.getElementById('thetaUPG6power').textContent = format(game.thetaUpgrades[5].power(), 1)
-        document.getElementById('thetaUPG6auto').textContent = 'Auto: ' + (player.automation.thetaUpgrades[5] ? 'On' : 'Off')
-
-        document.getElementById('thetaUPG7count').textContent = formatWhole(player.thetaUpgrades[6])
-        document.getElementById('thetaUPG7cost').textContent = formatWhole(game.thetaUpgrades[6].cost())
-        document.getElementById('thetaUPG7effect').textContent = format(game.thetaUpgrades[6].effect())
-        document.getElementById('thetaUPG7power').textContent = format(game.thetaUpgrades[6].power())
-        document.getElementById('thetaUPG7auto').textContent = 'Auto: ' + (player.automation.thetaUpgrades[6] ? 'On' : 'Off')
+            if(Decimal.gte(player.theta, game.thetaUpgrades[index].cost())) {
+                document.getElementById(IDname + 'box').classList.add('canBuyTheta')
+            } else {
+                document.getElementById(IDname + 'box').classList.remove('canBuyTheta')
+            }
+        }
 
         if(player.unlocks.automation.theta >= 1) {
             document.getElementById('thetaUPG1auto').style.display = 'unset'
@@ -118,6 +90,16 @@ function mainLoop() {
             document.getElementById('thetaUPG6box').style.display = 'none'
             document.getElementById('thetaUPG7box').style.display = 'none'
         }
+
+        if(player.ranks.milestones >= 10) {
+            document.getElementById('thetaUPG8box').style.display = 'unset'
+            document.getElementById('thetaUPG9box').style.display = 'unset'
+            document.getElementById('thetaUPG10box').style.display = 'unset'
+        } else {
+            document.getElementById('thetaUPG8box').style.display = 'none'
+            document.getElementById('thetaUPG9box').style.display = 'none'
+            document.getElementById('thetaUP10box').style.display = 'none'
+        }
     }
 
     if(player.tab === 'ranks') {
@@ -141,50 +123,18 @@ function mainLoop() {
         document.getElementById('rankUPG1d1').textContent = format(game.ranks.upgrades[1].effects.d1().times(100))
         document.getElementById('rankUPG1e1').textContent = formatWhole(game.ranks.upgrades[1].effects.e1())
 
-        if(player.ranks.rankUpgrades1[0]) {
-            document.getElementById('rankUPG1').style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
-            document.getElementById('rankUPG1buyButton').textContent = 'Already Purchased'
-            document.getElementById('rankUPG1buyButton').classList.add('bought')
+        for (let index = 0; index <= 4; index++) {
+            const IDname = 'rankUPG' + (index + 1)
+            
+        if(player.ranks.rankUpgrades1[index]) {
+            document.getElementById(IDname).style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
+            document.getElementById(IDname + 'buyButton').textContent = 'Already Purchased'
+            document.getElementById(IDname + 'buyButton').classList.add('bought')
         } else {
-            document.getElementById('rankUPG1').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
-            document.getElementById('rankUPG1buyButton').textContent = 'Buy'
-            document.getElementById('rankUPG1buyButton').classList.remove('bought')
+            document.getElementById(IDname).style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
+            document.getElementById(IDname + 'buyButton').textContent = 'Buy'
+            document.getElementById(IDname + 'buyButton').classList.remove('bought')
         }
-        if(player.ranks.rankUpgrades1[1]) {
-            document.getElementById('rankUPG2').style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
-            document.getElementById('rankUPG2buyButton').textContent = 'Already Purchased'
-            document.getElementById('rankUPG2buyButton').classList.add('bought')
-        } else {
-            document.getElementById('rankUPG2').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
-            document.getElementById('rankUPG2buyButton').textContent = 'Buy'
-            document.getElementById('rankUPG2buyButton').classList.remove('bought')
-        }
-        if(player.ranks.rankUpgrades1[2]) {
-            document.getElementById('rankUPG3').style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
-            document.getElementById('rankUPG3buyButton').textContent = 'Already Purchased'
-            document.getElementById('rankUPG3buyButton').classList.add('bought')
-        } else {
-            document.getElementById('rankUPG3').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
-            document.getElementById('rankUPG3buyButton').textContent = 'Buy'
-            document.getElementById('rankUPG3buyButton').classList.remove('bought')
-        }
-        if(player.ranks.rankUpgrades1[3]) {
-            document.getElementById('rankUPG4').style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
-            document.getElementById('rankUPG4buyButton').textContent = 'Already Purchased'
-            document.getElementById('rankUPG4buyButton').classList.add('bought')
-        } else {
-            document.getElementById('rankUPG4').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
-            document.getElementById('rankUPG4buyButton').textContent = 'Buy'
-            document.getElementById('rankUPG4buyButton').classList.remove('bought')
-        }
-        if(player.ranks.rankUpgrades1[4]) {
-            document.getElementById('rankUPG5').style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
-            document.getElementById('rankUPG5buyButton').textContent = 'Already Purchased'
-            document.getElementById('rankUPG5buyButton').classList.add('bought')
-        } else {
-            document.getElementById('rankUPG5').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
-            document.getElementById('rankUPG5buyButton').textContent = 'Buy'
-            document.getElementById('rankUPG5buyButton').classList.remove('bought')
         }
     }
 

@@ -11,7 +11,7 @@ const basePlayer = {
     theta: new Decimal(0),
     time: Date.now(),
 	playtime: 0,
-    thetaUpgrades: [new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0)],
+    thetaUpgrades: [new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0)],
 	tab: 'theta',
 	subtabs: {
 		ranks: 'rankup'
@@ -20,7 +20,7 @@ const basePlayer = {
 
 	},
 	automation: {
-		thetaUpgrades: [false, false, false, false, false, false, false],
+		thetaUpgrades: [false, false, false, false, false, false, false, false],
 	},
 	unlocks: {
 		automation: {
@@ -66,8 +66,8 @@ function load(data) {
 setInterval(save, 8000);
 
 function saveExport() {
-	navigator.clipboard.writeText('5j3' + btoa(unescape(encodeURIComponent(JSON.stringify(player)))))
-	alert('Save copied to clipboard, if it hasn' + "'" + 't been copied, here is the save text: ' + '5j3' + btoa(unescape(encodeURIComponent(JSON.stringify(player)))))
+	navigator.clipboard.writeText('TIS' + btoa(unescape(encodeURIComponent(JSON.stringify(player)))))
+	alert('Save copied to clipboard, if it hasn' + "'" + 't been copied, here is the save text: ' + 'TIS' + btoa(unescape(encodeURIComponent(JSON.stringify(player)))))
 }
 
 function saveImport() {
@@ -89,4 +89,11 @@ function remakeValues(obj, defaultObj) {
         }
     }
     return obj;
+}
+
+function DANGERresetSave() {
+	if(confirm('Are you sure you want to reset your save? There is no benefit to doing so and you will NOT be able to get it back!')) {
+		player = basePlayer
+		save()
+	}
 }
