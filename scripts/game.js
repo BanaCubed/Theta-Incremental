@@ -179,14 +179,14 @@ const game = {
     }, { // UPG8
         cost(x = player.thetaUpgrades[7]) {
             let amount = new Decimal(x)
-            if(amount.gte(10)) amount = amount.div(10).pow(2).times(10)
-            let base = Decimal.pow(1e4, amount).times(1e4).floor()
+            if(amount.gte(10)) amount = amount.div(10).pow(4).times(10)
+            let base = Decimal.pow(1e2, amount).times(1e10).floor()
             return base
         },
         buyMax() {
-            let toBuy = Decimal.div(player.theta, 1e4).log(1e4)
+            let toBuy = Decimal.div(player.theta, 1e10).log(1e2)
             if(toBuy.gte(10)) {
-                toBuy = toBuy.div(10).pow(0.5).times(10).floor()
+                toBuy = toBuy.div(10).pow(0.25).times(10).floor()
             }
             let cost = this.cost(toBuy)
             toBuy = toBuy.sub(player.thetaUpgrades[7]).add(1).floor()
@@ -279,7 +279,7 @@ const game = {
             if(Decimal.gte(player.ranks.ranks, 9)) milestones++
             if(Decimal.gte(player.ranks.ranks, 10)) milestones++
             if(Decimal.gte(player.ranks.ranks, 12)) milestones++
-            if(Decimal.gte(player.ranks.ranks, 16)) milestones++
+            if(Decimal.gte(player.ranks.ranks, 17)) milestones++
             player.ranks.milestones = milestones
 
             if(milestones >= 3 && player.unlocks.automation.theta < 1) player.unlocks.automation.theta = 1
@@ -304,7 +304,7 @@ const game = {
             "good luck getting this one.",
         ],
         milestonesRequirements: [
-            new Decimal(1), new Decimal(2), new Decimal(3), new Decimal(4), new Decimal(5), new Decimal(6), new Decimal(7), new Decimal(9), new Decimal(10), new Decimal(12), new Decimal(16), Decimal.pow(2, 1024)
+            new Decimal(1), new Decimal(2), new Decimal(3), new Decimal(4), new Decimal(5), new Decimal(6), new Decimal(7), new Decimal(9), new Decimal(10), new Decimal(12), new Decimal(17), Decimal.pow(1e300, 1e300)
         ],
         rerenderMilestones(x = player.ranks.milestones) {
             if(x === 0) return
