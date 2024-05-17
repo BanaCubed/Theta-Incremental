@@ -115,8 +115,8 @@ button.bought {
     margin: 0 0 5px 0;
     overflow-y: auto;
     overflow-x: auto;
-    min-height: 35px;
-    max-height: 35px;
+    min-height: 40px;
+    max-height: 40px;
     max-width: 100%;
     min-width: calc(100%);
     width: fit-content;
@@ -131,8 +131,8 @@ button.bought {
 
 .tabs:not(.bought) {
     width: 118px;
-    margin: 3px 3px;
-    height: 24px;
+    margin: 0;
+    height: 35px;
     font-weight: bold;
 }
 
