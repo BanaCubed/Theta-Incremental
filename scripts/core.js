@@ -188,9 +188,9 @@ function mainLoop() {
     }
 
     if(player.tab === 'options') {
-        document.getElementById('pinHeaderSelection').style.setProperty('--leftPos', player.options.pinHeader ? '0px' : '84px')
+        document.getElementById('pinHeaderSelection').style.setProperty('--leftPos', player.options.pinHeader ? '0px' : '80px')
         document.getElementById('pinHeaderSelection').style.setProperty('border-radius', player.options.pinHeader ? '7px 0 0 7px' : '0 7px 7px 0')
-        document.getElementById('rankupConfirmSelection').style.setProperty('--leftPos', player.options.rankupConfirm === 2 ? '0px' : player.options.rankupConfirm === 1 ? '84px' : '168px')
+        document.getElementById('rankupConfirmSelection').style.setProperty('--leftPos', player.options.rankupConfirm === 2 ? '0px' : player.options.rankupConfirm === 1 ? '80px' : '160px')
         document.getElementById('rankupConfirmSelection').style.setProperty('border-radius', player.options.rankupConfirm === 2 ? '7px 0 0 7px' : player.options.rankupConfirm === 0 ? '0 7px 7px 0' : '0 0 0 0')
     }
 

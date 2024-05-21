@@ -285,8 +285,8 @@ div.optionsList {
 /* I know that this part is scuffed with its variables but whatever */
 
 button.optionsBarSegment:not(.bought) {
-    width: 77px;
-    margin: 0px;
+    width: 80px;
+    margin: 0 -3px;
     height: 50px;
     background-color: transparent;
     border-radius: 7px;
@@ -301,7 +301,8 @@ button.optionsBarSegment:not(.bought):hover {
 }
 
 .optionsBarName {
-    margin: 5px;
+    margin: 0px;
+    width: 80px
 }
 
 .optionsBar {
@@ -323,7 +324,7 @@ button.optionsBarSegment:not(.bought):hover {
 .optionsBarSelection {
     position: absolute;
     background-color: hsl(var(--themecolor), 40%, 20%);
-    width: 77px;
+    width: 80px;
     height: 50px;
     z-index: 1;
     border-radius: 7px;
