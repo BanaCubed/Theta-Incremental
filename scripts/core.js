@@ -192,8 +192,11 @@ function mainLoop() {
         document.getElementById('pinHeaderSelection').style.setProperty('border-radius', player.options.pinHeader ? '7px 0 0 7px' : '0 7px 7px 0')
         document.getElementById('rankupConfirmSelection').style.setProperty('--leftPos', player.options.rankupConfirm === 2 ? '0px' : player.options.rankupConfirm === 1 ? '80px' : '160px')
         document.getElementById('rankupConfirmSelection').style.setProperty('border-radius', player.options.rankupConfirm === 2 ? '7px 0 0 7px' : player.options.rankupConfirm === 0 ? '0 7px 7px 0' : '0 0 0 0')
+        document.getElementById('promptSelection').style.setProperty('--leftPos', player.options.promptStyle === 2 ? '0px' : '80px')
+        document.getElementById('promptSelection').style.setProperty('border-radius', player.options.promptStyle === 2 ? '7px 0 0 7px' : '0 7px 7px 0')
     }
 
     // CSS variables and Modification
     document.documentElement.style.setProperty('--themecolor', color)
+    document.getElementById('popup').style.setProperty('--height', document.getElementById('popup').getBoundingClientRect().height + 'px')
 }

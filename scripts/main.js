@@ -46,8 +46,7 @@ function getThetaGain(event) {
 
 function rankUp() {
     if(player.theta.gte(game.ranks.nextat())) {
-        player.ranks.ranks = Decimal.add(player.ranks.ranks, 1)
-        game.reset.rankup()
+        game.reset.rankup(false, true)
     }
     game.ranks.milestoneCheck()
 }
@@ -67,24 +66,15 @@ function rankUPGbuy(row, id) {
     }
 }
 
-function respecRanks() {
-    let condition = false
-    if(player.options.rankConfirm === 0) condition = true
-    if(!condition) condition = confirm('Are you sure you want to Respec you Rank Energy upgrades? This will force a Rank reset, without any gain!')
+function respecRanks(condition = false) {
+    if(player.options.rankupConfirm == 0) condition = true
+    if(!condition) popup('Are you sure you want to Respec you Rank Energy upgrades? This will force a Rank reset, without any gain!', 'confirm', 'rankrespec')
     if(condition) {
-        game.reset.rankup()
+        game.reset.rankup(true)
         player.ranks.rankRowsData = [0]
         player.ranks.rankUpgrades1 = [false, false, false, false, false]
     } else {
         return
-    }
-}
-
-function switchTabs(tab, isSubtab = false, subtab) {
-    if (!isSubtab) {
-        player.tab = tabs[tab]
-    } else {
-        if(tab === 1) player.subtabs.ranks = subtabs.ranks[subtab]
     }
 }
 

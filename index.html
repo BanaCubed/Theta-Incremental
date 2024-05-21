@@ -18,6 +18,7 @@
 
     <script src="scripts/dependencies/break_eternity.js"></script>
     <script src="scripts/utils/formats.js"></script>
+    <script src="scripts/utils/prompts.js"></script>
     <script src="scripts/game.js"></script>
 
     <script src="scripts/options.js"></script>
@@ -385,8 +386,18 @@
                     <div class="optionsBar" id="pinHeaderBar" style="width: 160px; height: 50px">
                         <div class="optionsBarSelection" id="pinHeaderSelection" style="z-index: 1;"></div>
                         <div style="z-index: 2;">
-                            <button class="optionsBarSegment" onclick="player.options.pinHeader = true" style="border-radius: 7px 0 0 7px;">Enabled</button>
-                            <button class="optionsBarSegment" onclick="player.options.pinHeader = false" style="border-radius: 0 7px 7px 0;">Disabled</button>
+                            <button class="optionsBarSegment" onclick="player.options.pinHeader = true" style="border-radius: 7px 0 0 7px; left: 3px;">Enabled</button>
+                            <button class="optionsBarSegment" onclick="player.options.pinHeader = false" style="border-radius: 0 7px 7px 0; right: 3px;">Disabled</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="optionsList" style="justify-content: start;">
+                    <div class="optionsBarName" style="width: 80px;">Popup Style</div>
+                    <div class="optionsBar" id="promptBar" style="width: 160px; height: 50px;">
+                        <div class="optionsBarSelection" id="promptSelection" style="z-index: 1;"></div>
+                        <div style="z-index: 2;">
+                            <button class="optionsBarSegment" onclick="player.options.promptStyle = 2" style="border-radius: 7px 0 0 7px; left: 3px;">In Tab</button>
+                            <button class="optionsBarSegment" onclick="player.options.promptStyle = 1" style="border-radius: 0 7px 7px 0; left: 83px;">Browser Alert</button>
                         </div>
                     </div>
                 </div>
@@ -395,9 +406,9 @@
                     <div class="optionsBar" id="rankupConfirmBar" style="width: 240px; height: 50px;">
                         <div class="optionsBarSelection" id="rankupConfirmSelection" style="z-index: 1;"></div>
                         <div style="z-index: 2;">
-                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 2" style="border-radius: 7px 0 0 7px;">Enabled</button>
-                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 1" style="border-radius: 0 0 0 0;">Respec</button>
-                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 0" style="border-radius: 0 7px 7px 0;">Disabled</button>
+                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 2" style="border-radius: 7px 0 0 7px; left: 3px;">Enabled</button>
+                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 1" style="border-radius: 0 0 0 0; left: 83px;">Gainless Only</button>
+                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 0" style="border-radius: 0 7px 7px 0; right: 3px;">Disabled</button>
                         </div>
                     </div>
                 </div>
@@ -405,6 +416,10 @@
 
         </div>
 
+    </div>
+
+    <div id="popup">
+        Something has gone terribly wrong, as this text is supposed to be replaced with the contents of the popup
     </div>
 
 </body>

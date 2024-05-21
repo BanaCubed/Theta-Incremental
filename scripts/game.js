@@ -279,7 +279,7 @@ const game = {
             if(Decimal.gte(player.ranks.ranks, 9)) milestones++
             if(Decimal.gte(player.ranks.ranks, 10)) milestones++
             if(Decimal.gte(player.ranks.ranks, 12)) milestones++
-            if(Decimal.gte(player.ranks.ranks, 17)) milestones++
+            if(Decimal.gte(player.ranks.ranks, 16)) milestones++
             player.ranks.milestones = milestones
 
             if(milestones >= 3 && player.unlocks.automation.theta < 1) player.unlocks.automation.theta = 1
@@ -304,7 +304,7 @@ const game = {
             "good luck getting this one.",
         ],
         milestonesRequirements: [
-            new Decimal(1), new Decimal(2), new Decimal(3), new Decimal(4), new Decimal(5), new Decimal(6), new Decimal(7), new Decimal(9), new Decimal(10), new Decimal(12), new Decimal(17), Decimal.pow(1e300, 1e300)
+            new Decimal(1), new Decimal(2), new Decimal(3), new Decimal(4), new Decimal(5), new Decimal(6), new Decimal(7), new Decimal(9), new Decimal(10), new Decimal(12), new Decimal(16), Decimal.pow(1e300, 1e300)
         ],
         rerenderMilestones(x = player.ranks.milestones) {
             if(x === 0) return
@@ -403,15 +403,17 @@ const game = {
         }
     },
     reset: {
-        rankup() {
-            let condition = true
-            if(player.options.rankupConfirm <= 1) condition = true
-            if(!condition) condition = confirm('Are you sure you want to rakn up?')
+        rankup(condition = false, gaining = false) {
+            if(player.options.rankupConfirm < 1) condition = true
+            if(!condition) popup('Are you sure you want to rank up?', 'confirm', 'rankup')
             if(condition) {
                 player.theta = new Decimal(0)
-                player.thetaUpgrades = [new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0)]
+                player.thetaUpgrades = [new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0)]
                 player.ranks.lastRankup = player.time
+                if(gaining) {
+                    player.ranks.ranks = Decimal.add(player.ranks.ranks, 1)
+                }
             }
         },
-    }
+    },
 }

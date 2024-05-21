@@ -18,7 +18,8 @@ const basePlayer = {
 	},
 	options: {
 		pinHeader: true,
-		rankupConfirm: 1
+		rankupConfirm: 1,
+		promtStyle: 2
 	},
 	automation: {
 		thetaUpgrades: [false, false, false, false, false, false, false, false],
@@ -68,13 +69,13 @@ setInterval(save, 8000);
 
 function saveExport() {
 	navigator.clipboard.writeText('TIS' + btoa(unescape(encodeURIComponent(JSON.stringify(player)))))
-	alert('Save copied to clipboard, if it hasn' + "'" + 't been copied, here is the save text: ' + 'TIS' + btoa(unescape(encodeURIComponent(JSON.stringify(player)))))
+	popup('Save copied to clipboard. If it hasn' + "'" + 't been copied, it is available in the console (F12)', 'alert')
+	console.log('Exported save should be below')
+	console.log('TIS' + btoa(unescape(encodeURIComponent(JSON.stringify(player)))))
 }
 
 function saveImport() {
-	save = prompt('Paste or type in save here')
-	save = save.substring(3)
-	load(save)
+	popup('Paste or type in save here', 'prompt', 'import')
 }
 
 function remakeValues(obj, defaultObj) {
@@ -93,7 +94,7 @@ function remakeValues(obj, defaultObj) {
 }
 
 function DANGERresetSave() {
-	if(confirm('Are you sure you want to reset your save? There is no benefit to doing so and you will NOT be able to get it back!')) {
+	if(popup('Are you sure you want to reset your save? There is no benefit to doing so and you will NOT be able to get it back!', 'confirm', 'hardreset')) {
 		player = basePlayer
 		save()
 	}
