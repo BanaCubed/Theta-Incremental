@@ -118,7 +118,7 @@ button.bought {
 
 .tabsList {
     margin: 0 0 5px 0;
-    overflow-y: visible;
+    overflow-y: hidden;
     overflow-x: auto;
     min-height: 40px;
     max-height: 40px;
