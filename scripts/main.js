@@ -68,7 +68,10 @@ function rankUPGbuy(row, id) {
 }
 
 function respecRanks() {
-    if(confirm('Are you sure you want to Respec you Rank Energy upgrades? This will force a Rank reset, without any gain!')) {
+    let condition = false
+    if(player.options.rankConfirm === 0) condition = true
+    if(!condition) condition = confirm('Are you sure you want to Respec you Rank Energy upgrades? This will force a Rank reset, without any gain!')
+    if(condition) {
         game.reset.rankup()
         player.ranks.rankRowsData = [0]
         player.ranks.rankUpgrades1 = [false, false, false, false, false]
@@ -128,7 +131,6 @@ function updateSubtab() {
 
 function getCPS() {
     let cps = new Decimal(5)
-    cps = cps.add(game.thetaUpgrades[8].effect())
     if(player.ranks.milestones >= 1) cps = cps.times(player.ranks.ranks)
     if(player.ranks.milestones >= 5) cps = cps.pow(2)
     return cps

@@ -222,7 +222,7 @@ const game = {
         },
         spends() { return true },
         power() {
-            return new Decimal(3)
+            return new Decimal(15)
         }
     }, { // UPG10
         cost(x = player.thetaUpgrades[9]) {
@@ -404,9 +404,14 @@ const game = {
     },
     reset: {
         rankup() {
-            player.theta = new Decimal(0)
-            player.thetaUpgrades = [new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0)]
-            player.ranks.lastRankup = player.time
+            let condition = true
+            if(player.options.rankupConfirm <= 1) condition = true
+            if(!condition) condition = confirm('Are you sure you want to rakn up?')
+            if(condition) {
+                player.theta = new Decimal(0)
+                player.thetaUpgrades = [new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0)]
+                player.ranks.lastRankup = player.time
+            }
         },
     }
 }

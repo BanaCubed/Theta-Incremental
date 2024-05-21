@@ -28,10 +28,15 @@ function mainLoop() {
     }
 
     // Rerendering
-    if(document.documentElement.scrollTop <= 8) {
-        document.getElementById('resourcesDisplay').style.boxShadow = 'unset'
-    } else {
+    if(document.documentElement.scrollTop >= 8 && player.options.pinHeader) {
         document.getElementById('resourcesDisplay').style.boxShadow = '0 0 10px #000, 0 0 20px #000, 0 0 15px #000, 0 0 5px #000'
+    } else {
+        document.getElementById('resourcesDisplay').style.boxShadow = 'unset'
+    }
+    if(player.options.pinHeader) {
+        document.getElementById('resourcesDisplay').style.position = 'fixed'
+    } else {
+        document.getElementById('resourcesDisplay').style.position = 'absolute'
     }
 
     document.getElementById('thetaCountDisplay').textContent = formatWhole(player.theta)
@@ -126,15 +131,15 @@ function mainLoop() {
         for (let index = 0; index <= 4; index++) {
             const IDname = 'rankUPG' + (index + 1)
             
-        if(player.ranks.rankUpgrades1[index]) {
-            document.getElementById(IDname).style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
-            document.getElementById(IDname + 'buyButton').textContent = 'Already Purchased'
-            document.getElementById(IDname + 'buyButton').classList.add('bought')
-        } else {
-            document.getElementById(IDname).style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
-            document.getElementById(IDname + 'buyButton').textContent = 'Buy'
-            document.getElementById(IDname + 'buyButton').classList.remove('bought')
-        }
+            if(player.ranks.rankUpgrades1[index]) {
+                document.getElementById(IDname).style.backgroundColor = 'rgba(0, 128, 0, 0.5)'
+                document.getElementById(IDname + 'buyButton').textContent = 'Already Purchased'
+                document.getElementById(IDname + 'buyButton').classList.add('bought')
+            } else {
+                document.getElementById(IDname).style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
+                document.getElementById(IDname + 'buyButton').textContent = 'Buy'
+                document.getElementById(IDname + 'buyButton').classList.remove('bought')
+            }
         }
     }
 
@@ -180,6 +185,13 @@ function mainLoop() {
         
         document.getElementById('statsRadius').textContent = formatDistance(game.stats.theta.radius())
         document.getElementById('statsDistance').textContent = formatDistance(game.stats.theta.distance())
+    }
+
+    if(player.tab === 'options') {
+        document.getElementById('pinHeaderSelection').style.setProperty('--leftPos', player.options.pinHeader ? '0px' : '84px')
+        document.getElementById('pinHeaderSelection').style.setProperty('border-radius', player.options.pinHeader ? '7px 0 0 7px' : '0 7px 7px 0')
+        document.getElementById('rankupConfirmSelection').style.setProperty('--leftPos', player.options.rankupConfirm === 2 ? '0px' : player.options.rankupConfirm === 1 ? '84px' : '168px')
+        document.getElementById('rankupConfirmSelection').style.setProperty('border-radius', player.options.rankupConfirm === 2 ? '7px 0 0 7px' : player.options.rankupConfirm === 0 ? '0 7px 7px 0' : '0 0 0 0')
     }
 
     // CSS variables and Modification

@@ -237,7 +237,7 @@
                     </div>
 
                     <div class="box" style="display: none;" id="thetaUPG9box">
-                        θB9: Provide bonus functional amount to θB2, θB5, and increase base cps<br>
+                        θB9: Provide bonus functional amount to θB2 and θB5<br>
                         <div class="upgrade" id="thetaUPG9">
                             <div class="upgradeInfo">Power: +<br>
                                 Count:  <br>
@@ -374,13 +374,32 @@
             </div>
 
             <div id="optionsTab" class="tabData">
-                <div style="height: fit-content; display: flex; justify-content: center; width: 100%;">
+                <div class="optionsList">
                     <button class="optionsButton" onclick="saveExport()">Export Save to Clipboard</button>
                     <button class="optionsButton" onclick="save()">Save Game</button>
                     <button class="optionsButton" onclick="saveImport()">Import Save</button>
-                </div>
-                <div style="height: fit-content; display: flex; justify-content: center; width: 100%;">
                     <button class="optionsButton DangerousButton" onclick="DANGERresetSave()">Hard Reset</button>
+                </div>
+                <div class="optionsList" style="justify-content: start;">
+                    <div class="optionsBarName" style="width: 80px;">Pin Header</div>
+                    <div class="optionsBar" id="pinHeaderBar">
+                        <div class="optionsBarSelection" id="pinHeaderSelection" style="z-index: 1;"></div>
+                        <div style="z-index: 2;">
+                            <button class="optionsBarSegment" onclick="player.options.pinHeader = true" style="border-radius: 7px 0 0 7px;">Enabled</button>
+                            <button class="optionsBarSegment" onclick="player.options.pinHeader = false" style="border-radius: 0 7px 7px 0;">Disabled</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="optionsList" style="justify-content: start;">
+                    <div class="optionsBarName" style="width: 80px;">Rankup Confirm</div>
+                    <div class="optionsBar" id="rankupConfirmBar">
+                        <div class="optionsBarSelection" id="rankupConfirmSelection" style="z-index: 1;"></div>
+                        <div style="z-index: 2;">
+                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 2" style="border-radius: 7px 0 0 7px;">Enabled</button>
+                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 1" style="border-radius: 0 0 0 0;">Respec</button>
+                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 0" style="border-radius: 0 7px 7px 0;">Disabled</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 

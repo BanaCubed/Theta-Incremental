@@ -17,7 +17,8 @@ const basePlayer = {
 		ranks: 'rankup'
 	},
 	options: {
-
+		pinHeader: true,
+		rankupConfirm: 1
 	},
 	automation: {
 		thetaUpgrades: [false, false, false, false, false, false, false, false],
