@@ -10,6 +10,7 @@ function mainLoop() {
 
     // Calculations
     player.theta = Decimal.add(player.theta, getThetaGain('passive').times(diff))
+    player.totalTheta = Decimal.add(player.totalTheta, getThetaGain('passive').times(diff))
     if(Decimal.gte(player.theta, player.ranks.bestTheta)) player.ranks.bestTheta = player.theta
     if(Decimal.gte(player.theta, player.ranks.bestTheta)) {
         player.ranks.bestTheta = player.theta
@@ -28,15 +29,26 @@ function mainLoop() {
     }
 
     // Rerendering
-    if(document.documentElement.scrollTop >= 8 && player.options.pinHeader) {
+    if(document.documentElement.scrollTop >= 8 && player.options.pinHeader === true) {
         document.getElementById('resourcesDisplay').style.boxShadow = '0 0 10px #000, 0 0 20px #000, 0 0 15px #000, 0 0 5px #000'
     } else {
         document.getElementById('resourcesDisplay').style.boxShadow = 'unset'
     }
-    if(player.options.pinHeader) {
+    if(player.options.pinHeader == true) {
         document.getElementById('resourcesDisplay').style.position = 'fixed'
     } else {
         document.getElementById('resourcesDisplay').style.position = 'absolute'
+    }
+    
+    if(document.documentElement.scrollTop >= 8 && player.options.pinHeader === 'values') {
+        document.getElementById('resourceValues').style.boxShadow = '0 0 10px #000, 0 0 20px #000, 0 0 15px #000, 0 0 5px #000'
+    } else {
+        document.getElementById('resourceValues').style.boxShadow = 'unset'
+    }
+    if(player.options.pinHeader == 'values') {
+        document.getElementById('resourceValues').style.position = 'fixed'
+    } else {
+        document.getElementById('resourceValues').style.position = 'absolute'
     }
 
     document.getElementById('thetaCountDisplay').textContent = formatWhole(player.theta)
@@ -182,14 +194,22 @@ function mainLoop() {
         
         if(Decimal.gte(player.theta, 1)) document.getElementById('thetaRotation').style.display = 'unset'
         else document.getElementById('thetaRotation').style.display = 'none'
+
+        if(Decimal.gte(player.ranks.ranks, 1)) document.getElementById('rankLength').style.display = 'unset'
+        else document.getElementById('rankLength').style.display = 'none'
         
         document.getElementById('statsRadius').textContent = formatDistance(game.stats.theta.radius())
         document.getElementById('statsDistance').textContent = formatDistance(game.stats.theta.distance())
+        
+        document.getElementById('totalTheta').textContent = formatWhole(player.totalTheta)
+        document.getElementById('timePlayed').textContent = formatTime(player.playtime)
+        
+        document.getElementById('rankLengthTime').textContent = formatTime(Date.now() / 1000 - player.ranks.lastRankup / 1000)
     }
 
     if(player.tab === 'options') {
-        document.getElementById('pinHeaderSelection').style.setProperty('--leftPos', player.options.pinHeader ? '0px' : '80px')
-        document.getElementById('pinHeaderSelection').style.setProperty('border-radius', player.options.pinHeader ? '7px 0 0 7px' : '0 7px 7px 0')
+        document.getElementById('pinHeaderSelection').style.setProperty('--leftPos', player.options.pinHeader == true ? '0px' : player.options.pinHeader == false ? '160px' : '80px')
+        document.getElementById('pinHeaderSelection').style.setProperty('border-radius', player.options.pinHeader == true ? '7px 0 0 7px' : player.options.pinHeader == false ? '0 7px 7px 0' : '0 0 0 0')
         document.getElementById('rankupConfirmSelection').style.setProperty('--leftPos', player.options.rankupConfirm === 2 ? '0px' : player.options.rankupConfirm === 1 ? '80px' : '160px')
         document.getElementById('rankupConfirmSelection').style.setProperty('border-radius', player.options.rankupConfirm === 2 ? '7px 0 0 7px' : player.options.rankupConfirm === 0 ? '0 7px 7px 0' : '0 0 0 0')
         document.getElementById('promptSelection').style.setProperty('--leftPos', player.options.promptStyle === 2 ? '0px' : '80px')
@@ -198,5 +218,4 @@ function mainLoop() {
 
     // CSS variables and Modification
     document.documentElement.style.setProperty('--themecolor', color)
-    document.getElementById('popup').style.setProperty('--height', document.getElementById('popup').getBoundingClientRect().height + 'px')
 }

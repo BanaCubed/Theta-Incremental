@@ -39,6 +39,7 @@ const basePlayer = {
 		bestTheta: new Decimal(0),
 		lastRankup: Date.now()
 	},
+	totalTheta: new Decimal(0),
 }
 
 let player = {}
@@ -95,7 +96,5 @@ function remakeValues(obj, defaultObj) {
 
 function DANGERresetSave() {
 	if(popup('Are you sure you want to reset your save? There is no benefit to doing so and you will NOT be able to get it back!', 'confirm', 'hardreset')) {
-		player = basePlayer
-		save()
 	}
 }

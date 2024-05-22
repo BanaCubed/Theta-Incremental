@@ -34,14 +34,18 @@
 <body id="body">
 
     <div id="resourcesDisplay">
-        <div class="resourceDisplay" id="thetaResource">
-            <div id="thetaText" class="thetaDisplay resourceText">θ: <span id="thetaCountDisplay">?</span></div>
-            <div class="passiveProductionDisplay">+ <span id="thetaPassiveDisplay">?</span>/s</div>
-            <button onclick="thetaButtonPress()" class="button thetaDisplay resourceButton" id="thetaButton">+ <span id="thetaPerClickDisplay">?</span></button>
+        <div id="resourceValues">
+            <div class="resourceDisplay" id="thetaResource">
+                <div id="thetaText" class="thetaDisplay resourceText">θ: <span id="thetaCountDisplay">?</span></div>
+                <div class="passiveProductionDisplay">+ <span id="thetaPassiveDisplay">?</span>/s</div>
+            </div>
+            <div class="resourceDisplay" id="rankResource" style="display: none;">
+                <div id="ranksResourceDisplayText" class="rankDisplay resourceText">Rank <span id="ranksCountDisplay">?</span></div>
+                <div class="passiveProductionDisplay">Need <span id="rankRequirementDisplay">?</span> θ</div>
+            </div>
         </div>
-        <div class="resourceDisplay" id="rankResource" style="display: none;">
-            <div id="ranksResourceDisplayText" class="rankDisplay resourceText">Rank <span id="ranksCountDisplay">?</span></div>
-            <div class="passiveProductionDisplay">Need <span id="rankRequirementDisplay">?</span> θ</div>
+        <div id="resourceButtons">
+            <button onclick="thetaButtonPress()" class="button thetaDisplay resourceButton" id="thetaButton">+ <span id="thetaPerClickDisplay">?</span></button>
             <button onclick="rankUp()" class="button rankDisplay resourceButton" id="rankupQuickButton">Rank Up</button>
         </div>
     </div>
@@ -366,34 +370,43 @@
             </div>
 
             <div id="statsTab" class="tabData">
+                <div class="generalFacts box" style="margin: 10px; display: unset;" id="thetaAmount">
+                    You have gained a total of <span id="totalTheta">?</span> theta<br><br>
+                    You have played this game for a total of <span id="timePlayed">?</span>
+                </div>
                 <div class="thetaFacts box" style="margin: 10px; display: none;" id="thetaRotation">
                     If each of your theta (θ) was <span id="statsDegrees">? ???</span>, they would make <span id="statsRotations">?</span> full rotation<span id="rotationS"></span>
+                    <div class="thetaFacts" id="thetaDistance" style="margin: 10px; display: none;">
+                        <br>If this angle was the amount that a wheel with a radius of <span id="statsRadius">? ???</span> spun, it would move <span id="statsDistance">? ???</span>
+                    </div>
                 </div>
-                <div class="thetaFacts box" id="thetaDistance" style="margin: 10px; display: none;">
-                    If your theta's angle was the amount that a wheel with a radius of <span id="statsRadius">? ???</span> spun, it would move <span id="statsDistance">? ???</span>
+                <div class="rankFacts box" style="margin: 10px; display: none;" id="rankLength">
+                    Your current rank has lasted <span id="rankLengthTime">?</span>
                 </div>
             </div>
 
             <div id="optionsTab" class="tabData">
+                <h1>Theta Incremental v0.0.2.β1<br>Ranks - Rank Energy - Final Changes</h1>
                 <div class="optionsList">
                     <button class="optionsButton" onclick="saveExport()">Export Save to Clipboard</button>
                     <button class="optionsButton" onclick="save()">Save Game</button>
                     <button class="optionsButton" onclick="saveImport()">Import Save</button>
                     <button class="optionsButton DangerousButton" onclick="DANGERresetSave()">Hard Reset</button>
                 </div>
-                <div class="optionsList" style="justify-content: start;">
-                    <div class="optionsBarName" style="width: 80px;">Pin Header</div>
-                    <div class="optionsBar" id="pinHeaderBar" style="width: 160px; height: 50px">
+                <div class="optionsList" style="justify-content: start; margin-top: 12px;">
+                    <div class="optionsBar" id="pinHeaderBar" style="width: 240px; height: 50px">
+                        <div class="optionsBarName" style="width: 240px; text-align: start;">Pin Header</div>
                         <div class="optionsBarSelection" id="pinHeaderSelection" style="z-index: 1;"></div>
                         <div style="z-index: 2;">
                             <button class="optionsBarSegment" onclick="player.options.pinHeader = true" style="border-radius: 7px 0 0 7px; left: 3px;">Enabled</button>
+                            <button class="optionsBarSegment" onclick="player.options.pinHeader = 'values'" style="border-radius: 0 0 0 0; right: 83px;">Values Only</button>
                             <button class="optionsBarSegment" onclick="player.options.pinHeader = false" style="border-radius: 0 7px 7px 0; right: 3px;">Disabled</button>
                         </div>
                     </div>
                 </div>
-                <div class="optionsList" style="justify-content: start;">
-                    <div class="optionsBarName" style="width: 80px;">Popup Style</div>
+                <div class="optionsList" style="justify-content: start; margin-top: 15px;">
                     <div class="optionsBar" id="promptBar" style="width: 160px; height: 50px;">
+                        <div class="optionsBarName" style="width: 160px; text-align: start;">Popup Style</div>
                         <div class="optionsBarSelection" id="promptSelection" style="z-index: 1;"></div>
                         <div style="z-index: 2;">
                             <button class="optionsBarSegment" onclick="player.options.promptStyle = 2" style="border-radius: 7px 0 0 7px; left: 3px;">In Tab</button>
@@ -401,9 +414,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="optionsList" style="justify-content: start;">
-                    <div class="optionsBarName" style="width: 80px;">Rankup Confirm</div>
+                <div class="optionsList" style="justify-content: start; margin-top: 15px;">
                     <div class="optionsBar" id="rankupConfirmBar" style="width: 240px; height: 50px;">
+                        <div class="optionsBarName" style="width: 240px; text-align: start;">Rankup Confirm</div>
                         <div class="optionsBarSelection" id="rankupConfirmSelection" style="z-index: 1;"></div>
                         <div style="z-index: 2;">
                             <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 2" style="border-radius: 7px 0 0 7px; left: 3px;">Enabled</button>
