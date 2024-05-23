@@ -200,7 +200,7 @@ const game = {
         },
         spends() { return true },
         power() {
-            return new Decimal(0.025)
+            return new Decimal(0.02)
         }
     }, { // UPG9
         cost(x = player.thetaUpgrades[8]) {
@@ -248,7 +248,7 @@ const game = {
         },
         spends() { return true },
         power() {
-            return new Decimal(0.05)
+            return new Decimal(0.025)
         }
     }],
     ranks: {

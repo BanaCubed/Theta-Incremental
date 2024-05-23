@@ -57,6 +57,7 @@ async function updateStats() {
     document.getElementById('timePlayed').textContent = formatTime(player.playtime)
     
     document.getElementById('rankLengthTime').textContent = formatTime(Date.now() / 1000 - player.ranks.lastRankup / 1000)
+    document.getElementById('ranksBestTheta').textContent = formatWhole(player.ranks.bestTheta)
 }
 
 async function updateRanks() {
