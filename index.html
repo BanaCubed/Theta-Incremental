@@ -15,10 +15,13 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/theta.css">
     <link rel="stylesheet" href="css/ranks.css">
+    <link rel="stylesheet" href="css/popup.css">
+    <link rel="stylesheet" href="css/options.css">
 
     <script src="scripts/dependencies/break_eternity.js"></script>
     <script src="scripts/utils/formats.js"></script>
     <script src="scripts/utils/prompts.js"></script>
+    <script src="scripts/utils/rerender.js"></script>
     <script src="scripts/game.js"></script>
 
     <script src="scripts/options.js"></script>
@@ -46,7 +49,7 @@
         </div>
         <div id="resourceButtons">
             <button onclick="thetaButtonPress()" class="button thetaDisplay resourceButton" id="thetaButton">+ <span id="thetaPerClickDisplay">?</span></button>
-            <button onclick="rankUp()" class="button rankDisplay resourceButton" id="rankupQuickButton">Rank Up</button>
+            <button onclick="rankUp()" class="button rankDisplay resourceButton" id="rankupQuickButton" style="display: none;">Rank Up</button>
         </div>
     </div>
 
@@ -279,9 +282,9 @@
                             </div>
                         </div>
                         <div class="upgradeButtons" style="display: flex; flex-direction: row;">
-                            <button id="thetaUPG10buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(8)">Buy One</button>
-                            <button id="thetaUPG10max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(8, true)">Buy Max</button>
-                        <button id="thetaUPG10auto" class="thetaUPGbuy upgradeBuy" onclick="toggleAuto(8, 0)" style="display: none;">Auto: Off</button>
+                            <button id="thetaUPG10buy" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(10)">Buy One</button>
+                            <button id="thetaUPG10max" class="thetaUPGbuy upgradeBuy" onclick="thetaUPGbuy(10, true)">Buy Max</button>
+                        <button id="thetaUPG10auto" class="thetaUPGbuy upgradeBuy" onclick="toggleAuto(10, 0)" style="display: none;">Auto: Off</button>
                             </div>
                     </div>
 
@@ -371,55 +374,58 @@
 
             <div id="statsTab" class="tabData">
                 <div class="generalFacts box" style="margin: 10px; display: unset;" id="thetaAmount">
-                    You have gained a total of <span id="totalTheta">?</span> theta<br><br>
+                    <h1>General</h1>
                     You have played this game for a total of <span id="timePlayed">?</span>
                 </div>
                 <div class="thetaFacts box" style="margin: 10px; display: none;" id="thetaRotation">
+                    <h1>Theta</h1>
+                    You have gained a total of <span id="totalTheta">?</span> theta<br>
                     If each of your theta (θ) was <span id="statsDegrees">? ???</span>, they would make <span id="statsRotations">?</span> full rotation<span id="rotationS"></span>
                     <div class="thetaFacts" id="thetaDistance" style="margin: 10px; display: none;">
                         <br>If this angle was the amount that a wheel with a radius of <span id="statsRadius">? ???</span> spun, it would move <span id="statsDistance">? ???</span>
                     </div>
                 </div>
                 <div class="rankFacts box" style="margin: 10px; display: none;" id="rankLength">
+                    <h1>Ranks</h1>
                     Your current rank has lasted <span id="rankLengthTime">?</span>
                 </div>
             </div>
 
             <div id="optionsTab" class="tabData">
-                <h1>Theta Incremental v0.0.2.β1<br>Ranks - Rank Energy - Final Changes</h1>
+                <h1>Theta Incremental v0.0.2.β2<br>Ranks - Rank Energy - Loading Screen go brrrrrrr</h1>
                 <div class="optionsList">
                     <button class="optionsButton" onclick="saveExport()">Export Save to Clipboard</button>
                     <button class="optionsButton" onclick="save()">Save Game</button>
                     <button class="optionsButton" onclick="saveImport()">Import Save</button>
                     <button class="optionsButton DangerousButton" onclick="DANGERresetSave()">Hard Reset</button>
                 </div>
-                <div class="optionsList" style="justify-content: start; margin-top: 12px;">
+                <div class="optionsList" style="justify-content: start; margin-top: 18px;">
                     <div class="optionsBar" id="pinHeaderBar" style="width: 240px; height: 50px">
-                        <div class="optionsBarName" style="width: 240px; text-align: start;">Pin Header</div>
+                        <div class="optionsBarName" style="text-align: start;">Pin Header</div>
                         <div class="optionsBarSelection" id="pinHeaderSelection" style="z-index: 1;"></div>
                         <div style="z-index: 2;">
-                            <button class="optionsBarSegment" onclick="player.options.pinHeader = true" style="border-radius: 7px 0 0 7px; left: 3px;">Enabled</button>
+                            <button class="optionsBarSegment" onclick="player.options.pinHeader = true" style="border-radius: 0 0 0 7px; left: 3px;">Enabled</button>
                             <button class="optionsBarSegment" onclick="player.options.pinHeader = 'values'" style="border-radius: 0 0 0 0; right: 83px;">Values Only</button>
                             <button class="optionsBarSegment" onclick="player.options.pinHeader = false" style="border-radius: 0 7px 7px 0; right: 3px;">Disabled</button>
                         </div>
                     </div>
                 </div>
-                <div class="optionsList" style="justify-content: start; margin-top: 15px;">
+                <div class="optionsList" style="justify-content: start; margin-top: 21px;">
                     <div class="optionsBar" id="promptBar" style="width: 160px; height: 50px;">
-                        <div class="optionsBarName" style="width: 160px; text-align: start;">Popup Style</div>
+                        <div class="optionsBarName" style="text-align: start;">Popup Style</div>
                         <div class="optionsBarSelection" id="promptSelection" style="z-index: 1;"></div>
                         <div style="z-index: 2;">
-                            <button class="optionsBarSegment" onclick="player.options.promptStyle = 2" style="border-radius: 7px 0 0 7px; left: 3px;">In Tab</button>
+                            <button class="optionsBarSegment" onclick="player.options.promptStyle = 2" style="border-radius: 0 0 0 7px; left: 3px;">In Tab</button>
                             <button class="optionsBarSegment" onclick="player.options.promptStyle = 1" style="border-radius: 0 7px 7px 0; left: 83px;">Browser Alert</button>
                         </div>
                     </div>
                 </div>
-                <div class="optionsList" style="justify-content: start; margin-top: 15px;">
+                <div class="optionsList" style="justify-content: start; margin-top: 21px;">
                     <div class="optionsBar" id="rankupConfirmBar" style="width: 240px; height: 50px;">
-                        <div class="optionsBarName" style="width: 240px; text-align: start;">Rankup Confirm</div>
+                        <div class="optionsBarName" style="text-align: start;">Rankup Confirm</div>
                         <div class="optionsBarSelection" id="rankupConfirmSelection" style="z-index: 1;"></div>
                         <div style="z-index: 2;">
-                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 2" style="border-radius: 7px 0 0 7px; left: 3px;">Enabled</button>
+                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 2" style="border-radius: 0 0 0 7px; left: 3px;">Enabled</button>
                             <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 1" style="border-radius: 0 0 0 0; left: 83px;">Gainless Only</button>
                             <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 0" style="border-radius: 0 7px 7px 0; right: 3px;">Disabled</button>
                         </div>
@@ -435,10 +441,13 @@
         Kris get the banana!
     </div>
 
+    <div id="loadingScreen" style="display: unset;"></div>
+
 </body>
 
 <script>
     updateTab()
+	updateAll()
 </script>
 
 </html>

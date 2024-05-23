@@ -31,7 +31,8 @@ function popup(text = 'lorem ipsum', type = 'alert', event) {
                     <br><br>
                     <button class="strangeBugfix DangerousButton" onclick="
                         player = basePlayer;
-                        save()">Confirm</button>
+                        save();
+                        closePopup()">Confirm</button>
                     <button class="strangeBugfix" onclick="closePopup()">Cancel</button>
                 `)
             }
@@ -42,7 +43,8 @@ function popup(text = 'lorem ipsum', type = 'alert', event) {
                     player.theta = new Decimal(0);
                     player.thetaUpgrades = [new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0)];
                     player.ranks.lastRankup = player.time;
-                    player.ranks.ranks = Decimal.add(player.ranks.ranks, 1);">Rankup</button>
+                    player.ranks.ranks = Decimal.add(player.ranks.ranks, 1);
+                    closePopup()">Rankup</button>
                     <button class="strangeBugfix" onclick="closePopup()">Cancel</button>
                 `)
             }
@@ -52,7 +54,8 @@ function popup(text = 'lorem ipsum', type = 'alert', event) {
                     <button class="strangeBugfix" onclick="
                     game.reset.rankup(true);
                     player.ranks.rankRowsData = [0];
-                    player.ranks.rankUpgrades1 = [false, false, false, false, false];">Respec</button>
+                    player.ranks.rankUpgrades1 = [false, false, false, false, false];
+                    closePopup()">Respec</button>
                     <button class="strangeBugfix" onclick="closePopup()">Cancel</button>
                 `)
             }

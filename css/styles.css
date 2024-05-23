@@ -177,6 +177,7 @@ button.bought {
     flex-direction: column;
     align-content: center;
     text-align: center;
+    align-items: center;
 }
 
 .upgradesList {
@@ -257,156 +258,10 @@ button.upgradeBuy.bought {
     max-width: 100%;
 }
 
-button.optionsButton {
-    height: 80px;
-    width: 80px;
-    margin: 3px 0;
+div#statsTab > div.box {
+    width: calc(100% - 16px);
 }
 
-.box {
-    height: fit-content;
-    width: 300px;
-    max-width: 100%;
-    margin: 2px;
-    border-color: rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
-    border-width: 3px;
-    border-style: solid;
-    padding: 5px;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.help {
-    background-color: black;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    font-size: 20px;
-    border-color: var(--buttonbackgroundcolor);
-    border-width: 2px;
-    border-style: solid;
-}
-
-.help:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-    transform: scale(1.1, 1.1);
-    border-color: var(--buttonbackgroundcolorhover);
-}
-
-button.DangerousButton:hover:not(.sampleclass) {
-    background-color: hsl(0, 100%, 50%);
-    box-shadow: 0 0 10px hsl(0 100% 20%);
-}
-
-div.optionsList {
-    margin: 10px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-
-}
-
-/* I know that this part is scuffed with its variables but whatever */
-
-button.optionsBarSegment:not(.bought) {
-    width: 80px;
-    margin: 0 -3px;
-    height: 50px;
-    background-color: transparent;
-    border-radius: 7px;
-    border-width: 0;
-    position: absolute;
-}
-
-button.optionsBarSegment:not(.bought):hover {
-    background-color: hsl(var(--themecolor), 85%, 35%);
-}
-
-.optionsBarName {
-    margin: 0px;
-    width: 80px;
-    position: absolute;
-    top: -20px;
-    pointer-events: none;
-}
-
-.optionsBar {
-    background-color: var(--buttonbackgroundcolor);
-    border-radius: 10px;
-    border-color: rgba(255, 255, 255, 0.2);
-    border-width: 3px;
-    border-style: solid;
-    position: relative;
-    text-align: center;
-}
-
-.optionsBar:hover {
-    border-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 0 3px hsl(var(--themecolor) 100% 20%);
-    background-color: hsl(var(--themecolor), 90%, 30%);
-}
-
-.optionsBarSelection {
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.2);
-    width: 80px;
-    height: 50px;
-    z-index: 5;
-    border-radius: 7px;
-    top: 0px;
-    left: var(--leftPos);
-    --leftPos: 0px;
-    pointer-events: none;
-    transition: all 0.5s
-}
-
-#popup {
-    position: fixed;
-    z-index: calc(infinity);
-    top: calc(calc(100% - var(--height)) / 2 + 30px);
-    left: 50px;
-    text-align: center;
-    width: calc(100% - 100px);
-    height: fit-content;
-    --height: 0px;
-    max-height: calc(100% - 100px);
-    background-color: var(--backgroundcolor);
-    box-shadow: 0 0 10px black;
-    border-radius: 10px;
-    transition: none;
-    opacity: 0%;
-    pointer-events: none;
-    line-break: loose;
-    overflow: auto;
-    padding: 8px;
-}
-
-#popup.activated:not(.sampleclass):not(.sampleclass) {
-    opacity: 100%;
-    top: calc(calc(100% - var(--height)) / 2);
-    pointer-events: all;
-}
-
-textarea {
-    background-color: hsl(var(--themecolor), 80%, 20%);
-    transition: none;
-    border-radius: 10px;
-    border-color: hsl(var(--themecolor), 70%, 30%);
-    border-width: 3px;
-}
-
-.coolepictextbox {
-    width: calc(100% - 20px);
-    height: 100px;
-    margin: 0 3px;
-}
-
-.inPopup > :not(.activated) {
-    pointer-events: none;
-}
-
-button.strangeBugfix { /* Not actually a bugfix, not anymore */
-    margin: 3px calc(100vw / 10);
+div#optionsTab {
+    align-items: start;
 }

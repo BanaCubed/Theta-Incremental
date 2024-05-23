@@ -19,10 +19,10 @@ const basePlayer = {
 	options: {
 		pinHeader: true,
 		rankupConfirm: 1,
-		promtStyle: 2
+		promptStyle: 2
 	},
 	automation: {
-		thetaUpgrades: [false, false, false, false, false, false, false, false],
+		thetaUpgrades: [false, false, false, false, false, false, false, false, false, false],
 	},
 	unlocks: {
 		automation: {
@@ -44,15 +44,16 @@ const basePlayer = {
 
 let player = {}
 
-load()
+load(null, true)
 
 function save() {
 	if (player !== undefined && player !== null) {
         localStorage.setItem('thetaIncrementalR', btoa(unescape(encodeURIComponent(JSON.stringify(player)))));
     }
+	updateAll()
 }
 
-function load(data) {
+function load(data, initial = false) {
 	if(data === undefined || data === null) {
 		data = localStorage.getItem('thetaIncrementalR');
 	}
@@ -64,6 +65,7 @@ function load(data) {
 	}
 
 	player = remakeValues(player, basePlayer)
+	if(!initial) updateAll()
 }
 
 setInterval(save, 8000);

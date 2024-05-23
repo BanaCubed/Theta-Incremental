@@ -123,5 +123,5 @@ function getCPS() {
     let cps = new Decimal(5)
     if(player.ranks.milestones >= 1) cps = cps.times(player.ranks.ranks)
     if(player.ranks.milestones >= 5) cps = cps.pow(2)
-    return cps
+    return player.ranks.milestones >= 1 ? cps : new Decimal(0)
 }

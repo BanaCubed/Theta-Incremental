@@ -28,12 +28,12 @@ const game = {
         spends() { return player.ranks.milestones < 2 }
     }, { // UPG2
         cost(x = player.thetaUpgrades[1]) {
-            let base = new Decimal(1.25)
+            let base = new Decimal(1.2)
             if(player.ranks.rankUpgrades1[3]) base = base.pow(Decimal.pow(0.94, player.ranks.rankEnergy))
             return Decimal.pow(base, x).times(25).floor()
         },
         buyMax() {
-            let base = new Decimal(1.25)
+            let base = new Decimal(1.2)
             if(player.ranks.rankUpgrades1[3]) base = base.pow(Decimal.pow(0.94, player.ranks.rankEnergy))
             let toBuy = Decimal.div(player.theta, 25).log(base).floor().add(1)
             let cost = this.cost(toBuy.sub(1))
@@ -82,19 +82,19 @@ const game = {
         cost(x = player.thetaUpgrades[3]) {
             let amount = new Decimal(x)
             if(amount.gte(10)) amount = amount.div(10).pow(2).times(10)
-            let base = new Decimal(2.5)
+            let base = new Decimal(2)
             if(player.ranks.rankUpgrades1[3]) base = base.pow(Decimal.pow(0.94, player.ranks.rankEnergy))
             let baseCost = Decimal.pow(base, amount).times(4000).floor()
             return baseCost
         },
         buyMax() {
-            let base = new Decimal(2.5)
+            let base = new Decimal(2)
             if(player.ranks.rankUpgrades1[3]) base = base.pow(Decimal.pow(0.94, player.ranks.rankEnergy))
             let toBuy = Decimal.div(player.theta, 4000).log(base)
             if(toBuy.gte(10)) {
                 toBuy = toBuy.div(10).pow(0.5).times(10)
             }
-            let cost = this.cost(toBuy)
+            let cost = this.cost(toBuy.floor())
             toBuy = toBuy.sub(player.thetaUpgrades[3]).add(1).floor()
             return [cost, toBuy]
         },
@@ -160,9 +160,9 @@ const game = {
         buyMax() {
             let toBuy = Decimal.div(player.theta, 5e7).log(2)
             if(toBuy.gte(10)) {
-                toBuy = toBuy.div(10).pow(0.5).times(10)
+                toBuy = toBuy.div(10).pow(0.5).times(10).floor()
             }
-            let cost = this.cost(toBuy)
+            let cost = this.cost(toBuy.floor())
             toBuy = toBuy.sub(player.thetaUpgrades[6]).add(1).floor()
             return [cost, toBuy]
         },
@@ -180,15 +180,15 @@ const game = {
         cost(x = player.thetaUpgrades[7]) {
             let amount = new Decimal(x)
             if(amount.gte(10)) amount = amount.div(10).pow(4).times(10)
-            let base = Decimal.pow(1e2, amount).times(1e10).floor()
+            let base = Decimal.pow(25, amount).times(1e10).floor()
             return base
         },
         buyMax() {
-            let toBuy = Decimal.div(player.theta, 1e10).log(1e2)
+            let toBuy = Decimal.div(player.theta, 1e10).log(25)
             if(toBuy.gte(10)) {
                 toBuy = toBuy.div(10).pow(0.25).times(10).floor()
             }
-            let cost = this.cost(toBuy)
+            let cost = this.cost(toBuy.floor())
             toBuy = toBuy.sub(player.thetaUpgrades[7]).add(1).floor()
             return [cost, toBuy]
         },
@@ -200,18 +200,18 @@ const game = {
         },
         spends() { return true },
         power() {
-            return new Decimal(0.02)
+            return new Decimal(0.025)
         }
     }, { // UPG9
         cost(x = player.thetaUpgrades[8]) {
             let amount = new Decimal(x)
-            let base = Decimal.pow(9, amount).times(1e15).floor()
+            let base = Decimal.pow(6, amount).times(1e15).floor()
             return base
         },
         buyMax() {
-            let toBuy = Decimal.div(player.theta, 1e15).log(9)
+            let toBuy = Decimal.div(player.theta, 1e15).log(6).floor()
             let cost = this.cost(toBuy)
-            toBuy = toBuy.sub(player.thetaUpgrades[8]).add(1).floor()
+            toBuy = toBuy.sub(player.thetaUpgrades[8]).add(1)
             return [cost, toBuy]
         },
         bonus() {
@@ -228,15 +228,15 @@ const game = {
         cost(x = player.thetaUpgrades[9]) {
             let amount = new Decimal(x)
             if(amount.gte(10)) amount = amount.div(10).pow_base(2).times(5)
-            let base = Decimal.pow(1e10, amount).times(1e50).floor()
+            let base = Decimal.pow(1e5, amount).times(1e20).floor()
             return base
         },
         buyMax() {
-            let toBuy = Decimal.div(player.theta, 1e50).log(1e10)
+            let toBuy = Decimal.div(player.theta, 1e20).log(1e5)
             if(toBuy.gte(10)) {
                 toBuy = toBuy.div(10).log(2).times(10).floor()
             }
-            let cost = this.cost(toBuy)
+            let cost = this.cost(toBuy.floor())
             toBuy = toBuy.sub(player.thetaUpgrades[9]).add(1).floor()
             return [cost, toBuy]
         },
@@ -248,7 +248,7 @@ const game = {
         },
         spends() { return true },
         power() {
-            return new Decimal(0.01)
+            return new Decimal(0.05)
         }
     }],
     ranks: {
@@ -335,7 +335,7 @@ const game = {
             if(player.ranks.rankRowsData[0] >= 1) x = x.sub(1)
             if(player.ranks.rankRowsData[0] >= 2) x = x.sub(1)
             if(player.ranks.rankRowsData[0] >= 3) x = x.sub(2)
-            if(player.ranks.rankRowsData[0] >= 4) x = x.sub(3)
+            if(player.ranks.rankRowsData[0] >= 4) x = x.sub(2)
             if(player.ranks.rankRowsData[0] >= 5) x = x.sub(4)
             return x
         },
@@ -355,7 +355,7 @@ const game = {
                     if(player.ranks.rankRowsData[0] == 0) return new Decimal(1)
                     if(player.ranks.rankRowsData[0] == 1) return new Decimal(1)
                     if(player.ranks.rankRowsData[0] == 2) return new Decimal(2)
-                    if(player.ranks.rankRowsData[0] == 3) return new Decimal(3)
+                    if(player.ranks.rankRowsData[0] == 3) return new Decimal(2)
                     if(player.ranks.rankRowsData[0] == 4) return new Decimal(4)
                 },
                 effects: {
@@ -404,7 +404,8 @@ const game = {
     },
     reset: {
         rankup(condition = false, gaining = false) {
-            if(player.options.rankupConfirm < 1) condition = true
+            if(player.options.rankupConfirm < 1 && gaining == false) condition = true
+            if(player.options.rankupConfirm < 2 && gaining == true) condition = true
             if(!condition) popup('Are you sure you want to rank up?', 'confirm', 'rankup')
             if(condition) {
                 player.theta = new Decimal(0)
