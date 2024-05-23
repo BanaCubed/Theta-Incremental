@@ -28,7 +28,25 @@ async function updateStats() {
                         if(degrees.lt(1)) {
                             degrees = degrees.times(1000)
                             increases++
-    }}}}}}
+                            if(degrees.lt(1)) {
+                                degrees = degrees.times(1000)
+                                increases++
+                                if(degrees.lt(1)) {
+                                    degrees = degrees.times(1000)
+                                    increases++
+                                    if(degrees.lt(1)) {
+                                        degrees = degrees.times(1000)
+                                        increases++
+                                        if(degrees.lt(1)) {
+                                            degrees = degrees.times(1000)
+                                            increases++
+                                            if(degrees.lt(1)) {
+                                                degrees = degrees.times(1000)
+                                                increases++
+                                                if(degrees.lt(1)) {
+                                                    degrees = degrees.times(1000)
+                                                    increases++
+    }}}}}}}}}}}}
     let degreestype = ' degrees'
     if(increases === 1) degreestype = ' arc minutes'
     if(increases === 2) degreestype = ' arc seconds'
@@ -36,10 +54,16 @@ async function updateStats() {
     if(increases === 4) degreestype = ' arc microseconds'
     if(increases === 5) degreestype = ' arc nanoseconds'
     if(increases === 6) degreestype = ' arc picoseconds'
+    if(increases === 7) degreestype = ' arc femtoseconds'
+    if(increases === 8) degreestype = ' arc attoseconds'
+    if(increases === 9) degreestype = ' arc zeptoseconds'
+    if(increases === 10) degreestype = ' arc yoctoseconds'
+    if(increases === 11) degreestype = ' arc rontoseconds'
+    if(increases === 12) degreestype = ' arc quectoseconds'
     document.getElementById('statsDegrees').textContent = format(degrees) + degreestype
     document.getElementById('statsRotations').textContent = format(game.stats.theta.rotations())
-    if(player.theta.lt(1.296e21)) document.getElementById('rotationS').textContent = ''
-    if(player.theta.gte(1.296e21)) document.getElementById('rotationS').textContent = 's'
+    if(player.theta.lt(1.296e40)) document.getElementById('rotationS').textContent = ''
+    if(player.theta.gte(1.296e40)) document.getElementById('rotationS').textContent = 's'
 
     if(game.stats.theta.rotations().gt(1)) document.getElementById('thetaDistance').style.display = 'unset'
     else document.getElementById('thetaDistance').style.display = 'none'
@@ -58,6 +82,28 @@ async function updateStats() {
     
     document.getElementById('rankLengthTime').textContent = formatTime(Date.now() / 1000 - player.ranks.lastRankup / 1000)
     document.getElementById('ranksBestTheta').textContent = formatWhole(player.ranks.bestTheta)
+
+    document.getElementById('thetaPerClickBreakdownThetaUPG1').textContent = 'θB1: +' + formatWhole(game.thetaUpgrades[0].effect())
+    document.getElementById('thetaPerClickBreakdownThetaUPG1').style.display = game.thetaUpgrades[0].effect().gte(1) ? 'unset' : 'none'
+    document.getElementById('thetaPerClickBreakdownThetaUPG7').textContent = 'θB7: x' + format(game.thetaUpgrades[6].effect())
+    document.getElementById('thetaPerClickBreakdownThetaUPG7').style.display = game.thetaUpgrades[6].effect().gte(1.3) ? 'unset' : 'none'
+    document.getElementById('thetaPerClickBreakdownRankMilestone10').textContent = 'RM10: x' + format(player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
+    document.getElementById('thetaPerClickBreakdownRankMilestone10').style.display = Decimal.gte(player.ranks.ranks, 10) ? 'unset' : 'none'
+    document.getElementById('thetaPerClickBreakdownRankEnergyUpgrade5').textContent = 'RεU1e: x' + formatWhole(game.ranks.upgrades[1].effects.e1())
+    document.getElementById('thetaPerClickBreakdownRankEnergyUpgrade5').style.display = player.ranks.rankUpgrades1[4] ? 'unset' : 'none'
+
+    document.getElementById('thetaPerSecondBreakdownThetaUPG2').textContent = 'θB2: +' + formatWhole(game.thetaUpgrades[1].effect())
+    document.getElementById('thetaPerSecondBreakdownThetaUPG2').style.display = game.thetaUpgrades[1].effect().gte(1) ? 'unset' : 'none'
+    document.getElementById('thetaPerSecondBreakdownThetaUPG4').textContent = 'θB4: x' + format(game.thetaUpgrades[3].effect())
+    document.getElementById('thetaPerSecondBreakdownThetaUPG4').style.display = game.thetaUpgrades[3].effect().gte(1.5) ? 'unset' : 'none'
+    document.getElementById('thetaPerSecondBreakdownThetaUPG7').textContent = 'θB7: x' + format(game.thetaUpgrades[6].effect())
+    document.getElementById('thetaPerSecondBreakdownThetaUPG7').style.display = game.thetaUpgrades[6].effect().gte(1.3) ? 'unset' : 'none'
+    document.getElementById('thetaPerSecondBreakdownRankMilestone10').textContent = 'RM10: x' + format(player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
+    document.getElementById('thetaPerSecondBreakdownRankMilestone10').style.display = Decimal.gte(player.ranks.ranks, 10) ? 'unset' : 'none'
+    document.getElementById('thetaPerSecondBreakdownRankEnergyUpgrade5').textContent = 'RεU1e: x' + formatWhole(game.ranks.upgrades[1].effects.e1())
+    document.getElementById('thetaPerSecondBreakdownRankEnergyUpgrade5').style.display = player.ranks.rankUpgrades1[4] ? 'unset' : 'none'
+    document.getElementById('thetaPerSecondBreakdownAutomaticCPS').textContent = 'CPS: +' + formatWhole(getThetaGain('click')) + 'x' + formatWhole(getCPS()) + ' (' + formatWhole(getThetaGain('click').times(getCPS())) +')'
+    document.getElementById('thetaPerSecondBreakdownAutomaticCPS').style.display = Decimal.gte(player.ranks.ranks, 1) ? 'unset' : 'none'
 }
 
 async function updateRanks() {

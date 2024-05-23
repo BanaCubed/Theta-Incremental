@@ -27,7 +27,7 @@ function getThetaGain(event) {
         gain = gain.add(game.thetaUpgrades[1].effect())
         gain = gain.times(game.thetaUpgrades[3].effect())
         gain = gain.times(game.thetaUpgrades[6].effect())
-        if(player.ranks.rankUpgrades1[4]) gain = gain.times(Decimal.pow(55, game.ranks.unspentEnergy()))
+        if(player.ranks.rankUpgrades1[4]) gain = gain.times(Decimal.pow(20, game.ranks.unspentEnergy()))
         if(player.ranks.milestones >= 9) gain = gain.times(player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
 
         gain = gain.add(Decimal.times(getThetaGain('click'), getCPS()))
@@ -37,7 +37,7 @@ function getThetaGain(event) {
         gain = new Decimal(1)
         gain = gain.add(game.thetaUpgrades[0].effect())
         gain = gain.times(game.thetaUpgrades[6].effect())
-        if(player.ranks.rankUpgrades1[4]) gain = gain.times(Decimal.pow(55, game.ranks.unspentEnergy()))
+        if(player.ranks.rankUpgrades1[4]) gain = gain.times(Decimal.pow(20, game.ranks.unspentEnergy()))
         if(player.ranks.milestones >= 9) gain = gain.times(player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
     }
 
@@ -84,6 +84,7 @@ function switchTabs(tab, isSubtab = false, subtab) {
         updateTab()
     } else {
         if(tab === 1) player.subtabs.ranks = subtabs.ranks[subtab]
+        if(tab === 2) player.subtabs.stats = subtabs.stats[subtab]
         updateSubtab()
     }
 }
@@ -111,7 +112,7 @@ function updateSubtab() {
                 const subtabID = maintab[index];
                 
                 let state = 'none'
-                if(player.subtabs.ranks === subtabID) state = 'flex'
+                if(player.subtabs[key] === subtabID) state = 'flex'
 
                 document.getElementById(subtabID + 'Subtab').style.display = state
             }

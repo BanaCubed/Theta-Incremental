@@ -1,10 +1,14 @@
-const tabs = ['theta', 'ranks', 'stats', 'options']
+const tabs = ['theta', 'ranks', 'stats', 'options', 'challenges']
 
 const subtabs = {
 	ranks: [
 		'rankup',
 		'energy',
 	],
+	stats: [
+		'stats',
+		'theteBreakdown',
+	]
 }
 
 const basePlayer = {
@@ -14,7 +18,8 @@ const basePlayer = {
     thetaUpgrades: [new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0)],
 	tab: 'theta',
 	subtabs: {
-		ranks: 'rankup'
+		ranks: 'rankup',
+		stats: 'stats',
 	},
 	options: {
 		pinHeader: true,

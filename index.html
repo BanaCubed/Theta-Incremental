@@ -302,12 +302,12 @@
                         <button id="rankup" onclick="rankUp()">Rank Up<br>You are at Rank <span id="ranksCount">?</span></button><br><span style="margin-bottom: 10px;">Ranks reset all theta related features.<br>You can rank up at <span id="rankRequirement">?</span> theta.<br><span id="ranksNextMilestone">At ? Ranks, ???</span></span>
                     </div><br>
                     <div class="box" style="padding: 10px; width: 100%; max-width: calc(100% - 50px); text-align: left;">
-                        <h2>Rank Rewards</h2><br><span id="rankMilestones">???</span>
+                        <h2>Rank Rewards<br>(RMX = Rank X Milestone)</h2><br><span id="rankMilestones">???</span>
                     </div>
                 </div>
 
                 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; display: none;" id="energySubtab">
-                    <div class="box" style="padding: 10px; align-self: center; width: 300px; min-height: 100px;">
+                    <div class="box antiH1" style="padding: 10px; align-self: center; width: 300px; min-height: 100px;">
 
                         <h1>You have <span id="currentRankEnergy">?</span> Rank Energy (Rε)<br><span id="totalRankEnergy">?</span> total (Rτ)<br>Next at <span id="nextRankEnergy">?</span> theta<br>Buying an upgrade increases the cost of all others<br><br>Next upgrade will cost you <span id="rankEnergyCost">infinity</span> Rε</h1><br>
                         <button class="upgradeBuy" onclick="respecRanks()">Respec</button>
@@ -359,7 +359,7 @@
                         <div class="box" style="max-width: 100%;" id="rankUPG5">
                             RεU1e: Drastically increase theta gain based on Rε<br><br>
                             <div class="upgrade" style="text-align: center; justify-content: center;">
-                                <div class="upgradeInfo" style="width: 95%; text-align: left;">Effect:    x55 per Rε<br>Currently: x<span id="rankUPG1e1">?</span></div>
+                                <div class="upgradeInfo" style="width: 95%; text-align: left;">Effect:    x20 per Rε<br>Currently: x<span id="rankUPG1e1">?</span></div>
                             </div>
                             <div class="upgradeButtons" style="display: flex; flex-direction: row;">
                                 <button id="rankUPG5buyButton" class="rankUPGbuy upgradeBuy" onclick="rankUPGbuy(1, 5)" style="width: 300px;"><span id="rankUPG5buy">Buy</span></button>
@@ -372,28 +372,60 @@
 
             </div>
 
+            <div id="challengesTab" class="tabData">
+
+            </div>
+
             <div id="statsTab" class="tabData">
-                <div class="generalFacts box" style="margin: 10px; display: unset;" id="thetaAmount">
-                    <h1>General</h1>
-                    You have played this game for a total of <span id="timePlayed">?</span>
+
+                <div id="ranksSubtabs" class="tabsList">
+                    <button class="tabs" onclick="switchTabs(2, true, 0)">Stats</button>
+                    <button class="tabs" onclick="switchTabs(2, true, 1)">Breakdowns</button>
                 </div>
-                <div class="thetaFacts box" style="margin: 10px; display: none;" id="thetaRotation">
-                    <h1>Theta</h1>
-                    You have gained a total of <span id="totalTheta">?</span> theta<br>
-                    If each of your theta (θ) was <span id="statsDegrees">? ???</span>, they would make <span id="statsRotations">?</span> full rotation<span id="rotationS"></span>
-                    <div class="thetaFacts" id="thetaDistance" style="margin: 10px; display: none;">
-                        <br>If this angle was the amount that a wheel with a radius of <span id="statsRadius">? ???</span> spun, it would move <span id="statsDistance">? ???</span>
+
+                <div id="statsSubtab" class="tabData">
+                    <div class="generalFacts box" style="margin: 10px; display: unset; border-width: 0;" id="thetaAmount">
+                        <h1>General</h1>
+                        You have played this game for a total of <span id="timePlayed">?</span>
+                    </div>
+                    <div class="thetaFacts box" style="margin: 10px; display: none;" id="thetaRotation">
+                        <h1>Theta</h1>
+                        You have gained a total of <span id="totalTheta">?</span> theta<br>
+                        If each of your theta (θ) was <span id="statsDegrees">? ???</span>, they would make <span id="statsRotations">?</span> full rotation<span id="rotationS"></span>
+                        <div class="thetaFacts" id="thetaDistance" style="margin: 10px; display: none;">
+                            <br>If this angle was the amount that a wheel with a radius of <span id="statsRadius">? ???</span> spun, it would move <span id="statsDistance">? ???</span>
+                        </div>
+                    </div>
+                    <div class="rankFacts box" style="margin: 10px; display: none;" id="rankLength">
+                        <h1>Ranks</h1>
+                        Your current rank has lasted <span id="rankLengthTime">?</span><br>
+                        Your best theta across all ranks is <span id="ranksBestTheta">?</span>
                     </div>
                 </div>
-                <div class="rankFacts box" style="margin: 10px; display: none;" id="rankLength">
-                    <h1>Ranks</h1>
-                    Your current rank has lasted <span id="rankLengthTime">?</span><br>
-                    Your best theta across all ranks is <span id="ranksBestTheta">?</span>
+
+                <div id="theteBreakdownSubtab" class="tabData">
+                    <div class="generalFacts box" style="margin: 10px; display: unset; border-width: 0; display: flex; flex-direction: column; align-items: start; max-width: 480px;" id="thetaBreakdown">
+                        <h1>Theta</h1>
+                        <h2>Per Click</h2>
+                        Base: 1<br>
+                        <span style="display: none;" id="thetaPerClickBreakdownThetaUPG1">θB1: +?</span>
+                        <span style="display: none;" id="thetaPerClickBreakdownThetaUPG7">θB7: x?</span>
+                        <span style="display: none;" id="thetaPerClickBreakdownRankMilestone10">RM10: x?</span>
+                        <span style="display: none;" id="thetaPerClickBreakdownRankEnergyUpgrade5">RεU1e: x?</span><br>
+                        <h2>Per Second</h2>
+                        <span style="display: none;" id="thetaPerSecondBreakdownThetaUPG2">θB2: +?</span>
+                        <span style="display: none;" id="thetaPerSecondBreakdownThetaUPG4">θB4: x?</span>
+                        <span style="display: none;" id="thetaPerSecondBreakdownThetaUPG7">θB7: x?</span>
+                        <span style="display: none;" id="thetaPerSecondBreakdownRankMilestone10">RM10: x?</span>
+                        <span style="display: none;" id="thetaPerSecondBreakdownRankEnergyUpgrade5">RεU1e: x?</span>
+                        <span style="display: none;" id="thetaPerSecondBreakdownAutomaticCPS">CPS: +?x? (?)</span><br>
+                    </div>
                 </div>
+
             </div>
 
             <div id="optionsTab" class="tabData">
-                <h1>Theta Incremental v0.0.2.β2<br>Ranks - Rank Energy - Loading Screen go brrrrrrr</h1>
+                <h1 style="width: 344px; text-align: center; max-width:100%;">Theta Incremental v0.1.1.β3<br>Ranks - Rank Energy - Theta Breakdown</h1>
                 <div class="optionsList">
                     <button class="optionsButton" onclick="saveExport()">Export Save to Clipboard</button>
                     <button class="optionsButton" onclick="save()">Save Game</button>
