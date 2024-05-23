@@ -179,14 +179,14 @@ const game = {
     }, { // UPG8
         cost(x = player.thetaUpgrades[7]) {
             let amount = new Decimal(x)
-            if(amount.gte(10)) amount = amount.div(10).pow(4).times(10)
+            if(amount.gte(10)) amount = amount.div(10).pow(2.5).times(10)
             let base = Decimal.pow(25, amount).times(1e10).floor()
             return base
         },
         buyMax() {
             let toBuy = Decimal.div(player.theta, 1e10).log(25)
             if(toBuy.gte(10)) {
-                toBuy = toBuy.div(10).pow(0.25).times(10).floor()
+                toBuy = toBuy.div(10).pow(0.4).times(10).floor()
             }
             let cost = this.cost(toBuy.floor())
             toBuy = toBuy.sub(player.thetaUpgrades[7]).add(1).floor()
@@ -227,14 +227,14 @@ const game = {
     }, { // UPG10
         cost(x = player.thetaUpgrades[9]) {
             let amount = new Decimal(x)
-            if(amount.gte(10)) amount = amount.div(10).pow_base(2).times(5)
+            if(amount.gte(3)) amount = amount.div(3).pow_base(2).times(2)
             let base = Decimal.pow(1e5, amount).times(1e20).floor()
             return base
         },
         buyMax() {
             let toBuy = Decimal.div(player.theta, 1e20).log(1e5)
-            if(toBuy.gte(10)) {
-                toBuy = toBuy.div(10).log(2).times(10).floor()
+            if(toBuy.gte(3)) {
+                toBuy = toBuy.div(3).log(2).times(2).floor()
             }
             let cost = this.cost(toBuy.floor())
             toBuy = toBuy.sub(player.thetaUpgrades[9]).add(1).floor()
@@ -279,6 +279,7 @@ const game = {
             if(Decimal.gte(player.ranks.ranks, 9)) milestones++
             if(Decimal.gte(player.ranks.ranks, 10)) milestones++
             if(Decimal.gte(player.ranks.ranks, 12)) milestones++
+            if(Decimal.gte(player.ranks.ranks, 14)) milestones++
             if(Decimal.gte(player.ranks.ranks, 17)) milestones++
             player.ranks.milestones = milestones
 
@@ -300,11 +301,12 @@ const game = {
             'automate theta upgrade 7.',
             'increase theta gain based on time since last rankup.',
             'unlock another three theta upgrades.',
-            'unlock the super duper ultra omega placeholder of doom.',
+            'improve the rank 10 milestone.',
+            'unlock ??? [ENDGAME].',
             "good luck getting this one.",
         ],
         milestonesRequirements: [
-            new Decimal(1), new Decimal(2), new Decimal(3), new Decimal(4), new Decimal(5), new Decimal(6), new Decimal(7), new Decimal(9), new Decimal(10), new Decimal(12), new Decimal(17), Decimal.pow(1e300, 1e300)
+            new Decimal(1), new Decimal(2), new Decimal(3), new Decimal(4), new Decimal(5), new Decimal(6), new Decimal(7), new Decimal(9), new Decimal(10), new Decimal(12), new Decimal(14), new Decimal(17), Decimal.pow(1e300, 1e300)
         ],
         rerenderMilestones(x = player.ranks.milestones) {
             if(x === 0) return
@@ -327,7 +329,7 @@ const game = {
             if(x === 1) return false
             if(x === 2) return !Decimal.gte(player.ranks.ranks, 5) ? formatWhole(player.ranks.ranks) : '5'
             if(x >= 3 && x < 8) return false
-            if(x === 8) return 'x' + format(Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
+            if(x === 8) return 'x' + format(player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
             if(x >= 9) return false
         },
         unspentEnergy(x = player.ranks.rankEnergy) {

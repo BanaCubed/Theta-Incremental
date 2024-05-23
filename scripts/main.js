@@ -28,7 +28,7 @@ function getThetaGain(event) {
         gain = gain.times(game.thetaUpgrades[3].effect())
         gain = gain.times(game.thetaUpgrades[6].effect())
         if(player.ranks.rankUpgrades1[4]) gain = gain.times(Decimal.pow(55, game.ranks.unspentEnergy()))
-        if(player.ranks.milestones >= 9) gain = gain.times(Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
+        if(player.ranks.milestones >= 9) gain = gain.times(player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
 
         gain = gain.add(Decimal.times(getThetaGain('click'), getCPS()))
     }
@@ -37,8 +37,8 @@ function getThetaGain(event) {
         gain = new Decimal(1)
         gain = gain.add(game.thetaUpgrades[0].effect())
         gain = gain.times(game.thetaUpgrades[6].effect())
-        if(player.ranks.rankUpgrades1[4]) gain = gain.times(Decimal.pow(40, game.ranks.unspentEnergy()))
-        if(player.ranks.milestones >= 9) gain = gain.times(Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
+        if(player.ranks.rankUpgrades1[4]) gain = gain.times(Decimal.pow(55, game.ranks.unspentEnergy()))
+        if(player.ranks.milestones >= 9) gain = gain.times(player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
     }
 
     return gain
