@@ -306,7 +306,7 @@ const game = {
             "good luck getting this one.",
         ],
         milestonesRequirements: [
-            new Decimal(1), new Decimal(2), new Decimal(3), new Decimal(4), new Decimal(5), new Decimal(6), new Decimal(7), new Decimal(9), new Decimal(10), new Decimal(12), new Decimal(14), new Decimal(17), Decimal.pow(1e300, 1e300)
+            new Decimal(1), new Decimal(2), new Decimal(3), new Decimal(4), new Decimal(5), new Decimal(6), new Decimal(7), new Decimal(9), new Decimal(10), new Decimal(12), new Decimal(14), new Decimal(17), Decimal.pow(2, 1024)
         ],
         rerenderMilestones(x = player.ranks.milestones) {
             if(x === 0) return
@@ -387,20 +387,20 @@ const game = {
     stats: {
         theta: {
             degrees(x = new Decimal(player.theta)) {
-                if(x.lt(1.296e40)) return Decimal.div(360, x)
+                if(x.lt(1.679616e80)) return Decimal.div(360, x.pow(0.5))
                 else return Decimal.div(1, 3.6e37)
             },
             rotations(x = player.theta) {
                 x = new Decimal(x)
-                if(x.lt(1.296e40)) return new Decimal(1)
+                if(x.lt(1.679616e80)) return game.stats.theta.degrees().times(player.theta)
                 else return x.div(1.296e40)
             },
             radius(x = this.rotations()) {
-                if(x.lt(6.25e40)) return Decimal.div(1000, x).div(6.28318530718)
+                if(x.lt(3.90625e81)) return Decimal.div(1000, x).pow(0.5).div(6.28318530718)
                 else return Decimal.div(1, 6.25e37).div(6.28318530718)
             },
             distance(x = this.rotations()) {
-                if(x.lt(6.25e40)) return new Decimal(1000)
+                if(x.lt(3.90625e81)) return x.pow(0.5).times(6283.18530718)
                 else return x.div(6.25e37).times(6.28318530718)
             },
         }

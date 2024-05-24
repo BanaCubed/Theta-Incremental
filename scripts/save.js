@@ -24,7 +24,10 @@ const basePlayer = {
 	options: {
 		pinHeader: true,
 		rankupConfirm: 1,
-		promptStyle: 2
+		promptStyle: 2,
+		standardLimit: '1e15',
+		precision: 2,
+		standardStart: '1e6',
 	},
 	automation: {
 		thetaUpgrades: [false, false, false, false, false, false, false, false, false, false],

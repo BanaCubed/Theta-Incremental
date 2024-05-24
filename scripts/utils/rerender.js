@@ -5,6 +5,12 @@ async function updateOptions() {
     document.getElementById('rankupConfirmSelection').style.setProperty('border-radius', player.options.rankupConfirm === 2 ? '0 0 0 7px' : player.options.rankupConfirm === 0 ? '0 7px 7px 0' : '0 0 0 0')
     document.getElementById('promptSelection').style.setProperty('--leftPos', player.options.promptStyle === 2 ? '0px' : '80px')
     document.getElementById('promptSelection').style.setProperty('border-radius', player.options.promptStyle === 2 ? '0 0 0 7px' : '0 7px 7px 0')
+    document.getElementById('standardLimitSelection').style.setProperty('--leftPos', player.options.standardLimit === '1e15' ? '240px' : player.options.standardLimit === '1e36' ? '160px' : player.options.standardLimit === '1e306' ? '80px' : '0px')
+    document.getElementById('standardLimitSelection').style.setProperty('border-radius', player.options.standardLimit === '1e3006' ? '0 0 0 7px' : player.options.standardLimit === '1e15' ? '0 7px 7px 0' : '0 0 0 0')
+    document.getElementById('precisionSelection').style.setProperty('--leftPos', player.options.precision === 1 ? '240px' : player.options.precision === 2 ? '160px' : player.options.precision === 3 ? '80px' : '0px')
+    document.getElementById('precisionSelection').style.setProperty('border-radius', player.options.precision === 4 ? '0 0 0 7px' : player.options.precision === 1 ? '0 7px 7px 0' : '0 0 0 0')
+    document.getElementById('standardStartSelection').style.setProperty('--leftPos', player.options.standardStart === '1e9' ? '0px' : player.options.standardStart === '1e6' ? '80px' : '160px')
+    document.getElementById('standardStartSelection').style.setProperty('border-radius', player.options.standardStart === '1e9' ? '0 0 0 7px' : player.options.standardStart === '1e3' ? '0 7px 7px 0' : '0 0 0 0')
 }
 
 async function updateStats() {
@@ -65,7 +71,7 @@ async function updateStats() {
     if(player.theta.lt(1.296e40)) document.getElementById('rotationS').textContent = ''
     if(player.theta.gte(1.296e40)) document.getElementById('rotationS').textContent = 's'
 
-    if(game.stats.theta.rotations().gt(1)) document.getElementById('thetaDistance').style.display = 'unset'
+    if(game.stats.theta.rotations().gt(1e15)) document.getElementById('thetaDistance').style.display = 'unset'
     else document.getElementById('thetaDistance').style.display = 'none'
     
     if(Decimal.gte(player.theta, 1)) document.getElementById('thetaRotation').style.display = 'unset'
@@ -83,27 +89,29 @@ async function updateStats() {
     document.getElementById('rankLengthTime').textContent = formatTime(Date.now() / 1000 - player.ranks.lastRankup / 1000)
     document.getElementById('ranksBestTheta').textContent = formatWhole(player.ranks.bestTheta)
 
-    document.getElementById('thetaPerClickBreakdownThetaUPG1').textContent = 'θB1: +' + formatWhole(game.thetaUpgrades[0].effect())
-    document.getElementById('thetaPerClickBreakdownThetaUPG1').style.display = game.thetaUpgrades[0].effect().gte(1) ? 'unset' : 'none'
-    document.getElementById('thetaPerClickBreakdownThetaUPG7').textContent = 'θB7: x' + format(game.thetaUpgrades[6].effect())
-    document.getElementById('thetaPerClickBreakdownThetaUPG7').style.display = game.thetaUpgrades[6].effect().gte(1.3) ? 'unset' : 'none'
-    document.getElementById('thetaPerClickBreakdownRankMilestone10').textContent = 'RM10: x' + format(player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
-    document.getElementById('thetaPerClickBreakdownRankMilestone10').style.display = Decimal.gte(player.ranks.ranks, 10) ? 'unset' : 'none'
-    document.getElementById('thetaPerClickBreakdownRankEnergyUpgrade5').textContent = 'RεU1e: x' + formatWhole(game.ranks.upgrades[1].effects.e1())
-    document.getElementById('thetaPerClickBreakdownRankEnergyUpgrade5').style.display = player.ranks.rankUpgrades1[4] ? 'unset' : 'none'
+    document.getElementById('thetaPerClickBreakdownThetaUPG1').innerHTML = '<span>θB1: </span><span display="text-align: right;">+' + formatWhole(game.thetaUpgrades[0].effect()) + '<br>[' + format(Decimal.log(game.thetaUpgrades[0].effect(), 10).div(Decimal.log(getThetaGain('click'), 10)).times(100)) + '%]</span>'
+    document.getElementById('thetaPerClickBreakdownThetaUPG7').innerHTML = '<span>θB7: </span><span display="text-align: right;">x' + format(game.thetaUpgrades[6].effect()) + '<br>[' + format(Decimal.log(game.thetaUpgrades[6].effect(), 10).div(Decimal.log(getThetaGain('click'), 10)).times(100)) + '%]</span>'
+    document.getElementById('thetaPerClickBreakdownRankMilestone10').innerHTML = '<span>RM10: </span><span display="text-align: right;">x' + format(player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25)) + '<br>[' + format(Decimal.log(player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25), 10).div(Decimal.log(getThetaGain('click'), 10)).times(100)) + '%]</span>'
+    document.getElementById('thetaPerClickBreakdownRankEnergyUpgrade5').innerHTML = '<span>RεU1e: </span><span display="text-align: right;">x' + formatWhole(game.ranks.upgrades[1].effects.e1()) + '<br>[' + format(Decimal.log(game.ranks.upgrades[1].effects.e1(), 10).div(Decimal.log(getThetaGain('click'), 10)).times(100)) + '%]</span>'
 
-    document.getElementById('thetaPerSecondBreakdownThetaUPG2').textContent = 'θB2: +' + formatWhole(game.thetaUpgrades[1].effect())
-    document.getElementById('thetaPerSecondBreakdownThetaUPG2').style.display = game.thetaUpgrades[1].effect().gte(1) ? 'unset' : 'none'
-    document.getElementById('thetaPerSecondBreakdownThetaUPG4').textContent = 'θB4: x' + format(game.thetaUpgrades[3].effect())
-    document.getElementById('thetaPerSecondBreakdownThetaUPG4').style.display = game.thetaUpgrades[3].effect().gte(1.5) ? 'unset' : 'none'
-    document.getElementById('thetaPerSecondBreakdownThetaUPG7').textContent = 'θB7: x' + format(game.thetaUpgrades[6].effect())
-    document.getElementById('thetaPerSecondBreakdownThetaUPG7').style.display = game.thetaUpgrades[6].effect().gte(1.3) ? 'unset' : 'none'
-    document.getElementById('thetaPerSecondBreakdownRankMilestone10').textContent = 'RM10: x' + format(player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
-    document.getElementById('thetaPerSecondBreakdownRankMilestone10').style.display = Decimal.gte(player.ranks.ranks, 10) ? 'unset' : 'none'
-    document.getElementById('thetaPerSecondBreakdownRankEnergyUpgrade5').textContent = 'RεU1e: x' + formatWhole(game.ranks.upgrades[1].effects.e1())
-    document.getElementById('thetaPerSecondBreakdownRankEnergyUpgrade5').style.display = player.ranks.rankUpgrades1[4] ? 'unset' : 'none'
-    document.getElementById('thetaPerSecondBreakdownAutomaticCPS').textContent = 'CPS: +' + formatWhole(getThetaGain('click')) + 'x' + formatWhole(getCPS()) + ' (' + formatWhole(getThetaGain('click').times(getCPS())) +')'
-    document.getElementById('thetaPerSecondBreakdownAutomaticCPS').style.display = Decimal.gte(player.ranks.ranks, 1) ? 'unset' : 'none'
+    document.getElementById('thetaPerSecondBreakdownThetaUPG2').innerHTML = '<span>θB2: </span><span display="text-align: right;">+' + formatWhole(game.thetaUpgrades[1].effect()) + '<br>[' + format(Decimal.log(game.thetaUpgrades[1].effect(), 10).div(Decimal.log(getThetaGain('passive'), 10)).times(100)) + '%]</span>'
+    document.getElementById('thetaPerSecondBreakdownThetaUPG4').innerHTML = '<span>θB4: </span><span display="text-align: right;">x' + format(game.thetaUpgrades[3].effect()) + '<br>[' + format(Decimal.log(game.thetaUpgrades[3].effect(), 10).div(Decimal.log(getThetaGain('passive'), 10)).times(100)) + '%]</span>'
+    document.getElementById('thetaPerSecondBreakdownThetaUPG7').innerHTML = '<span>θB7: </span><span display="text-align: right;">x' + format(game.thetaUpgrades[6].effect()) + '<br>[' + format(Decimal.log(game.thetaUpgrades[6].effect(), 10).div(Decimal.log(getThetaGain('passive'), 10)).times(100)) + '%]</span>'
+    document.getElementById('thetaPerSecondBreakdownRankMilestone10').innerHTML = '<span>RM10: </span><span display="text-align: right;">x' + format(player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25)) + '<br>[' + format(Decimal.log(player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25), 10).div(Decimal.log(getThetaGain('passive'), 10)).times(100)) + '%]</span>'
+    document.getElementById('thetaPerSecondBreakdownRankEnergyUpgrade5').innerHTML = '<span>RεU1e: </span><span display="text-align: right;">x' + formatWhole(game.ranks.upgrades[1].effects.e1()) + '<br>[' + format(Decimal.log(game.ranks.upgrades[1].effects.e1(), 10).div(Decimal.log(getThetaGain('passive'), 10)).times(100)) + '%]</span>'
+    document.getElementById('thetaPerSecondBreakdownAutomaticCPS').innerHTML = '<span>CPS: <br>% is linear</span><span display="text-align: right;">+' + formatWhole(getThetaGain('click').times(getCPS())) + '<br>[' + format(Decimal.times(getThetaGain('click'), getCPS()).div(getThetaGain('passive')).times(100)) + '%]</span>'
+
+    document.getElementById('thetaPerSecondBreakdownAutomaticCPS').style.display = Decimal.gte(player.ranks.ranks, 1) ? 'flex' : 'none'
+    document.getElementById('thetaPerClickBreakdownThetaUPG1').style.display = game.thetaUpgrades[0].effect().gte(1) ? 'flex' : 'none'
+    document.getElementById('thetaPerClickBreakdownThetaUPG7').style.display = game.thetaUpgrades[6].effect().gte(1.3) ? 'flex' : 'none'
+    document.getElementById('thetaPerClickBreakdownRankMilestone10').style.display = Decimal.gte(player.ranks.ranks, 10) ? 'flex' : 'none'
+    document.getElementById('thetaPerClickBreakdownRankEnergyUpgrade5').style.display = player.ranks.rankUpgrades1[4] ? 'flex' : 'none'
+
+    document.getElementById('thetaPerSecondBreakdownThetaUPG2').style.display = game.thetaUpgrades[1].effect().gte(1) ? 'flex' : 'none'
+    document.getElementById('thetaPerSecondBreakdownThetaUPG4').style.display = game.thetaUpgrades[3].effect().gte(1.5) ? 'flex' : 'none'
+    document.getElementById('thetaPerSecondBreakdownThetaUPG7').style.display = game.thetaUpgrades[6].effect().gte(1.3) ? 'flex' : 'none'
+    document.getElementById('thetaPerSecondBreakdownRankMilestone10').style.display = Decimal.gte(player.ranks.ranks, 10) ? 'flex' : 'none'
+    document.getElementById('thetaPerSecondBreakdownRankEnergyUpgrade5').style.display = player.ranks.rankUpgrades1[4] ? 'flex' : 'none'
 }
 
 async function updateRanks() {

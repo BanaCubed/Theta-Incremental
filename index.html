@@ -403,11 +403,11 @@
                     </div>
                 </div>
 
-                <div id="theteBreakdownSubtab" class="tabData">
+                <div id="theteBreakdownSubtab" class="tabData"><br>All percentages are logarithmic unless otherwise specified
                     <div class="generalFacts box" style="margin: 10px; display: unset; border-width: 0; display: flex; flex-direction: column; align-items: start; max-width: 480px;" id="thetaBreakdown">
                         <h1>Theta</h1>
                         <h2>Per Click</h2>
-                        Base: 1<br>
+                        <span><span>Base: </span><span display="text-align: right;">1</span></span>
                         <span style="display: none;" id="thetaPerClickBreakdownThetaUPG1">θB1: +?</span>
                         <span style="display: none;" id="thetaPerClickBreakdownThetaUPG7">θB7: x?</span>
                         <span style="display: none;" id="thetaPerClickBreakdownRankMilestone10">RM10: x?</span>
@@ -418,19 +418,29 @@
                         <span style="display: none;" id="thetaPerSecondBreakdownThetaUPG7">θB7: x?</span>
                         <span style="display: none;" id="thetaPerSecondBreakdownRankMilestone10">RM10: x?</span>
                         <span style="display: none;" id="thetaPerSecondBreakdownRankEnergyUpgrade5">RεU1e: x?</span>
-                        <span style="display: none;" id="thetaPerSecondBreakdownAutomaticCPS">CPS: +?x? (?)</span><br>
+                        <span style="display: none;" id="thetaPerSecondBreakdownAutomaticCPS">CPS: +? [?%]</span><br>
                     </div>
                 </div>
 
             </div>
 
-            <div id="optionsTab" class="tabData">
-                <h1 style="width: 344px; text-align: center; max-width:100%;">Theta Incremental v0.1.1.β3<br>Ranks - Rank Energy - Theta Breakdown</h1>
+            <div id="optionsTab" class="tabData" style="justify-content: safe center;">
                 <div class="optionsList">
                     <button class="optionsButton" onclick="saveExport()">Export Save to Clipboard</button>
                     <button class="optionsButton" onclick="save()">Save Game</button>
                     <button class="optionsButton" onclick="saveImport()">Import Save</button>
                     <button class="optionsButton DangerousButton" onclick="DANGERresetSave()">Hard Reset</button>
+                </div>
+                <div class="optionsList" style="justify-content: start; margin-top: 21px;">
+                    <div class="optionsBar" id="rankupConfirmBar" style="width: 240px; height: 50px;">
+                        <div class="optionsBarName" style="text-align: start;">Rankup Confirm</div>
+                        <div class="optionsBarSelection" id="rankupConfirmSelection" style="z-index: 1;"></div>
+                        <div style="z-index: 2;">
+                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 2" style="border-radius: 0 0 0 7px; left: 3px;">Enabled</button>
+                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 1" style="border-radius: 0 0 0 0; left: 83px;">Gainless Only</button>
+                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 0" style="border-radius: 0 7px 7px 0; right: 3px;">Disabled</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="optionsList" style="justify-content: start; margin-top: 18px;">
                     <div class="optionsBar" id="pinHeaderBar" style="width: 240px; height: 50px">
@@ -444,6 +454,41 @@
                     </div>
                 </div>
                 <div class="optionsList" style="justify-content: start; margin-top: 21px;">
+                    <div class="optionsBar" id="standardLimitBar" style="width: 320px; height: 50px;">
+                        <div class="optionsBarName" style="text-align: start;">Standard Notation Limit</div>
+                        <div class="optionsBarSelection" id="standardLimitSelection" style="z-index: 1;"></div>
+                        <div style="z-index: 2;">
+                            <button class="optionsBarSegment" onclick="player.options.standardLimit = '1e3006'" style="border-radius: 0 0 0 7px; left: 3px;">Millillion</button>
+                            <button class="optionsBarSegment" onclick="player.options.standardLimit = '1e306'" style="border-radius: 0 0 0 0; left: 83px;">Centillion</button>
+                            <button class="optionsBarSegment" onclick="player.options.standardLimit = '1e36'" style="border-radius: 0 0 0 0; left: 163px;">Decillion</button>
+                            <button class="optionsBarSegment" onclick="player.options.standardLimit = '1e15'" style="border-radius: 0 7px 7px 0; right: 3px;">Trillion</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="optionsList" style="justify-content: start; margin-top: 21px;">
+                    <div class="optionsBar" id="standardStartBar" style="width: 240px; height: 50px;">
+                        <div class="optionsBarName" style="text-align: start;">Standard Notation Starting</div>
+                        <div class="optionsBarSelection" id="standardStartSelection" style="z-index: 1;"></div>
+                        <div style="z-index: 2;">
+                            <button class="optionsBarSegment" onclick="player.options.standardStart = '1e9'" style="border-radius: 0 0 0 7px; left: 3px;">Billion</button>
+                            <button class="optionsBarSegment" onclick="player.options.standardStart = '1e3'" style="border-radius: 0 7px 7px 0; left: 163px;">Thousand</button>
+                            <button class="optionsBarSegment" onclick="player.options.standardStart = '1e6'" style="border-radius: 0 0 0 0; left: 83px;">Million</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="optionsList" style="justify-content: start; margin-top: 21px;">
+                    <div class="optionsBar" id="precisionBar" style="width: 320px; height: 50px;">
+                        <div class="optionsBarName" style="text-align: start;">Number Precision</div>
+                        <div class="optionsBarSelection" id="precisionSelection" style="z-index: 1;"></div>
+                        <div style="z-index: 2;">
+                            <button class="optionsBarSegment" onclick="player.options.precision = 4" style="border-radius: 0 0 0 7px; left: 3px;">4 Digits</button>
+                            <button class="optionsBarSegment" onclick="player.options.precision = 3" style="border-radius: 0 0 0 0; left: 83px;">3 Digits</button>
+                            <button class="optionsBarSegment" onclick="player.options.precision = 2" style="border-radius: 0 0 0 0; left: 163px;">2 Digits</button>
+                            <button class="optionsBarSegment" onclick="player.options.precision = 1" style="border-radius: 0 7px 7px 0; right: 3px;">1 Digit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="optionsList" style="justify-content: start; margin-top: 21px;">
                     <div class="optionsBar" id="promptBar" style="width: 160px; height: 50px;">
                         <div class="optionsBarName" style="text-align: start;">Popup Style</div>
                         <div class="optionsBarSelection" id="promptSelection" style="z-index: 1;"></div>
@@ -453,17 +498,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="optionsList" style="justify-content: start; margin-top: 21px;">
-                    <div class="optionsBar" id="rankupConfirmBar" style="width: 240px; height: 50px;">
-                        <div class="optionsBarName" style="text-align: start;">Rankup Confirm</div>
-                        <div class="optionsBarSelection" id="rankupConfirmSelection" style="z-index: 1;"></div>
-                        <div style="z-index: 2;">
-                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 2" style="border-radius: 0 0 0 7px; left: 3px;">Enabled</button>
-                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 1" style="border-radius: 0 0 0 0; left: 83px;">Gainless Only</button>
-                            <button class="optionsBarSegment" onclick="player.options.rankupConfirm = 0" style="border-radius: 0 7px 7px 0; right: 3px;">Disabled</button>
-                        </div>
-                    </div>
-                </div>
+                <h1 style="width: 344px; text-align: center; max-width:100%;">Theta Incremental v0.1.1.β5<br>Ranks - Rank Energy - Offline Progress? (not yet, it's just one really long tick)</h1>
+                <h1 style="width: 344px; text-align: center; max-width:100%;">Inspired by:<br>Incremental Mass Rewritten<br>Shark Incremental</h1>
             </div>
 
         </div>
