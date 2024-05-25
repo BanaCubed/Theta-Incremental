@@ -1,3 +1,5 @@
+let gamestate = 'starting'
+
 async function updateOptions() {
     document.getElementById('pinHeaderSelection').style.setProperty('--leftPos', player.options.pinHeader == true ? '0px' : player.options.pinHeader == false ? '160px' : '80px')
     document.getElementById('pinHeaderSelection').style.setProperty('border-radius', player.options.pinHeader == true ? '0 0 0 7px' : player.options.pinHeader == false ? '0 7px 7px 0' : '0 0 0 0')
@@ -208,30 +210,32 @@ async function updateTheta() {
     }
 }
 
+async function offline(timeAway, iteration = 0) {
+    document.getElementById('progressbarOverlay').style.setProperty('--height', iteration / 6.25)
+    await mainLoop(timeAway / 500)
+    setTimeout(function() {
+        if(iteration < 500) offline(timeAway, iteration + 1)
+        else return
+    }, 1)
+}
+
 async function updateAll() {
     player.theta = new Decimal(player.theta)
     const timeAway = (Date.now() - player.time) / 1000
-    let progressbar = 0
-    let thing = setInterval(function() {
-        progressbar += 0.16
-        mainLoop(timeAway / 500)
-        document.getElementById('progressbarOverlay').style.setProperty('--height', progressbar)
-    }, 5) 
-    setTimeout(async function() {
-        clearInterval(thing)
-        await updateTheta()
-        document.getElementById('progressbarOverlay').style.setProperty('--height', 80)
-        await updateRanks()
-        document.getElementById('progressbarOverlay').style.setProperty('--height', 85)
-        await updateStats()
-        document.getElementById('progressbarOverlay').style.setProperty('--height', 90)
-        await updateOptions()
-        document.getElementById('progressbarOverlay').style.setProperty('--height', 95)
-        await updateHeader()
-        document.getElementById('progressbarOverlay').style.setProperty('--height', 100)
-        
-        setTimeout(function() {document.getElementById('loadingScreen').style.opacity = '0%'; document.getElementById('loadingScreen').style.pointerEvents = 'none'}, 800)
-    }, 2500)
+    await offline(timeAway)
+    await gamestate != 'starting'
+    await updateTheta()
+    document.getElementById('progressbarOverlay').style.setProperty('--height', 80)
+    await updateRanks()
+    document.getElementById('progressbarOverlay').style.setProperty('--height', 85)
+    await updateStats()
+    document.getElementById('progressbarOverlay').style.setProperty('--height', 90)
+    await updateOptions()
+    document.getElementById('progressbarOverlay').style.setProperty('--height', 95)
+    await updateHeader()
+    document.getElementById('progressbarOverlay').style.setProperty('--height', 100)
+    
+    setTimeout(function() {document.getElementById('loadingScreen').style.opacity = '0%'; document.getElementById('loadingScreen').style.pointerEvents = 'none'}, 800)
 }
 
 async function updateHeader() {

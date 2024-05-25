@@ -5,7 +5,7 @@ let color = 270
 async function mainLoop(diff = null, rerender = true) {
     // Time management
     if(diff === null) diff = (Date.now() - player.time) / 1000
-    player.time += diff
+    player.time += diff * 1000
     player.playtime += diff
 
     // Calculations

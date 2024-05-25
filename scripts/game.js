@@ -302,7 +302,7 @@ const game = {
             'increase theta gain based on time since last rankup.',
             'unlock another three theta upgrades.',
             'improve the rank 10 milestone.',
-            'unlock ??? [ENDGAME].',
+            'unlock Rankbert.',
             "good luck getting this one.",
         ],
         milestonesRequirements: [
@@ -324,13 +324,22 @@ const game = {
 
             document.getElementById('rankMilestones').innerHTML = content
         },
-        milestonesEffect(x = 0) {
-            if(x === 0) return formatWhole(getCPS()) + ' cps'
-            if(x === 1) return false
-            if(x === 2) return !Decimal.gte(player.ranks.ranks, 5) ? formatWhole(player.ranks.ranks) : '5'
-            if(x >= 3 && x < 8) return false
-            if(x === 8) return 'x' + format(player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
-            if(x >= 9) return false
+        milestonesEffect(milestone = 0, purenumber = false) {
+            if (!purenumber) {
+                if(milestone === 0) return formatWhole(getCPS()) + ' cps'
+                if(milestone === 1) return false
+                if(milestone === 2) return !Decimal.gte(player.ranks.ranks, 5) ? formatWhole(player.ranks.ranks) : '5'
+                if(milestone >= 3 && milestone < 8) return false
+                if(milestone === 8) return 'x' + format(player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25))
+                if(milestone >= 9) return false
+            } else {
+                if(milestone === 0) return getCPS()
+                if(milestone === 1) return false
+                if(milestone === 2) return !Decimal.gte(player.ranks.ranks, 5) ? player.ranks.ranks : new Decimal(5)
+                if(milestone >= 3 && milestone < 8) return false
+                if(milestone === 8) return player.ranks.milestones >= 8 ? Decimal.sub(player.time, player.ranks.lastRankup).add(300).pow(0.4) : Decimal.sub(player.time, player.ranks.lastRankup).add(1).pow(0.25)
+                if(milestone >= 9) return false
+            }
         },
         unspentEnergy(x = player.ranks.rankEnergy) {
             x = new Decimal(x)
