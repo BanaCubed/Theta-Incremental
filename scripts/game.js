@@ -360,6 +360,7 @@ const game = {
                     if(player.ranks.rankRowsData[0] == 2) return new Decimal(2)
                     if(player.ranks.rankRowsData[0] == 3) return new Decimal(2)
                     if(player.ranks.rankRowsData[0] == 4) return new Decimal(4)
+                    if(player.ranks.rankRowsData[0] == 4) return new Decimal(10)
                 },
                 effects: {
                     a1() {

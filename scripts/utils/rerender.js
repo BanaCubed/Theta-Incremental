@@ -5,8 +5,8 @@ async function updateOptions() {
     document.getElementById('rankupConfirmSelection').style.setProperty('border-radius', player.options.rankupConfirm === 2 ? '0 0 0 7px' : player.options.rankupConfirm === 0 ? '0 7px 7px 0' : '0 0 0 0')
     document.getElementById('promptSelection').style.setProperty('--leftPos', player.options.promptStyle === 2 ? '0px' : '80px')
     document.getElementById('promptSelection').style.setProperty('border-radius', player.options.promptStyle === 2 ? '0 0 0 7px' : '0 7px 7px 0')
-    document.getElementById('standardLimitSelection').style.setProperty('--leftPos', player.options.standardLimit === '1e15' ? '240px' : player.options.standardLimit === '1e36' ? '160px' : player.options.standardLimit === '1e306' ? '80px' : '0px')
-    document.getElementById('standardLimitSelection').style.setProperty('border-radius', player.options.standardLimit === '1e3006' ? '0 0 0 7px' : player.options.standardLimit === '1e15' ? '0 7px 7px 0' : '0 0 0 0')
+    document.getElementById('standardLimitSelection').style.setProperty('--leftPos', player.options.standardLimit === '1e15' ? '240px' : player.options.standardLimit === '1e36' ? '160px' : player.options.standardLimit === '1e306' ? '80px' : player.options.standardLimit === '0' ? '320px' : '0px')
+    document.getElementById('standardLimitSelection').style.setProperty('border-radius', player.options.standardLimit === '1e3006' ? '0 0 0 7px' : player.options.standardLimit === '0' ? '0 7px 7px 0' : '0 0 0 0')
     document.getElementById('precisionSelection').style.setProperty('--leftPos', player.options.precision === 1 ? '240px' : player.options.precision === 2 ? '160px' : player.options.precision === 3 ? '80px' : '0px')
     document.getElementById('precisionSelection').style.setProperty('border-radius', player.options.precision === 4 ? '0 0 0 7px' : player.options.precision === 1 ? '0 7px 7px 0' : '0 0 0 0')
     document.getElementById('standardStartSelection').style.setProperty('--leftPos', player.options.standardStart === '1e9' ? '0px' : player.options.standardStart === '1e6' ? '80px' : '160px')
@@ -210,15 +210,28 @@ async function updateTheta() {
 
 async function updateAll() {
     player.theta = new Decimal(player.theta)
-    await updateTheta()
-    updateRanks()
-    updateStats()
-    updateOptions()
-    updateHeader()
-
-    window.onload = function() {
-        setTimeout(function() {document.getElementById('loadingScreen').style.display = 'none'}, 50)
-    }
+    const timeAway = (Date.now() - player.time) / 1000
+    let progressbar = 0
+    let thing = setInterval(function() {
+        progressbar += 0.16
+        mainLoop(timeAway / 500)
+        document.getElementById('progressbarOverlay').style.setProperty('--height', progressbar)
+    }, 5) 
+    setTimeout(async function() {
+        clearInterval(thing)
+        await updateTheta()
+        document.getElementById('progressbarOverlay').style.setProperty('--height', 80)
+        await updateRanks()
+        document.getElementById('progressbarOverlay').style.setProperty('--height', 85)
+        await updateStats()
+        document.getElementById('progressbarOverlay').style.setProperty('--height', 90)
+        await updateOptions()
+        document.getElementById('progressbarOverlay').style.setProperty('--height', 95)
+        await updateHeader()
+        document.getElementById('progressbarOverlay').style.setProperty('--height', 100)
+        
+        setTimeout(function() {document.getElementById('loadingScreen').style.opacity = '0%'; document.getElementById('loadingScreen').style.pointerEvents = 'none'}, 800)
+    }, 2500)
 }
 
 async function updateHeader() {

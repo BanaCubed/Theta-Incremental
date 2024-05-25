@@ -301,9 +301,8 @@ div#theteBreakdownSubtab>div>span>span:last-child {
     text-align: right;
 }
 
-div#theteBreakdownSubtab>div>span:nth-child(3)  { background-color: rgba(0, 0, 0, 0.5); }
-div#theteBreakdownSubtab>div>span:nth-child(5)  { background-color: rgba(0, 0, 0, 0.5); }
-div#theteBreakdownSubtab>div>span:nth-child(7)  { background-color: rgba(0, 0, 0, 0.5); }
-div#theteBreakdownSubtab>div>span:nth-child(10) { background-color: rgba(0, 0, 0, 0.5); }
-div#theteBreakdownSubtab>div>span:nth-child(12) { background-color: rgba(0, 0, 0, 0.5); }
-div#theteBreakdownSubtab>div>span:nth-child(14) { background-color: rgba(0, 0, 0, 0.5); }
+div#theteBreakdownSubtab>div>span:nth-child(4)  { background-color: rgba(0, 0, 0, 0.5); }
+div#theteBreakdownSubtab>div>span:nth-child(6)  { background-color: rgba(0, 0, 0, 0.5); }
+div#theteBreakdownSubtab>div>span:nth-child(11) { background-color: rgba(0, 0, 0, 0.5); }
+div#theteBreakdownSubtab>div>span:nth-child(13) { background-color: rgba(0, 0, 0, 0.5); }
+div#theteBreakdownSubtab>div>span:nth-child(15) { background-color: rgba(0, 0, 0, 0.5); }

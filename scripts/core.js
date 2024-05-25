@@ -2,10 +2,10 @@ setInterval(mainLoop, 25)
 
 let color = 270
 
-function mainLoop() {
+async function mainLoop(diff = null, rerender = true) {
     // Time management
-    const diff = (Date.now() - player.time) / 1000
-    player.time = Date.now()
+    if(diff === null) diff = (Date.now() - player.time) / 1000
+    player.time += diff
     player.playtime += diff
 
     // Calculations
@@ -29,23 +29,12 @@ function mainLoop() {
     }
 
     // Rerendering
-    updateHeader()
-
-
-    if(player.tab === 'theta') {
-        updateTheta()
-    }
-
-    if(player.tab === 'ranks') {
-        updateRanks()
-    }
-
-    if(player.tab === 'stats') {
-        updateStats()
-    }
-
-    if(player.tab === 'options') {
-        updateOptions()
+    if(rerender) {   
+        updateHeader()
+        if(player.tab === 'theta') { updateTheta() }
+        if(player.tab === 'ranks') { updateRanks() }
+        if(player.tab === 'stats') { updateStats() }
+        if(player.tab === 'options') { updateOptions() }
     }
 
     // CSS variables and Modification

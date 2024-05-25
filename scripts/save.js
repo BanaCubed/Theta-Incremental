@@ -27,7 +27,7 @@ const basePlayer = {
 		promptStyle: 2,
 		standardLimit: '1e15',
 		precision: 2,
-		standardStart: '1e6',
+		standardStart: '1e9',
 	},
 	automation: {
 		thetaUpgrades: [false, false, false, false, false, false, false, false, false, false],
@@ -58,7 +58,6 @@ function save() {
 	if (player !== undefined && player !== null) {
         localStorage.setItem('thetaIncrementalR', btoa(unescape(encodeURIComponent(JSON.stringify(player)))));
     }
-	updateAll()
 }
 
 function load(data, initial = false) {

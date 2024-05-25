@@ -1,5 +1,6 @@
-function format(x, precision = player.options.precision) {
+function format(x, precision = player.options.precision, small = false) {
     x = new Decimal(x)
+    let davesWonderfulWorld = precision
     if(precision === 0) x = x.round()
     let e = x.div(x.log(10).floor().pow_base(10))
     let m = x.log(10).floor()
@@ -7,11 +8,20 @@ function format(x, precision = player.options.precision) {
     if(x.gte(player.options.standardLimit)) return e + 'e' + m
     else if(x.gte(player.options.standardStart)) {
         e = x.div(x.log(1000).floor().pow_base(1000))
+        while (davesWonderfulWorld > 0) {
+            if(Decimal.gte(e, Decimal.pow(10, davesWonderfulWorld))) precision--
+            davesWonderfulWorld--
+        }
         e = e.toStringWithDecimalPlaces(precision)
         return e + standardNotationSuffix(x)
     }
-    else if(x.gte(1e3)) return x.toStringWithDecimalPlaces(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-    else return x.toStringWithDecimalPlaces(precision).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+    while (davesWonderfulWorld > 0) {
+        if(x.gte(Decimal.pow(10, davesWonderfulWorld))) precision--
+        davesWonderfulWorld--
+    }
+    if(x.gte(Decimal.pow(0.1, player.options.precision)))return x.toStringWithDecimalPlaces(precision).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+    else if(!small) return (0).toFixed(player.options.precision)
+    else return format(Decimal.pow(x, -1)) + '⁻¹'
 }
 
 function formatWhole(x) {
@@ -134,7 +144,29 @@ function formatDistance(x) {
 
 function formatTime(x) {
     x = new Decimal(x)
-    return '' + x.toStringWithDecimalPlaces(2)
+    let text
+    if(x.lt(60*60*24*365*1000)) {
+        text = x.mod(60).toStringWithDecimalPlaces(player.options.precision - x.mod(60).toStringWithDecimalPlaces(0).length + 1) + 's'
+        if(x.gte(60)) {
+            x = x.div(60).floor()
+            text = x.mod(60).toStringWithDecimalPlaces(0) + 'm ' + text
+            if(x.gte(60)) {
+                x = x.div(60).floor()
+                text = x.mod(24).toStringWithDecimalPlaces(0) + 'h ' + text
+                if(x.gte(24)) {
+                    x = x.div(24).floor()
+                    text = x.mod(365).toStringWithDecimalPlaces(0) + 'd ' + text
+                    if(x.gte(365)) {
+                        x = x.div(365).floor()
+                        text = x.toStringWithDecimalPlaces(0) + 'y ' + text
+                    }
+                }
+            }
+        }
+    } else {
+        text = format(x.div(3600).div(24).div(365)) + 'y'
+    }
+    return text
 }
 
 function standardNotationSuffix(x) {
@@ -149,6 +181,7 @@ function standardNotationSuffix(x) {
     if(x.lt(1e12)) return ' B'
     if(x.lte(1e15)) return ' T'
     x = x.log(10).div(3).sub(1).floor()
+    if(x.gte(10000)) return ' I do not want to optimise this'
     let digits = []
     for (let index = 1; index <= x.log(10).mag + 1; index++) {
         if(index % 4 === 1) digits.push(ones[  x.mod(Decimal.pow(10, index)).div(Decimal.pow(10, index - 1)).floor()])
