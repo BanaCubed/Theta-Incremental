@@ -9,10 +9,11 @@ function popup(text = 'lorem ipsum', type = 'alert', event) {
         }
     } else if(type === 'confirm') {
         if(player.options.promptStyle === 1) {
-            let confirmed = confirm(text)
+            const confirmed = confirm(text)
             if(event === 'hardreset' && confirmed) {
                 player = basePlayer
                 save()
+                location.reload()
             }
             if(event === 'rankup' && confirmed) {
                 player.theta = new Decimal(0)
@@ -32,7 +33,7 @@ function popup(text = 'lorem ipsum', type = 'alert', event) {
                     <button class="strangeBugfix DangerousButton" onclick="
                         player = basePlayer;
                         save();
-                        closePopup()">Confirm</button>
+                        location.reload();">Confirm</button>
                     <button class="strangeBugfix" onclick="closePopup()">Cancel</button>
                 `)
             }
@@ -66,6 +67,7 @@ function popup(text = 'lorem ipsum', type = 'alert', event) {
             if(event === 'import') {
                 thingymajig = thingymajig.substring(3)
                 load(thingymajig)
+                location.reload()
             }
         } else {
             if(event === 'import') {
@@ -77,7 +79,7 @@ function popup(text = 'lorem ipsum', type = 'alert', event) {
                         let savedata = document.getElementById('importSaveSection').value;
                         savedata = savedata.substring(3);
                         load(savedata);
-                        closePopup()">Submit</button>
+                        location.reload()">Submit</button>
                     <button class="strangeBugfix" onclick="closePopup()">Cancel</button>
                 `)
             }

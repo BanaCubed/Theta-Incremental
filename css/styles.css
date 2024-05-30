@@ -30,7 +30,7 @@ button:not(.bought) {
     border-color: rgba(255, 255, 255, 0.05);
     border-style: solid;
     margin: 10px;
-    width: 118px;
+    width: 150px;
     margin: 3px 0;
     height: 35px;
 }
@@ -51,7 +51,7 @@ button.bought {
     border-style: solid;
     margin: 10px;
     pointer-events: none;
-    width: 118px;
+    width: 150px;
     margin: 3px 0;
     height: 35px;
 }
@@ -178,6 +178,7 @@ button.bought {
     align-content: center;
     text-align: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .upgradesList {
@@ -231,13 +232,13 @@ div{
 
 button.upgradeBuy:not(.bought) {
     height: 35px;
-    width: 300px;
+    max-width: 300px;
     margin: 0px;
 }
 
 button.upgradeBuy.bought {
     height: 35px;
-    width: 300px;
+    max-width: 300px;
     margin: 0px;
 }
 
@@ -254,8 +255,9 @@ button.upgradeBuy.bought {
 }
 
 .upgradeButtons {
-    width: fit-content;
     max-width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 div#statsSubtab  div.box {

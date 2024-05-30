@@ -4,6 +4,7 @@ const subtabs = {
 	ranks: [
 		'rankup',
 		'energy',
+		'rankbert',
 	],
 	stats: [
 		'stats',

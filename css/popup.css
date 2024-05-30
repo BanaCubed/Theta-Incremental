@@ -75,5 +75,7 @@ div#loadingScreen #progressbarOverlay {
     background-repeat: no-repeat;
     background-size: 76.3vh;
     background-position-x: center;
+    background-position-y: bottom;
     transition: cubic-bezier(0, 1, 1, 1) 0.8s;
+    bottom: 0;
 }

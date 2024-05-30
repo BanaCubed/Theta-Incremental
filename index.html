@@ -295,6 +295,7 @@
                 <div id="ranksSubtabs" class="tabsList">
                     <button class="tabs" onclick="switchTabs(1, true, 0)">Rankup</button>
                     <button class="tabs" onclick="switchTabs(1, true, 1)" style="display: none;" id="rankEnergySubtabButton">Energy</button>
+                    <button class="tabs" onclick="switchTabs(1, true, 2)" style="display: none;" id="rankbertSubtabButton">Rankbert</button>
                 </div>
 
                 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;" id="rankupSubtab">
@@ -306,7 +307,7 @@
                     </div>
                 </div>
 
-                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; display: none;" id="energySubtab">
+                <div style="flex-direction: column; justify-content: center; align-items: center; display: none;" id="energySubtab">
                     <div class="box antiH1" style="padding: 10px; align-self: center; width: 300px; min-height: 100px;">
 
                         <h1>You have <span id="currentRankEnergy">?</span> Rank Energy (Rε)<br><span id="totalRankEnergy">?</span> total (Rτ)<br>Next at <span id="nextRankEnergy">?</span> theta<br>Buying an upgrade increases the cost of all others<br><br>Next upgrade will cost you <span id="rankEnergyCost">infinity</span> Rε</h1><br>
@@ -368,6 +369,21 @@
 
                     </div>
 
+                </div>
+
+                <div id="rankbertSubtab" style="flex-direction: column; justify-content: center; align-items: center; display: none;">
+                    <h1>This is Rankbert<br>He is very hungry<br>Feed him things for cool bonuses</h1>
+                    <div style="display: flex; flex-direction: row; margin-top: 10px;">
+                        <img src="resources/rankbert.svg" alt="rankbert placeholder image.png" style="height: 300px; width: 228px;">
+                        <div style="width: 72px; height: 300px; position: relative; border-width: 3px; border-style: solid; border-color: transparent;">
+                            <div style="width: 66px; height: 294px; border-width: 3px; border-style: solid; border-color: rgba(255, 255, 255, 0.5); border-radius: 10px; position: relative;">
+                                <div style="position: absolute; top: -18px; text-align: center; width: 100%;">Satiation</div>
+                                <div style="position: absolute; height: 100%; width: 100%; background-color: var(--backgroundcolor); z-index: 200; border-radius: 7px;"></div>
+                                <div style="position: absolute; height: calc(var(--percentage) * 1%); width: 100%; background-color: var(--buttonbackgroundcolor); z-index: 201; border-radius: 7px; --percentage: 6; bottom: 0; text-align: center; " id="rankbertHungerBar"></div>
+                                <div style="position: absolute; height: calc(var(--percentage) * 1%); width: 100%; z-index: 202; border-radius: 7px; --percentage: 6; bottom: 0; text-align: center; " id="rankbertHungerBar">6%</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>

@@ -289,6 +289,7 @@ const game = {
             if(milestones >= 6 && player.unlocks.tabs < 1) player.unlocks.tabs = 1
             if(milestones >= 7 && player.unlocks.automation.theta < 4) player.unlocks.automation.theta = 4
             if(milestones >= 8 && player.unlocks.automation.theta < 5) player.unlocks.automation.theta = 5
+            if(milestones >= 12 && player.unlocks.tabs < 2) player.unlocks.tabs = 2
         },
         milestonesText: [
             'automatically click the theta gain button based on ranks, unaffected by upgrade 4.',

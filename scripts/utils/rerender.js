@@ -129,6 +129,7 @@ async function updateRanks() {
     document.getElementById('rankEnergyCost').textContent = formatWhole(game.ranks.upgrades[1].cost())
 
     if(player.unlocks.tabs >= 1) document.getElementById('rankEnergySubtabButton').style.display = 'unset'
+    if(player.unlocks.tabs >= 1) document.getElementById('rankbertSubtabButton').style.display = 'unset'
 
     document.getElementById('rankUPG1a1').textContent = formatWhole(game.ranks.upgrades[1].effects.a1().times(100))
     document.getElementById('rankUPG1a2').textContent = formatWhole(game.ranks.upgrades[1].effects.a2().times(100))
@@ -211,7 +212,6 @@ async function updateTheta() {
 }
 
 async function offline(timeAway, iteration = 0) {
-    document.getElementById('progressbarOverlay').style.setProperty('--height', iteration / 6.25)
     await mainLoop(timeAway / 500)
     setTimeout(function() {
         if(iteration < 500) offline(timeAway, iteration + 1)
@@ -223,7 +223,6 @@ async function updateAll() {
     player.theta = new Decimal(player.theta)
     const timeAway = (Date.now() - player.time) / 1000
     await offline(timeAway)
-    await gamestate != 'starting'
     await updateTheta()
     document.getElementById('progressbarOverlay').style.setProperty('--height', 80)
     await updateRanks()
