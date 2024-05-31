@@ -30,7 +30,7 @@ button:not(.bought) {
     border-color: rgba(255, 255, 255, 0.05);
     border-style: solid;
     margin: 10px;
-    width: 150px;
+    width: 118px;
     margin: 3px 0;
     height: 35px;
 }
@@ -51,7 +51,7 @@ button.bought {
     border-style: solid;
     margin: 10px;
     pointer-events: none;
-    width: 150px;
+    width: 118px;
     margin: 3px 0;
     height: 35px;
 }
@@ -232,13 +232,13 @@ div{
 
 button.upgradeBuy:not(.bought) {
     height: 35px;
-    max-width: 300px;
+    width: 300px;
     margin: 0px;
 }
 
 button.upgradeBuy.bought {
     height: 35px;
-    max-width: 300px;
+    width: 300px;
     margin: 0px;
 }
 
