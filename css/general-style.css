@@ -2,7 +2,7 @@
 body {
 	color: var(--color);
 	overflow: hidden;
-	--background: #0f0f0f;
+	--background: hsl(275, 100%, 10%);
 	--color: #dfdfdf;
 	--points: #ffffff;
 	background: var(--background)
@@ -11,7 +11,6 @@ body {
 /* General text */
 h1, h2, h3, b, input {
 	display: inline;
-	font-family: "Lucida Console", "Courier New", monospace
 }
 
 h2 {
@@ -29,7 +28,7 @@ button {
     border-style: solid;
 }
 
-button:hover:not(.locked) {
+button:hover:not(.locked):not(.bought) {
 	background-color: hsl(275, 70%, 50%);
     transform: scale(1.05, 1.05);
     box-shadow: 0 0 5px hsl(275 100% 20%);
@@ -53,7 +52,7 @@ button:hover:not(.locked) {
 }
 
 .bought {
-	background-color: #77bf5f;
+	background-color: hsl(120, 50%, 30%);
 	cursor: default;
 }
 

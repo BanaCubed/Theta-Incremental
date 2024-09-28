@@ -34,6 +34,10 @@ addLayer("tree-tab", {
             embedLayer: 'theta',
             unlocked(){return true},
         },
+        "Ranks": {
+            embedLayer: 'ranks',
+            unlocked(){return true},
+        },
     },
     previousTab: "",
     leftTab: true,

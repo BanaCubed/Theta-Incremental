@@ -10,7 +10,7 @@ var colors = {
 		points: "#ffffff",
 		locked: "#bf8f8f",
 		background: "hsl(275, 100%, 10%)",
-		background_tooltip: "hsl(275, 100%, 25%)",
+		background_tooltip: "hsla(275, 100%, 15%, 0.75)",
 	},
 }
 function changeTheme() {
@@ -34,7 +34,6 @@ function switchTheme() {
 	else {
 		index ++;
 		options.theme = themes[index];
-		options.theme = themes[1];
 	}
 	changeTheme();
 	resizeCanvas();

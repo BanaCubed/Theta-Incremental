@@ -138,7 +138,7 @@ function rowReset(row, layer) {
 }
 
 function layerDataReset(layer, keep = []) {
-	let storedData = {unlocked: player[layer].unlocked, forceTooltip: player[layer].forceTooltip, noRespecConfirm: player[layer].noRespecConfirm, prevTab:player[layer].prevTab} // Always keep these
+	let storedData = {unlocked: player[layer].unlocked, forceTooltip: player[layer].forceTooltip, noRespecConfirm: player[layer].noRespecConfirm, prevTab:player[layer].prevTab, done: player[layer].done} // Always keep these
 
 	for (thing in keep) {
 		if (player[layer][keep[thing]] !== undefined)
@@ -194,8 +194,9 @@ function doReset(layer, force=false) {
 		updateMilestones(layer)
 		updateAchievements(layer)
 
-		if (!player[layer].unlocked) {
+		if (!player[layer].unlocked || !player[layer].done) {
 			player[layer].unlocked = true;
+			player[layer].done = true;
 			needCanvasUpdate = true;
 
 			if (tmp[layer].increaseUnlockOrder){
@@ -224,6 +225,17 @@ function doReset(layer, force=false) {
 
 	player[layer].resetTime = 0
 
+	multiTemp()
+}
+
+function multiTemp() {
+	updateTemp()
+	updateTemp()
+	updateTemp()
+	updateTemp()
+	updateTemp()
+	updateTemp()
+	updateTemp()
 	updateTemp()
 	updateTemp()
 }
@@ -338,6 +350,7 @@ function gameLoop(diff) {
 	}
 	addTime(diff)
 	player.points = player.points.add(tmp.pointGen.times(diff)).max(0)
+	player.totalTheta = player.totalTheta.add(tmp.pointGen.mul(diff))
 
 	for (let x = 0; x <= maxRow; x++){
 		for (item in TREE_LAYERS[x]) {
@@ -393,7 +406,7 @@ function hardReset(resetOptions) {
 
 var ticking = false
 
-var interval = setInterval(function() {
+function loop() {
 	if (player===undefined||tmp===undefined) return;
 	if (ticking) return;
 	if (tmp.gameEnded&&!player.keepGoing) return;
@@ -425,6 +438,7 @@ var interval = setInterval(function() {
 	adjustPopupTime(trueDiff)
 	updateParticles(trueDiff)
 	ticking = false
-}, 50)
+	setTimeout(loop, options.tickspeed)
+}
 
 setInterval(function() {needCanvasUpdate = true}, 500)

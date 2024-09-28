@@ -5,7 +5,7 @@ var systemComponents = {
 			<div class="upgRow">
 				<div v-for="tab in Object.keys(data)">
 					<button v-if="data[tab].unlocked == undefined || data[tab].unlocked" v-bind:class="{tabButton: true, notify: subtabShouldNotify(layer, name, tab), resetNotify: subtabResetNotify(layer, name, tab)}"
-					v-bind:style="[{'border-color': tmp[layer].color}, (subtabShouldNotify(layer, name, tab) ? {'box-shadow': 'var(--hqProperty2a), 0 0 20px '  + (data[tab].glowColor || defaultGlow)} : {}), tmp[layer].componentStyles['tab-button'], data[tab].buttonStyle]"
+					v-bind:style="[{'border-color': tmp[layer].color}, tmp[layer].componentStyles['tab-button'], data[tab].buttonStyle]"
 						v-on:click="function(){player.subtabs[layer][name] = tab; updateTabFormats(); needCanvasUpdate = true;}">{{tab}}</button>
 				</div>
 			</div>
@@ -107,25 +107,22 @@ var systemComponents = {
 		<div class="overlayThing" style="
 		padding-top:5px;
 		padding-bottom:5px;
-		width: 100%;
+		width: 100%; height: fit-content;
 		z-index: 100000;
 		position: relative;
-		background-color: var(--background);
-		box-shadow: 0 0 5px var(--background), 0 0 5px var(--background), 0 0 10px var(--background), 0 0 15px var(--background), 0 0 25px var(--background);">
+		background-color: var(--background);" v-bind:style="{'box-shadow': (document.getElementById('treeTab').scrollTop>=5?'0 0 5px 2px black':'')}" v-if="options.header>=1">
 			<span v-if="player.devSpeed && player.devSpeed != 1" class="overlayThing">
 				Dev Speed: x{{format(player.devSpeed)}}<br><br>
 			</span>
 			<div style="
 				display: flex;
-				justify-content: space-around;">
-				<div style="width: fit-content; text-align: left;">
-					<span v-if="player.points.lt('1e1000')"  class="overlayThing">θ: </span>
-					<span class="overlayThing theta">{{formatWhole(player.points)}}</span>
-					<br>
-					<span v-if="canGenPoints()"  class="overlayThing">+ {{formatWhole(getPointGen())}}/s</span>
-					<div v-for="thing in tmp.displayThings" class="overlayThing"><span v-if="thing" v-html="thing"></span></div>
-					<br>
-					<clickable :layer="'theta'" :data="11"></clickable>
+				justify-content: space-around; height: fit-content;">
+				<div style="width: fit-content; text-align: left; min-width: 150px; height: fit-content;">
+					<span class="overlayThing" v-if="options.header>=1">θ: {{formatWhole(player.points)}}</span>
+					<br v-if="options.header>=2">
+					<span v-if="canGenPoints()" class="overlayThing" v-if="options.header>=2">+ {{formatWhole(getPointGen())}}/s</span>
+					<br v-if="options.header>=3">
+					<clickable :layer="'theta'" :data="11" v-if="options.header>=3"></clickable>
 				</div>
 			</div>
 		</div>
@@ -151,19 +148,23 @@ var systemComponents = {
         <a class="link" href="https://discord.gg/F3xveHV" target="_blank" v-bind:style="modInfo.discordLink ? {'font-size': '16px'} : {}">The Modding Tree Discord</a><br>
         <a class="link" href="http://discord.gg/wwQfgPa" target="_blank" v-bind:style="{'font-size': '16px'}">Main Prestige Tree server</a><br>
 		<br><br>
-        Time Played: {{ formatTime(player.timePlayed) }}<br><br>
-        <h3>Hotkeys</h3><br>
-        <span v-for="key in hotkeys" v-if="player[key.layer].unlocked && tmp[key.layer].hotkeys[key.id].unlocked"><br>{{key.description}}</span></div>
     `
     },
 
     'options-tab': {
         template: `
-        <div style="display: flex; flex-direction: row;">
-            <button class="opt" onclick="exportSave()">Export Save</button>
-            <button class="opt" onclick="save()">Force Save</button>
-            <button class="opt" onclick="importSave()">Import Save</button>
-            <button class="opt glowRed" onclick="hardReset()">Hard Reset</button>
+        <div style="display: flex; flex-direction: column;">
+			<div style="display: flex; flex-direction: row;">
+				<button class="opt" onclick="save()">Save Game</button>
+				<button class="opt" onclick="exportSave()">Export Save</button>
+				<button class="opt" onclick="importSave()">Import Save</button>
+				<button class="opt glowRed" onclick="hardReset()">Hard Reset</button>
+			</div><br>
+			<options-bar :option="['autosave', 'Autosave']" :choices="[true, false]" :names="['Enabled', 'Disabled']"></options-bar><br>
+			<options-bar :option="['offlineProd', 'Offline Progress']" :choices="[true, false]" :names="['Enabled', 'Disabled']"></options-bar><br>
+			<options-bar :option="['tickspeed', 'Game Tickspeed']" :choices="[15, 50, 100, 200]" :names="['60/s', '20/s', '10/s', '5/s']"></options-bar><br>
+			<options-bar :option="['notation', 'Notation']" :choices="[0, 1, 2, 5, 4]" :names="['Mixed Science', 'Science', 'Logarithm', 'Mixed Logarithm', 'Letters'],"></options-bar><br>
+			<options-bar :option="['header', 'Pinned Header']" :choices="[3, 2, 1, 0]" :names="['Enabled', 'Production', 'Resources', 'Disabled'],"></options-bar>
         </div>`
     },
 

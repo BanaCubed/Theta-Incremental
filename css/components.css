@@ -59,6 +59,7 @@
     border-style: solid;
     padding: 8px 5px 5px 5px;
 	text-align: left;
+	transition: none;
 }
 
 /* Infoboxes */

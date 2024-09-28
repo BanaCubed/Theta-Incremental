@@ -39,19 +39,9 @@
 	font-size: 30px;
 }
 
-.resetNotify {
-	box-shadow: var(--hqProperty2a), 0 0 8px #ffffff;
-}
-
 .treeNode.can:hover {
 	transform: scale(1.15, 1.15);
 	box-shadow: var(--hqProperty2a), 0 0 20px var(--points);
-}
-
-.notify {
-	transform: scale(1.05, 1.05);
-	border-color: rgba(0, 0, 0, 0.125);
-	box-shadow: var(--hqProperty2a), 0 0 20px #ff0000;
 }
 
 

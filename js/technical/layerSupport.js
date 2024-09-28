@@ -279,12 +279,26 @@ const RIGHT = 3
 
 
 addLayer("info-tab", {
-    tabFormat: ["info-tab"],
+    tabFormat: {
+        Stats: {
+            content: ['stats', 'blank']
+        },
+        Breakdown: {
+            content: [['breakdown', ['θ/sec', 'θ/click']], 'blank', 'breakdown-display', 'blank']
+        }
+    },
     row: "otherside"
 })
 
 addLayer("options-tab", {
-    tabFormat: ["options-tab"],
+    tabFormat: {
+        Options: {
+            content: ['options-tab', 'blank'],
+        },
+        Info: {
+            content: ['info-tab', 'blank'],
+        },
+    },
     row: "otherside"
 })
 

@@ -38,12 +38,9 @@ html, body {
 	margin: 0;
 }
 
-.upgAlign {
-	vertical-align: 0
-}
-
-.bigUpgAlign {
-	vertical-align: 0
+.upgAlign, .bigUpgAlign {
+	vertical-align: 0;
+	margin: 0;
 }
 
 .treeThing {
@@ -168,11 +165,11 @@ ul {
 	position: relative;
   }
   
-  .tooltipBox:hover .tooltip{
+  .tooltipBox:hover>.tooltip{
 	opacity: 1;
   }
 
-  .forceTooltip .tooltip{
+  .forceTooltip>.tooltip{
 	opacity: 1;
   }
   

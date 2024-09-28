@@ -210,10 +210,10 @@ function load() {
 	setupModInfo();
 
 	setupTemp();
-	updateTemp();
-	updateTemp();
+	multiTemp();
 	updateTabFormats()
 	loadVue();
+	loop();
 }
 
 function loadOptions() {

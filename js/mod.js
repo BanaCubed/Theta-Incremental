@@ -3,18 +3,18 @@ let modInfo = {
 	id: "ThetaIncremental",
 	author: "BanaCubed",
 	pointsName: "",
-	modFiles: ["layers.js", "tree.js"],
+	modFiles: ["layers.js", "tree.js", "layers/theta.js", "layers/ranks.js"],
 
-	discordName: "Bana's Corner",
-	discordLink: "",
+	discordName: "Theta Incremental Discord",
+	discordLink: "https://discord.gg/wt5XyPRtte",
 	initialStartPoints: new Decimal (0), // Used for hard resets and new players
 	offlineLimit: 168,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "θ.1",
-	name: "Ranks",
+	num: "0.3",
+	name: "New Beginnings",
 }
 
 let changelog = `<button class="upg">button</button>`
@@ -35,27 +35,46 @@ function canGenPoints(){
 }
 
 // Calculate points/sec!
-function getPointGen() {
+function getPointGen(addOnly=false) {
 	if(!canGenPoints())
 		return new Decimal(0)
 
 	let gain = new Decimal(0)
 	gain = gain.add(tmp.theta.buyables[12].effect)
+
+	if(addOnly) { return gain }
+
 	gain = gain.times(tmp.theta.buyables[14].effect)
+	gain = gain.times(tmp.theta.buyables[22].effect)
+
+	if(hasUpgrade('ranks', 15)) { gain = gain.mul(tmp.ranks.upgrades[15].effect) }
+
+
+	if(hasMilestone('ranks', 0)) { gain = gain.add(tmp.ranks.milestones[0].effect.times(getPointClick())) }
 	return gain
 }
 
-function getPointClick() {
+function getPointClick(addOnly=false) {
 	if(!canGenPoints())
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
 	gain = gain.add(tmp.theta.buyables[11].effect)
+	
+	if(addOnly) { return gain }
+
+	gain = gain.times(tmp.theta.buyables[22].effect)
+
+	if(hasUpgrade('ranks', 15)) { gain = gain.mul(tmp.ranks.upgrades[15].effect) }
+	
+
 	return gain
 }
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
+	totalTheta: Decimal.dZero,
+	breakdown: 0,
 }}
 
 // Display extra things at the top of the page

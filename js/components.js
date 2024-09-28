@@ -137,7 +137,7 @@ function loadVue() {
 	Vue.component('challenge', {
 		props: ['layer', 'data'],
 		template: `
-		<div v-if="tmp[layer].challenges && tmp[layer].challenges[data]!== undefined && tmp[layer].challenges[data].unlocked && !(options.hideChallenges && maxedChallenge(layer, [data]) && !inChallenge(layer, [data]))"
+		<div v-if="tmp[layer].challenges && tmp[layer].challenges[data]!== undefined && tmp[layer].challenges[data].unlocked && !inChallenge(layer, [data]))"
 			v-bind:class="['challenge', challengeStyle(layer, data), player[layer].activeChallenge === data ? 'resetNotify' : '']" v-bind:style="tmp[layer].challenges[data].style">
 			<br><h3 v-html="tmp[layer].challenges[data].name"></h3><br><br>
 			<button v-bind:class="{ longUpg: true, can: true, [layer]: true }" v-bind:style="{'background-color': tmp[layer].color}" v-on:click="startChallenge(layer, data)">{{challengeButtonText(layer, data)}}</button><br><br>
@@ -158,9 +158,9 @@ function loadVue() {
 		props: ['layer', 'data'],
 		template: `
 		<div v-if="tmp[layer].upgrades" class="upgTable">
-			<div v-for="row in (data === undefined ? tmp[layer].upgrades.rows : data)" class="upgRow">
-				<div v-for="col in tmp[layer].upgrades.cols"><div v-if="tmp[layer].upgrades[row*10+col]!== undefined && tmp[layer].upgrades[row*10+col].unlocked" class="upgAlign">
-					<upgrade :layer = "layer" :data = "row*10+col" v-bind:style="tmp[layer].componentStyles.upgrade"></upgrade>
+		<div class="upgRow">
+			<div v-for="id in (data === undefined ? Object.keys(tmp[layer].upgrades) : data)" class="upgAlign">
+					<upgrade :layer = "layer" :data = "id" v-bind:style="tmp[layer].componentStyles.upgrade"></upgrade>
 				</div></div>
 			</div>
 			<br>
@@ -172,31 +172,71 @@ function loadVue() {
 	Vue.component('upgrade', {
 		props: ['layer', 'data'],
 		template: `
-		<button v-if="tmp[layer].upgrades && tmp[layer].upgrades[data]!== undefined && tmp[layer].upgrades[data].unlocked" :id='"upgrade-" + layer + "-" + data' v-on:click="buyUpg(layer, data)" v-bind:class="{ [layer]: true, tooltipBox: true, upg: true, bought: hasUpgrade(layer, data), locked: (!(canAffordUpgrade(layer, data))&&!hasUpgrade(layer, data)), can: (canAffordUpgrade(layer, data)&&!hasUpgrade(layer, data))}"
-			v-bind:style="[((!hasUpgrade(layer, data) && canAffordUpgrade(layer, data)) ? {'background-color': tmp[layer].color} : {}), tmp[layer].upgrades[data].style]">
-			<span v-if="layers[layer].upgrades[data].fullDisplay" v-html="run(layers[layer].upgrades[data].fullDisplay, layers[layer].upgrades[data])"></span>
-			<span v-else>
-				<span v-if= "tmp[layer].upgrades[data].title"><h3 v-html="tmp[layer].upgrades[data].title"></h3><br></span>
-				<span v-html="tmp[layer].upgrades[data].description"></span>
-				<span v-if="layers[layer].upgrades[data].effectDisplay"><br>Currently: <span v-html="run(layers[layer].upgrades[data].effectDisplay, layers[layer].upgrades[data])"></span></span>
-				<br><br>Cost: {{ formatWhole(tmp[layer].upgrades[data].cost) }} {{(tmp[layer].upgrades[data].currencyDisplayName ? tmp[layer].upgrades[data].currencyDisplayName : tmp[layer].resource)}}
-			</span>
-			<tooltip v-if="tmp[layer].upgrades[data].tooltip" :text="tmp[layer].upgrades[data].tooltip"></tooltip>
+		<div class="box" v-if="tmp[layer].upgrades && tmp[layer].upgrades[data]!== undefined && tmp[layer].upgrades[data].unlocked">
+			 {{ tmp[layer].upgrades[data].name }}: <span v-html="run(tmp[layer].upgrades[data].description, tmp[layer].upgrades[data])"></span><br><br>
+			<div style="text-align: left; margin: 0 8px 0 8px">
+				 Power: <span v-html="run(tmp[layer].upgrades[data].powerDisplay, tmp[layer].upgrades[data])"></span><br>
+				<span v-if="layer != 'ranks'">  Cost:  {{ formatWhole(tmp[layer].upgrades[data].cost) }}<br></span>
+				Effect: <span v-html="run(tmp[layer].upgrades[data].effectDisplay, tmp[layer].upgrades[data])"></span><br>
+				
+			</div><br>
+			<div style="display: flex; flex-direction: row;">
+				<button style="width: 100%;" v-bind:class="{ can: tmp[layer].upgrades[data].canAfford && !hasUpgrade(layer, data), locked: !tmp[layer].upgrades[data].canAfford && !hasUpgrade(layer, data), bought: hasUpgrade(layer, data) }" v-on:click="if(canAffordUpgrade(layer, data)) buyUpg(layer, data)">{{hasUpgrade(layer, data) ? 'Bought' : 'Buy'}}</button>
+			</div>
+		</div>
+		`
+	})
 
-			</button>
+	Vue.component('rankup', {
+		props: ['layer', 'data'],
+		template: `
+		<div class="box" style="text-align: center; margin: 4px auto; width: 420px;">
+			<h2>Rankup</h2><br>
+			You are at Rank {{ formatWhole(player.ranks.points) }}<br><br>
+			Rankup will reset all theta related features<br>
+			You can rank up at {{ formatWhole(tmp.ranks.getNextAt) }} theta<br><br>
+			At {{ tmp.ranks.milestones[player.ranks.milestones.length].requirementDescription }}, <span v-html="tmp.ranks.milestones[player.ranks.milestones.length].effectDescription"></span><br><br>
+			<prestige-button :layer="layer"></prestige-button>
+		</div>
+		`
+	})
+
+	Vue.component('rank-energy', {
+		props: ['layer', 'data'],
+		template: `
+		<div class="box" style="text-align: center; margin: 4px auto; width: 420px;">
+			<h2>Rank Energy</h2><br>
+			You have {{ formatWhole(tmp.ranks.unspentEnergy) }} rank energy (Rε)<br>
+			{{ formatWhole(tmp.ranks.totalEnergy) }} total (Rτ)<br>
+			Next rank energy at {{ formatWhole(tmp.ranks.nextEnergyAt) }} theta<br><br>
+			Your next rank energy upgrade will cost {{ formatWhole(tmp.ranks.rankEnergyCost) }} rank energy<br>
+			This increases with every upgrade bought<br><br>
+			<clickable :layer="'ranks'" :data="11"></clickable>
+		</div>
+		`
+	})
+
+	Vue.component('rankbert', {
+		props: ['layer', 'data'],
+		template: `
+		<div class="box" style="text-align: center; margin: 4px auto; width: 420px;">
+			<h2>Rankbert</h2><br>
+			This is Rankbert, another being trapped here<br>
+			Rankbert, unlike you, is unable to live purely off of basically nothingness<br>
+			This makes Rankbert very hungry<br><br>
+			Perhaps if you feed him he will reward you...
+		</div>
 		`
 	})
 
 	Vue.component('milestones', {
 		props: ['layer', 'data'],
 		template: `
-		<div v-if="tmp[layer].milestones">
-			<table>
-				<tr v-for="id in (data === undefined ? Object.keys(tmp[layer].milestones) : data)" v-if="tmp[layer].milestones[id]!== undefined && tmp[layer].milestones[id].unlocked && milestoneShown(layer, id)">
-					<milestone :layer = "layer" :data = "id" v-bind:style="tmp[layer].componentStyles.milestone"></milestone>
-				</tr>
-			</table>
-			<br>
+		<div v-if="tmp[layer].milestones && hasMilestone(layer, 0)" class="box" style="width: calc(100vw - 40px); max-width: 600px; height: fit-content; margin: 0; padding: 5px;">
+			<h2> Milestones</h2><br><br>
+				<div v-for="milestone in (data === undefined ? Object.keys(tmp[layer].milestones) : data)" style="margin: 0;">
+					<milestone :layer = "layer" :data = "milestone" v-bind:style="tmp[layer].componentStyles.milestone"></milestone>
+				</div>
 		</div>
 		`
 	})
@@ -205,12 +245,9 @@ function loadVue() {
 	Vue.component('milestone', {
 		props: ['layer', 'data'],
 		template: `
-		<td v-if="tmp[layer].milestones && tmp[layer].milestones[data]!== undefined && milestoneShown(layer, data) && tmp[layer].milestones[data].unlocked" v-bind:style="[tmp[layer].milestones[data].style]" v-bind:class="{milestone: !hasMilestone(layer, data), tooltipBox: true, milestoneDone: hasMilestone(layer, data)}">
-			<h3 v-html="tmp[layer].milestones[data].requirementDescription"></h3><br>
-			<span v-html="run(layers[layer].milestones[data].effectDescription, layers[layer].milestones[data])"></span><br>
-			<tooltip v-if="tmp[layer].milestones[data].tooltip" :text="tmp[layer].milestones[data].tooltip"></tooltip>
-
-		<span v-if="(tmp[layer].milestones[data].toggles)&&(hasMilestone(layer, data))" v-for="toggle in tmp[layer].milestones[data].toggles"><toggle :layer= "layer" :data= "toggle" v-bind:style="tmp[layer].componentStyles.toggle"></toggle>&nbsp;</span></td></tr>
+		<div v-if="tmp[layer].milestones && tmp[layer].milestones[data]!== undefined && hasMilestone(layer, data)" style="text-align: left;">
+			 {{ tmp[layer].milestones[data].name }}: <span v-html="run(tmp[layer].milestones[data].requirementDescription, tmp[layer].milestones[data])"></span>, <span v-html="run(tmp[layer].milestones[data].effectDescription, tmp[layer].milestones[data])"></span><br><br>
+		</div>
 		`
 	})
 
@@ -259,10 +296,10 @@ function loadVue() {
 		template: `
 		<div v-if="tmp[layer].buyables" class="upgTable">
 			<respec-button v-if="tmp[layer].buyables.respec && !(tmp[layer].buyables.showRespec !== undefined && tmp[layer].buyables.showRespec == false)" :layer = "layer" v-bind:style="[{'margin-bottom': '12px'}, tmp[layer].componentStyles['respec-button']]"></respec-button>
-			<div v-for="row in (data === undefined ? tmp[layer].buyables.rows : data)" class="upgRow">
-				<div v-for="col in tmp[layer].buyables.cols"><div v-if="tmp[layer].buyables[row*10+col]!== undefined && tmp[layer].buyables[row*10+col].unlocked" class="upgAlign" v-bind:style="{'height': (data ? data : 'inherit'),}">
-					<buyable :layer = "layer" :data = "row*10+col"></buyable>
-				</div></div>
+			<div class="upgRow">
+				<div v-if="tmp[layer].buyables[buyable]!== undefined && tmp[layer].buyables[buyable].unlocked" class="upgAlign" v-bind:style="{'height': (data ? data : 'inherit'),}" v-for="buyable in (data === undefined ? Object.keys(tmp[layer].buyables) : data)">
+					<buyable :layer = "layer" :data = "buyable"></buyable>
+				</div>
 				<br>
 			</div>
 		</div>
@@ -276,15 +313,15 @@ function loadVue() {
 				 {{ tmp[layer].buyables[data].name }}: <span v-html="run(tmp[layer].buyables[data].description, tmp[layer].buyables[data])"></span><br><br>
 				<div style="text-align: left; margin: 0 8px 0 8px">
 					 Power: {{ tmp[layer].buyables[data].effectPre }}{{ format(tmp[layer].buyables[data].power) }}<br>
-					 Count:  {{ formatWhole(getBuyableAmount(layer, data)) }}<br>
+					 Count:  {{ formatWhole(getBuyableAmount(layer, data)) }}<span v-if="tmp[layer].buyables[data].bonus.neq(0)"> + {{ formatWhole(tmp[layer].buyables[data].bonus) }}</span><br>
 					  Cost:  {{ formatWhole(tmp[layer].buyables[data].cost) }}<br>
 					Effect: {{ tmp[layer].buyables[data].effectPre }}{{ format(tmp[layer].buyables[data].effect) }}<br>
 					
 				</div><br>
 				<div style="display: flex; flex-direction: row;">
-					<button style="width: 100%;" v-bind:class="{ can: tmp[layer].buyables[data].canAfford, locked: !tmp[layer].buyables[data].canAfford }" v-on:click="layers[layer].buyables[data].buy()">Buy One</button>
+					<button style="width: 100%;" v-bind:class="{ can: tmp[layer].buyables[data].canAfford, locked: !tmp[layer].buyables[data].canAfford }" v-on:click="if(layers[layer].buyables[data].canAfford()) layers[layer].buyables[data].buy()">Buy One</button>
 					<button style="width: 100%;" v-bind:class="{ can: tmp[layer].buyables[data].canAfford, locked: !tmp[layer].buyables[data].canAfford }" v-on:click="layers[layer].buyables[data].buyMax()">Buy Max</button>
-					<button v-if="player.unlocks.auto[layer][data]">Auto: On</button>
+					<button style="width: 100%;" v-if="player.unlocks.auto[layer][data]" v-on:click="player.auto[layer][data] = !player.auto[layer][data]">Auto: {{player.auto[layer][data] ? "On" : "Off"}}</button>
 				</div>
 			</div>
 		`,
@@ -580,6 +617,56 @@ function loadVue() {
 			<button v-if="tmp[layer].buyables && tmp[layer].buyables[data].sellAll && !(tmp[layer].buyables[data].canSellAll !== undefined && tmp[layer].buyables[data].canSellAll == false)" v-on:click="run(tmp[layer].buyables[data].sellAll, tmp[layer].buyables[data])"
 				v-bind:class="{ longUpg: true, can: player[layer].unlocked, locked: !player[layer].unlocked }">{{tmp[layer].buyables.sellAllText ? tmp[layer].buyables.sellAllText : "Sell All"}}</button>
 	`
+	})
+	
+	Vue.component('options-bar', {
+		props: ['option', 'choices', 'names'],
+		template: `
+			<div class="optionsBar" id="pinHeaderBar" style="height: 50px; margin-top: 20px;" v-bind:style="{'width': (choices.length*80)+'px'}">
+				<div class="optionsBarName" style="text-align: start;" v-html="option[1]"></div>
+				<div class="optionsBarSelection" style="z-index: 1;" v-bind:style="{'border-radius': '0px '+(choices.indexOf(options[option[0]])==(choices.length-1)?'7px 7px ':'0px 0px ')+(choices.indexOf(options[option[0]])==0?'7px':'0px'), '--leftPos': (choices.indexOf(options[option[0]])*80)+'px'}"></div>
+				<div style="z-index: 2; border-radius: 0 7px 7px 7px; overflow: hidden; display: flex;">
+					<button class="optionsBarSegment" v-on:click="options[option[0]]=choice" v-for="choice in choices">{{ names[choices.indexOf(choice)] }}</button>
+				</div>
+			</div>
+	`
+	})
+
+	Vue.component('stats', {
+		props: ['layer', 'data'],
+		template: `
+		<div class="box" style="text-align: center; margin: 4px auto; width: 600px;">
+			<h2>General</h2><br>
+			You have played for {{ formatTime(player.timePlayed) }}<br><br>
+			<h2>Theta</h2><br>
+			You have produced a total of {{ formatWhole(player.totalTheta) }} theta<br>
+			You own a total of {{ formatWhole(getBuyableAmount('theta', 11).add(getBuyableAmount('theta', 12)).add(getBuyableAmount('theta', 13)).add(getBuyableAmount('theta', 14)).add(getBuyableAmount('theta', 15)).add(getBuyableAmount('theta', 21)).add(getBuyableAmount('theta', 22))) }} theta upgrades<br><br>
+			<span v-if="player.ranks.done"><h2>Ranks</h2><br>
+			<span class="tooltipBox">Your best theta is {{ formatWhole(player.ranks.bestTheta) }}<tooltip :text="'Used for calculating Rank Energy'"></tooltip></span><br><br></span>
+		</div>
+		`
+	})
+	
+	Vue.component('breakdown', {
+		props: ['layer', 'data'],
+		template: `
+			<div class="optionsBar" id="pinHeaderBar" style="height: 50px; margin-top: 20px;" v-bind:style="{'width': (data.length*80)+'px'}">
+				<div class="optionsBarName" style="text-align: start;" v-html="'Breakdown Stat'"></div>
+				<div class="optionsBarSelection" style="z-index: 1;" v-bind:style="{'border-radius': '0px '+(player.breakdown==data.length-1?'7px 7px ':'0px 0px ')+(player.breakdown==0?'7px':'0px'), '--leftPos': (player.breakdown*80)+'px'}"></div>
+				<div style="z-index: 2; border-radius: 0 7px 7px 7px; overflow: hidden; display: flex;">
+					<button class="optionsBarSegment" v-on:click="player.breakdown=data.indexOf(choice)" v-for="choice in data">{{ choice }}</button>
+				</div>
+			</div>
+	`
+	})
+
+	Vue.component('breakdown-display', {
+		props: ['layer', 'data'],
+		template: `
+		<div class="box" style="text-align: center; margin: 4px auto; width: 600px;">
+			<span v-html="breakdownDisplay()"></span>
+		</div>
+		`
 	})
 
 	// SYSTEM COMPONENTS

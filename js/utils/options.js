@@ -5,15 +5,12 @@ let options = {}
 function getStartOptions() {
 	return {
 		autosave: true,
-		msDisplay: "always",
 		theme: "default",
-		hqTree: false,
 		offlineProd: true,
-		hideChallenges: false,
-		showStory: true,
-		forceOneTab: false,
-		oldStyle: false,
-		forceTooltips: true,
+		tickspeed: 50,
+		notation: 0,
+		precision: 2,
+		header: 3,
 	}
 }
 
