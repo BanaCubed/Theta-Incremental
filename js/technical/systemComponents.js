@@ -168,6 +168,14 @@ var systemComponents = {
         </div>`
     },
 
+    'confirmations': {
+        template: `
+        <div style="display: flex; flex-direction: column;">
+			<options-bar :option="['modals', 'Popups Styles']" :choices="[true, false]" :names="['Modal', 'Browser Alert']"></options-bar><br>
+			<options-bar :option="['ranks', 'Rankup Confirmation']" :choices="[0, 1, 2]" :names="['Never', 'Gainless', 'Always']"></options-bar><br>
+        </div>`
+    },
+
     'back-button': {
         template: `
         <button v-bind:class="back" onclick="goBack()">←</button>

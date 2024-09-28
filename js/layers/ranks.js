@@ -10,6 +10,7 @@ addLayer("ranks", {
             done: false,
             points: new Decimal(0),
             bestTheta: new Decimal(0),
+            rankbert: Decimal.dZero
         };
     },
     baseAmount() {
@@ -72,7 +73,7 @@ addLayer("ranks", {
             height: 300,
             direction: UP,
             progress() {
-                return 0.06
+                return player.ranks.rankbert.div(100)
             },
             borderStyle: {
                 'border-width': '3px',
@@ -82,10 +83,11 @@ addLayer("ranks", {
                 'background-color': 'hsl(275, 100%, 20%)',
             },
             display() {
-                return '6%'
+                return formatWhole(player.ranks.rankbert) + '%'
             },
         },
     },
+    resetName: 'Rankup',
     prestigeNotify(){return false},
     shouldNotify(){return false},
     milestones: {
@@ -157,8 +159,8 @@ addLayer("ranks", {
             name: 'RM9',
         },
         8: {
-            requirementDescription: 'Rank Infinity',
-            effectDescription: 'Placeholder, as Rankup breaks without one',
+            requirementDescription: 'Rank 25',
+            effectDescription: 'Win?',
             done() {
                 return false
             },
@@ -176,10 +178,14 @@ addLayer("ranks", {
         if(player.points.gte(player.ranks.bestTheta)) { player.ranks.bestTheta = player.points }
     },
     totalEnergy() {
-        return player.ranks.bestTheta.max(1).log(10).sub(10).max(0.5).pow(0.75).floor()
+        let en = player.ranks.bestTheta.max(1).log(10).sub(10).max(0.5).pow(0.75).floor()
+        if(en.gte(15)) { en = en.div(15).log(1.25).add(1).mul(15) }
+        return en
     },
     nextEnergyAt() {
-        return tmp.ranks.totalEnergy.add(1).pow(1/0.75).add(10).pow_base(10)
+        let en = tmp.ranks.totalEnergy.add(1)
+        if(en.gte(15)) { en = en.div(15).sub(1).pow_base(1.25).mul(15) }
+        return en.pow(1/0.75).add(10).pow_base(10)
     },
     unspentEnergy() {
         let amt = tmp.ranks.totalEnergy

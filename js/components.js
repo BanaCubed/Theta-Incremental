@@ -195,7 +195,7 @@ function loadVue() {
 			You are at Rank {{ formatWhole(player.ranks.points) }}<br><br>
 			Rankup will reset all theta related features<br>
 			You can rank up at {{ formatWhole(tmp.ranks.getNextAt) }} theta<br><br>
-			At {{ tmp.ranks.milestones[player.ranks.milestones.length].requirementDescription }}, <span v-html="tmp.ranks.milestones[player.ranks.milestones.length].effectDescription"></span><br><br>
+			<span v-if="player.ranks.milestones.length<Object.keys(tmp.ranks.milestones).length">At {{ tmp.ranks.milestones[player.ranks.milestones.length].requirementDescription }}, <span v-html="tmp.ranks.milestones[player.ranks.milestones.length].effectDescription"></span><br><br></span>
 			<prestige-button :layer="layer"></prestige-button>
 		</div>
 		`
@@ -224,7 +224,8 @@ function loadVue() {
 			This is Rankbert, another being trapped here<br>
 			Rankbert, unlike you, is unable to live purely off of basically nothingness<br>
 			This makes Rankbert very hungry<br><br>
-			Perhaps if you feed him he will reward you...
+			Perhaps if you feed him he will reward you...<br><br>
+			CURRENT ENDGAME
 		</div>
 		`
 	})
@@ -677,6 +678,7 @@ function loadVue() {
 	Vue.component('overlay-head', systemComponents['overlay-head'])
 	Vue.component('info-tab', systemComponents['info-tab'])
 	Vue.component('options-tab', systemComponents['options-tab'])
+	Vue.component('confirmations', systemComponents['confirmations'])
 	Vue.component('tooltip', systemComponents['tooltip'])
 	Vue.component('particle', systemComponents['particle'])
 	Vue.component('bg', systemComponents['bg'])

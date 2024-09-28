@@ -259,3 +259,24 @@ button > * {
     background: hsl(275, 100%, 10%);
     border-radius: 0px;
 }
+
+#modal {
+	width: 90vw;
+	position: fixed;
+	height: fit-content;
+	min-height: 20px;
+	left: 5vw;
+	top: 50vh;
+	max-height: 90vh;
+	background-color: hsl(275, 100%, 15%);
+	border-width: 3px;
+	border-radius: 10px;
+	border-color: rgba(255, 255, 255, 0.05);
+	z-index: 99999999;
+	border-style: solid;
+	transform: translate(0, -50%);
+	pointer-events: all;
+	box-shadow: 0 0 15px 2px black;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}

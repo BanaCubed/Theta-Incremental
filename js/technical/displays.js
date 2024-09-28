@@ -12,6 +12,27 @@ function prestigeButtonText(layer) {
         return "You need prestige button text"
 }
 
+function closeModal() {
+	let modal = document.getElementById('modal')
+	modal.style.display = 'none'
+	modal.innerHTML = `<h2>What?</h2><br><br>This modal should have been closed, but something went wrong!<br><br><button onclick="closeModal()">Close</button>`
+}
+
+function createAlert(text='Lorem ipsum', title='Alert!', buttonText='Okay') {
+	if(!options.modals) { alert(text); return; }
+	let modal = document.getElementById('modal')
+	modal.innerHTML = `<h2>${title}</h2><br><br>${text}<br><br><button onclick="closeModal()">${buttonText}</button>`
+	modal.style.display = 'block'
+}
+
+function createConfirm(text='Lorem ipsum', title='Confirm!', cancelText='False', confirmText='True', func=()=>{closeModal()}) {
+	if(!options.modals) { if(confirm(text)) { func(); } return; }
+	let modal = document.getElementById('modal')
+	func = func.toString().substring(5, func.toString().length-1)
+	modal.innerHTML = `<h2>${title}</h2><br><br>${text}<br><br><div><button style="margin-right: 5px;" onclick="${func}">${confirmText}</button><button style="margin-left: 5px;" onclick="closeModal()">${cancelText}</button></div>`
+	modal.style.display = 'block'
+}
+
 function constructNodeStyle(layer){
 	let style = []
 	if ((tmp[layer].isLayer && layerunlocked(layer)) || (!tmp[layer].isLayer && tmp[layer].canClick))

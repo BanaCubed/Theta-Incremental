@@ -295,14 +295,12 @@ addLayer("options-tab", {
         Options: {
             content: ['options-tab', 'blank'],
         },
+        'Popups': {
+            content: ['confirmations', 'blank'],
+        },
         Info: {
             content: ['info-tab', 'blank'],
         },
     },
-    row: "otherside"
-})
-
-addLayer("changelog-tab", {
-    tabFormat() {return ([["raw-html", modInfo.changelog]])},
     row: "otherside"
 })

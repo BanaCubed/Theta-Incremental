@@ -7,10 +7,12 @@ function getStartOptions() {
 		autosave: true,
 		theme: "default",
 		offlineProd: true,
+		modals: true,
 		tickspeed: 50,
 		notation: 0,
 		precision: 2,
 		header: 3,
+		ranks: 1, // Confirmation
 	}
 }
 
