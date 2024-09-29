@@ -151,10 +151,10 @@ addLayer("ranks", {
             name: 'RM8',
         },
         7: {
-            requirementDescription: 'Rank 17',
+            requirementDescription: 'Rank 18',
             effectDescription: 'Unlock Rankbert',
             done() {
-                return player.ranks.points.gte(17)
+                return player.ranks.points.gte(18)
             },
             name: 'RM9',
         },
@@ -191,10 +191,10 @@ addLayer("ranks", {
         let amt = tmp.ranks.totalEnergy
         let upgs = player.ranks.upgrades.length
         if(upgs == 1) { amt = amt.sub(1) }
-        if(upgs == 2) { amt = amt.sub(3) }
-        if(upgs == 3) { amt = amt.sub(6) }
-        if(upgs == 4) { amt = amt.sub(10) }
-        if(upgs == 5) { amt = amt.sub(15) }
+        if(upgs == 2) { amt = amt.sub(2) }
+        if(upgs == 3) { amt = amt.sub(4) }
+        if(upgs == 4) { amt = amt.sub(7) }
+        if(upgs == 5) { amt = amt.sub(10) }
         return amt
     },
     upgrades: {
@@ -304,10 +304,10 @@ addLayer("ranks", {
     rankEnergyCost() {
         let upgs = player.ranks.upgrades.length
         if(upgs < 1) { return new Decimal(1) }
-        if(upgs < 2) { return new Decimal(2) }
-        if(upgs < 3) { return new Decimal(3) }
-        if(upgs < 4) { return new Decimal(4) }
-        if(upgs < 5) { return new Decimal(5) }
+        if(upgs < 2) { return new Decimal(1) }
+        if(upgs < 3) { return new Decimal(2) }
+        if(upgs < 4) { return new Decimal(3) }
+        if(upgs < 5) { return new Decimal(3) }
         if(upgs < 6) { return new Decimal(999) }
     },
     canGetUpg() {
@@ -320,8 +320,11 @@ addLayer("ranks", {
                 return `Respec`
             },
             onClick() {
-                player.ranks.upgrades = []
-                doReset('ranks', true)
+                if(options[layer]>=1) { createConfirm(`Are you sure that you want to force a ${tmp[layer].resetName} reset?<br>This is a gainless reset, and is not required to beat the game.`,
+                    `${tmp[layer].resetName} Confirmation`, `Cancel`, `Confirm`,
+                    ()=>{doReset(layer, true, true); player.ranks.upgrades=[]; closeModal();}); return; }
+                
+                doReset(layer, true, true); player.ranks.upgrades=[];
             },
             style: {
                 height: '35px',

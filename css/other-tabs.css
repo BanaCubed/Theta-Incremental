@@ -83,10 +83,7 @@ a {
 	font-size: 20px;
 	color: hsl(265, 90%, 61%);
 	cursor: pointer;
-	font-family: "Lucida Console", "Courier New", monospace;
-	-webkit-text-stroke-width: 1px;
-	-webkit-text-stroke-color: hsl(265, 98%, 48%);
-	text-decoration: none;
+	font-weight: bold;
 }
 
 .link:hover {

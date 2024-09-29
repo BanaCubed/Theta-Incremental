@@ -172,16 +172,16 @@ function generatePoints(layer, diff) {
 	addPoints(layer, tmp[layer].resetGain.times(diff))
 }
 
-function doReset(layer, force=false, fromModal=false) {
+function doReset(layer, force=false, fromModal=false, after) {
 	if (tmp[layer].type == "none") return
 	let row = tmp[layer].row
-	
+
 	if(options[layer]>=2 && !force && !fromModal) { createConfirm(`Are you sure that you want to ${tmp[layer].resetName}?<br>This will grant you ${formatWhole(tmp[layer].resetGain)} ${tmp[layer].resource}.`,
 		`${tmp[layer].resetName} Confirmation`, `Cancel`, `Confirm`,
-		()=>{doReset(layer, false, true); closeModal();}); return; }
+		()=>{doReset(layer, false, true, after); closeModal();}); return; }
 	if(options[layer]>=1 && force && !fromModal) { createConfirm(`Are you sure that you want to force a ${tmp[layer].resetName} reset?<br>This is a gainless reset, and is not required to beat the game.`,
 		`${tmp[layer].resetName} Confirmation`, `Cancel`, `Confirm`,
-		()=>{doReset(layer, true, true); closeModal();}); return; }
+		()=>{doReset(layer, true, true, after); closeModal();}); return; }
 
 	if (!force) {
 		
