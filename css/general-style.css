@@ -1,0 +1,62 @@
+/* Global things */
+body {
+	color: var(--color);
+	overflow: hidden;
+	--background: hsl(275, 100%, 10%);
+	--color: #dfdfdf;
+	--points: #ffffff;
+	background: var(--background)
+}
+
+/* General text */
+h1, h2, h3, b, input {
+	display: inline;
+}
+
+h2 {
+	font-size: 21px;
+}
+
+button {
+	text-align: center;
+    background-color: hsl(275, 100%, 20%);
+    width: 118px;
+    height: 35px;
+    border-radius: 10px;
+    border-width: 3px;
+    border-color: rgba(255, 255, 255, 0.05);
+    border-style: solid;
+}
+
+button:hover:not(.locked):not(.bought) {
+	background-color: hsl(275, 70%, 50%);
+    transform: scale(1.05, 1.05);
+    box-shadow: 0 0 5px hsl(275 100% 20%);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* These are styles for different states of components. You can make layer-specific versions with .c.locked, for example */
+.locked {
+	background-color: hsl(0, 50%, 50%);
+	cursor: not-allowed;
+}
+
+/* Can meens can be clicked/bought/etc */
+.can {
+	cursor: pointer;
+}
+
+.can:hover {
+	transform: scale(1.15, 1.15);
+	box-shadow: 0 0 20px var(--points)
+}
+
+.bought {
+	background-color: hsl(120, 50%, 30%);
+	cursor: default;
+}
+
+#points {
+	color: var(--points);
+	text-shadow: 0 0 10px var(--points);
+}
