@@ -9,28 +9,33 @@ function prestigeButtonText(layer) {
 	if (tmp[layer].type == "none")
 		return ""
     
-        return "You need prestige button text"
+        return "Welcome to the source code, there is very little guidelines, so beware (also just use normal TMT)"
 }
 
 function closeModal() {
 	let modal = document.getElementById('modal')
-	modal.style.display = 'none'
-	modal.innerHTML = `<h2>What?</h2><br><br>This modal should have been closed, but something went wrong!<br><br><button onclick="closeModal()">Close</button>`
+	modal.style.opacity = '0%'
+	modal.style.pointerEvents = 'none'
+	modal.style.transform = 'translate(-50%, calc(-50% + 20px)) scale(0.95, 0.95)'
 }
 
-function createAlert(text='Lorem ipsum', title='Alert!', buttonText='Okay') {
+function createAlert(text='Lorem ipsum', title='Alert!', buttonText='Orem lipsum') {
 	if(!options.modals) { alert(text); return; }
 	let modal = document.getElementById('modal')
 	modal.innerHTML = `<h2>${title}</h2><br><br>${text}<br><br><button onclick="closeModal()">${buttonText}</button>`
-	modal.style.display = 'block'
+	modal.style.opacity = '100%'
+	modal.style.pointerEvents = 'all'
+	modal.style.transform = 'translate(-50%, -50%) scale(1, 1)'
 }
 
-function createConfirm(text='Lorem ipsum', title='Confirm!', cancelText='False', confirmText='True', func=()=>{closeModal()}) {
+function createConfirm(text='Lorem ipsum', title='Confirm!', cancelText='Orem lipsum', confirmText='Lorem ipsum', func=()=>{closeModal()}) {
 	if(!options.modals) { if(confirm(text)) { func(); } return; }
 	let modal = document.getElementById('modal')
 	func = func.toString().substring(5, func.toString().length-1)
 	modal.innerHTML = `<h2>${title}</h2><br><br>${text}<br><br><div><button style="margin-right: 5px;" onclick="${func}">${confirmText}</button><button style="margin-left: 5px;" onclick="closeModal()">${cancelText}</button></div>`
-	modal.style.display = 'block'
+	modal.style.opacity = '100%'
+	modal.style.pointerEvents = 'all'
+	modal.style.transform = 'translate(-50%, -50%) scale(1, 1)'
 }
 
 function constructNodeStyle(layer){

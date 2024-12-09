@@ -641,7 +641,7 @@ function loadVue() {
 			You have played for {{ formatTime(player.timePlayed) }}<br><br>
 			<h2>Theta</h2><br>
 			You have produced a total of {{ formatWhole(player.totalTheta) }} theta<br>
-			You own a total of {{ formatWhole(getBuyableAmount('theta', 11).add(getBuyableAmount('theta', 12)).add(getBuyableAmount('theta', 13)).add(getBuyableAmount('theta', 14)).add(getBuyableAmount('theta', 15)).add(getBuyableAmount('theta', 21)).add(getBuyableAmount('theta', 22))) }} theta upgrades<br><br>
+			You own a total of {{ formatWhole(getBuyableAmount('theta', 11).add(getBuyableAmount('theta', 12)).add(getBuyableAmount('theta', 13)).add(getBuyableAmount('theta', 14)).add(getBuyableAmount('theta', 15)).add(getBuyableAmount('theta', 21)).add(getBuyableAmount('theta', 22))) }}<span v-if="hasBonusTheta()" v-html="' + '+bonusTheta()"></span> theta upgrades<br><br>
 			<span v-if="player.ranks.done"><h2>Ranks</h2><br>
 			<span class="tooltipBox">Your best theta is {{ formatWhole(player.ranks.bestTheta) }}<tooltip :text="'Used for calculating Rank Energy'"></tooltip></span><br><br></span>
 		</div>

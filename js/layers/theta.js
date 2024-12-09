@@ -14,12 +14,12 @@ addLayer("theta", {
         11: {
             cost(x) {
                 let base = new Decimal(1.125);
-                if(hasUpgrade('ranks', 14)) { base = base.div(tmp.ranks.upgrades[14].effect) }
+                // if(hasUpgrade('ranks', 14)) { base = base.pow(tmp.ranks.upgrades[14].effect) }
                 return Decimal.pow(base, x).times(25).floor();
             },
             buyMax() {
                 let base = new Decimal(1.125);
-                if(hasUpgrade('ranks', 14)) { base = base.div(tmp.ranks.upgrades[14].effect) }
+                // if(hasUpgrade('ranks', 14)) { base = base.pow(tmp.ranks.upgrades[14].effect) }
                 let toBuy = Decimal.div(player.points, 25).log(base).floor().add(1);
                 let cost = this.cost(toBuy.sub(1)); // -+= This line and below are dynamic, so don't change them =+-
                 if(tmp[this.layer].buyables[this.id].spends) player.points = player.points.sub(cost).max(0);
@@ -35,7 +35,7 @@ addLayer("theta", {
             power() {
                 let base = new Decimal(1);
                 base = base.add(tmp.theta.buyables[13].effect);
-                if(hasUpgrade('ranks', 11)) { base = base.times(tmp.ranks.upgrades[11].effect[0]) }
+                // if(hasUpgrade('ranks', 11)) { base = base.times(tmp.ranks.upgrades[11].effect[0]) }
                 return base;
             },
             spends() { return !hasMilestone('ranks', 1); },
@@ -48,12 +48,12 @@ addLayer("theta", {
         12: {
             cost(x) {
                 let base = new Decimal(1.25);
-                if(hasUpgrade('ranks', 14)) { base = base.div(tmp.ranks.upgrades[14].effect) }
+                // if(hasUpgrade('ranks', 14)) { base = base.pow(tmp.ranks.upgrades[14].effect) }
                 return Decimal.pow(base, x).times(25).floor();
             },
             buyMax() {
                 let base = new Decimal(1.25);
-                if(hasUpgrade('ranks', 14)) { base = base.div(tmp.ranks.upgrades[14].effect) }
+                // if(hasUpgrade('ranks', 14)) { base = base.pow(tmp.ranks.upgrades[14].effect) }
                 let toBuy = Decimal.div(player.points, 25).log(base).floor().add(1);
                 let cost = this.cost(toBuy.sub(1)); // -+= This line and below are dynamic, so don't change them =+-
                 if(tmp[this.layer].buyables[this.id].spends) player.points = player.points.sub(cost).max(0);
@@ -69,7 +69,7 @@ addLayer("theta", {
             power() {
                 let base = new Decimal(3);
                 base = base.add(tmp.theta.buyables[13].effect);
-                if(hasUpgrade('ranks', 11)) { base = base.times(tmp.ranks.upgrades[11].effect[1]) }
+                // if(hasUpgrade('ranks', 11)) { base = base.times(tmp.ranks.upgrades[11].effect[1]) }
                 return base;
             },
             spends() { return !hasMilestone('ranks', 1); },
@@ -82,12 +82,12 @@ addLayer("theta", {
         13: {
             cost(x) {
                 let base = new Decimal(1.6);
-                if(hasUpgrade('ranks', 14)) { base = base.div(tmp.ranks.upgrades[14].effect) }
+                // if(hasUpgrade('ranks', 14)) { base = base.pow(tmp.ranks.upgrades[14].effect) }
                 return Decimal.pow(base, x).times(300).floor();
             },
             buyMax() {
                 let base = new Decimal(1.6);
-                if(hasUpgrade('ranks', 14)) { base = base.div(tmp.ranks.upgrades[14].effect) }
+                // if(hasUpgrade('ranks', 14)) { base = base.pow(tmp.ranks.upgrades[14].effect) }
                 let toBuy = Decimal.div(player.points, 300).log(base).floor().add(1);
                 let cost = this.cost(toBuy.sub(1)); // -+= This line and below are dynamic, so don't change them =+-
                 if(tmp[this.layer].buyables[this.id].spends) player.points = player.points.sub(cost).max(0);
@@ -119,12 +119,12 @@ addLayer("theta", {
             cost(x) {
                 if (x.gte(10)) x = x.div(10).pow(2).times(10);
                 let base = new Decimal(2);
-                if(hasUpgrade('ranks', 14)) { base = base.div(tmp.ranks.upgrades[14].effect) }
+                // if(hasUpgrade('ranks', 14)) { base = base.pow(tmp.ranks.upgrades[14].effect) }
                 return Decimal.pow(base, x).times(4000).floor();
             },
             buyMax() {
                 let base = new Decimal(2);
-                if(hasUpgrade('ranks', 14)) { base = base.div(tmp.ranks.upgrades[14].effect) }
+                // if(hasUpgrade('ranks', 14)) { base = base.pow(tmp.ranks.upgrades[14].effect) }
                 let toBuy = Decimal.div(player.points, 4000).log(base);
                 if (toBuy.gte(10)) toBuy = toBuy.div(10).pow(0.5).times(10);
                 toBuy = toBuy.floor().add(1); // -+= This line and below are dynamic, so don't change them =+-
@@ -210,7 +210,7 @@ addLayer("theta", {
                 let base = new Decimal(0.5);
                 return base;
             },
-            spends() { return !hasMilestone('ranks', 5) },
+            spends() { return /* !hasMilestone('ranks', 5) */ false },
             unlocked(){ return hasMilestone('ranks', 3); },
             canAfford() { return player.points.gte(tmp[this.layer].buyables[this.id].cost); },
             description: `Increae the power of <div style="display: inline;" class="tooltipBox">θB3<div class="tooltip">Increase the power of θB1 & θB2</div></div> & <div style="display: inline;" class="tooltipBox">θB5<div class="tooltip">Add to functional amount of θB3</div></div>`,
@@ -243,7 +243,7 @@ addLayer("theta", {
                 let base = new Decimal(1.3);
                 return base;
             },
-            spends() { return !hasMilestone('ranks', 5) },
+            spends() { return /* !hasMilestone('ranks', 5) */ false },
             unlocked(){ return hasMilestone('ranks', 3); },
             canAfford() { return player.points.gte(tmp[this.layer].buyables[this.id].cost); },
             description: `Multiply all theta gain`,

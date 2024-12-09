@@ -13,8 +13,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.3",
-	name: "New Beginnings",
+	num: "0.2.3",
+	name: "TMT Port",
 }
 
 let changelog = `<button class="upg">button</button>`
@@ -47,7 +47,7 @@ function getPointGen(addOnly=false) {
 	gain = gain.times(tmp.theta.buyables[14].effect)
 	gain = gain.times(tmp.theta.buyables[22].effect)
 
-	if(hasUpgrade('ranks', 15)) { gain = gain.mul(tmp.ranks.upgrades[15].effect) }
+	// if(hasUpgrade('ranks', 15)) { gain = gain.mul(tmp.ranks.upgrades[15].effect) }
 
 
 	if(hasMilestone('ranks', 0)) { gain = gain.add(tmp.ranks.milestones[0].effect.times(getPointClick())) }
@@ -65,7 +65,7 @@ function getPointClick(addOnly=false) {
 
 	gain = gain.times(tmp.theta.buyables[22].effect)
 
-	if(hasUpgrade('ranks', 15)) { gain = gain.mul(tmp.ranks.upgrades[15].effect) }
+	// if(hasUpgrade('ranks', 15)) { gain = gain.mul(tmp.ranks.upgrades[15].effect) }
 	
 
 	return gain

@@ -262,10 +262,11 @@ button > * {
 
 #modal {
 	width: 90vw;
+	max-width: 600px;
 	position: fixed;
 	height: fit-content;
 	min-height: 20px;
-	left: 5vw;
+	left: 50vw;
 	top: 50vh;
 	max-height: 90vh;
 	background-color: hsl(275, 100%, 15%);
@@ -274,7 +275,6 @@ button > * {
 	border-color: rgba(255, 255, 255, 0.05);
 	z-index: 99999999;
 	border-style: solid;
-	transform: translate(0, -50%);
 	pointer-events: all;
 	box-shadow: 0 0 15px 2px black;
 	padding-top: 10px;

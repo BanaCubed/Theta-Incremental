@@ -12,7 +12,7 @@ function getStartOptions() {
 		notation: 0,
 		precision: 2,
 		header: 3,
-		ranks: 1, // Confirmation
+		ranks: 2, // Confirmation
 	}
 }
 

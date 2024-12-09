@@ -172,7 +172,7 @@ var systemComponents = {
         template: `
         <div style="display: flex; flex-direction: column;">
 			<options-bar :option="['modals', 'Popups Styles']" :choices="[true, false]" :names="['Modal', 'Browser Alert']"></options-bar><br>
-			<options-bar :option="['ranks', 'Rankup Confirmation']" :choices="[0, 1, 2]" :names="['Never', 'Gainless', 'Always']"></options-bar><br>
+			<span v-if="player.ranks.done"><options-bar :option="['ranks', 'Rankup Confirmation']" :choices="[0, 1, 2]" :names="['Never', 'Gainless', 'Always']"></options-bar><br></span>
         </div>`
     },
 

@@ -1,5 +1,24 @@
 // ************ Big Feature related ************
 
+function hasBonusTheta() {
+	let upgs = [11, 12, 13, 14, 15, 21, 22]
+	for (let index = 0; index < upgs.length; index++) {
+		const element = upgs[index];
+		if(tmp.theta.buyables[element].bonus.neq(0)) { return true }
+	}
+	return false
+}
+
+function bonusTheta() {
+	let upgs = [11, 12, 13, 14, 15, 21, 22]
+	let amt = Decimal.dZero
+	for (let index = 0; index < upgs.length; index++) {
+		const element = upgs[index];
+		amt = amt.add(tmp.theta.buyables[element].bonus)
+	}
+	return formatWhole(amt)
+}
+
 function breakdownDisplay() {
 	if(player.breakdown==0) { return `<h2>Theta per Second</h2><br><br>
 		<h3>Additives</h3><br>
@@ -15,7 +34,7 @@ function breakdownDisplay() {
 			<tr><td>Additives</td><td>${formatWhole(getPointGen(true))}</td><td>${format(getPointGen(true).max(1).log(10).div(getPointGen(false).max(1).log(10)).mul(100))}%</td></tr>
 			${(tmp.theta.buyables[14].effect.gte(1)||player.ranks.done)?`<tr><td>θB4</td><td>${formatBoost(tmp.theta.buyables[14].effect, true, true)}</td><td>${format(tmp.theta.buyables[14].effect.max(1).log(10).div(getPointGen(false).max(1).log(10)).mul(100))}%</td></tr>`:''}
 			${(hasMilestone('ranks', 3)||false)?`<tr><td>θB7</td><td>${formatBoost(tmp.theta.buyables[22].effect, true, true)}</td><td>${format(tmp.theta.buyables[22].effect.max(1).log(10).div(getPointGen(false).max(1).log(10)).mul(100))}%</td></tr>`:''}
-			${(hasUpgrade('ranks', 15)||false)?`<tr><td>RεU1e</td><td>${formatBoost(tmp.ranks.upgrades[15].effect, true, true)}</td><td>${format(tmp.ranks.upgrades[15].effect.max(1).log(10).div(getPointGen(false).max(1).log(10)).mul(100))}%</td></tr>`:''}
+			${/*(hasUpgrade('ranks', 15)||false)?`<tr><td>RεU1e</td><td>${formatBoost(tmp.ranks.upgrades[15].effect, true, true)}</td><td>${format(tmp.ranks.upgrades[15].effect.max(1).log(10).div(getPointGen(false).max(1).log(10)).mul(100))}%</td></tr>`:''*/ ''}
 			${(hasMilestone('ranks', 0)||false)?`<tr><td>Autoclick</td><td>+${formatWhole(tmp.ranks.milestones[0].effect.times(getPointClick()))}</td><td>-</td></tr>`:''}
 			<tr><td>Total</td><td>${formatWhole(getPointGen(false))}</td><td>-</td></tr>
 		</table>
@@ -35,7 +54,7 @@ function breakdownDisplay() {
 			<thead><th style="min-width: 100px;">Source</th><th style="min-width: 100px;">Boost</th><th style="min-width: 100px;">Power</th></thead>
 			<tr><td>Additives</td><td>${formatWhole(getPointClick(true))}</td><td>${format(getPointClick(true).max(1).log(10).div(getPointClick(false).max(1).log(10)).mul(100))}%</td></tr>
 			${(hasMilestone('ranks', 3)||false)?`<tr><td>θB7</td><td>${formatBoost(tmp.theta.buyables[22].effect, true, true)}</td><td>${format(tmp.theta.buyables[22].effect.max(1).log(10).div(getPointClick(false).max(1).log(10)).mul(100))}%</td></tr>`:''}
-			${(hasUpgrade('ranks', 15)||false)?`<tr><td>RεU1e</td><td>${formatBoost(tmp.ranks.upgrades[15].effect, true, true)}</td><td>${format(tmp.ranks.upgrades[15].effect.max(1).log(10).div(getPointClick(false).max(1).log(10)).mul(100))}%</td></tr>`:''}
+			${'' /*(hasUpgrade('ranks', 15)||false)?`<tr><td>RεU1e</td><td>${formatBoost(tmp.ranks.upgrades[15].effect, true, true)}</td><td>${format(tmp.ranks.upgrades[15].effect.max(1).log(10).div(getPointClick(false).max(1).log(10)).mul(100))}%</td></tr>`:''*/}
 			<tr><td>Total</td><td>${formatWhole(getPointClick(false))}</td><td>-</td></tr>
 		</table>
 		` }
