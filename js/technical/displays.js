@@ -31,7 +31,7 @@ function createAlert(text='Lorem ipsum', title='Alert!', buttonText='Orem lipsum
 function createConfirm(text='Lorem ipsum', title='Confirm!', cancelText='Orem lipsum', confirmText='Lorem ipsum', func=()=>{closeModal()}) {
 	if(!options.modals) { if(confirm(text)) { func(); } return; }
 	let modal = document.getElementById('modal')
-	func = func.toString().substring(5, func.toString().length-1)
+	func = func.toString().slice(5, -1)
 	modal.innerHTML = `<h2>${title}</h2><br><br>${text}<br><br><div><button style="margin-right: 5px;" onclick="${func}">${confirmText}</button><button style="margin-left: 5px;" onclick="closeModal()">${cancelText}</button></div>`
 	modal.style.opacity = '100%'
 	modal.style.pointerEvents = 'all'
